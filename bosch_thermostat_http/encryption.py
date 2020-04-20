@@ -6,14 +6,17 @@ import json
 
 from pyaes import PADDING_NONE, AESModeOfOperationECB, Decrypter, Encrypter
 
-from .const import BS, MAGIC
+from .const import BS, MAGIC_HTTP, MAGIC_XMPP
 from .exceptions import EncryptionException, DeviceException
+
+
+
 
 
 class Encryption:
     """Encryption class."""
 
-    def __init__(self, access_key, password=None):
+    def __init__(self, access_key, device_type="IVT", password=None):
         """
         Initialize encryption.
 
@@ -22,9 +25,10 @@ class Encryption:
         :param str password: Password created with Bosch app.
         """
         self._bs = BS
+        magic = MAGIC_HTTP if device_type.upper() == "IVT" else MAGIC_XMPP
         if password and access_key:
-            key_hash = hashlib.md5(bytearray(access_key, "utf8") + MAGIC)
-            password_hash = hashlib.md5(MAGIC + bytearray(password, "utf8"))
+            key_hash = hashlib.md5(bytearray(access_key, "utf8") + magic)
+            password_hash = hashlib.md5(magic + bytearray(password, "utf8"))
             self._saved_key = key_hash.hexdigest() + password_hash.hexdigest()
             self._key = binascii.unhexlify(self._saved_key)
         elif access_key:

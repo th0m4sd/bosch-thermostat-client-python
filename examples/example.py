@@ -21,6 +21,7 @@ async def main():
         data_file = open("data_file.txt", "r")
         data = data_file.read().splitlines()
         gateway = bosch.Gateway(session,
+                                session_type="http",
                                 host=data[0],
                                 access_key=data[1],
                                 password=data[2])

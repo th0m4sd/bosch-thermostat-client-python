@@ -9,8 +9,8 @@ from aiohttp.client_exceptions import (
     ClientError,
 )
 
-from .const import HTTP_HEADER, APP_JSON
-from .exceptions import DeviceException, ResponseException
+from bosch_thermostat_http.const import HTTP_HEADER, APP_JSON
+from bosch_thermostat_http.exceptions import DeviceException, ResponseException
 
 _LOGGER = logging.getLogger(__name__)
 

@@ -18,16 +18,17 @@ async def main():
     """
     
     async with aiohttp.ClientSession() as session:
-        data_file = open("data_file_sim.txt", "r")
+        data_file = open("data_file.txt", "r")
         # data_file = open("data_file.txt", "r")
         data = data_file.read().splitlines()
         gateway = bosch.Gateway(session,
+                                session_type="http",
                                 host=data[0],
                                 access_key=data[1],
                                 password=data[2])
-        print(await gateway.check_connection())
-        await gateway.get_capabilities()
-
+        # print(await gateway.check_connection())
+        await gateway.test_connection()
+        return
         # small = await gateway.smallscan(DHW_CIRCUITS)
 #        myjson = json.loads(small)
         # print(small)

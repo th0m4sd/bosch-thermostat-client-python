@@ -1,7 +1,10 @@
 """Gateway module connecting to Bosch thermostat."""
 
 import logging
-from .http_connector import HttpConnector
+from .connectors.http import HttpConnector
+# from .connectors.nefitxmpp import Ne
+from .connectors.nefit import NefitConnector
+from .connectors.ivt import IVTConnector
 from .db import get_db_of_firmware, get_initial_db, get_custom_db
 from .circuits import Circuits
 from .const import (
@@ -29,6 +32,7 @@ from .const import (
     EMS,
     CIRCUIT_TYPES,
     TYPE,
+    SYSTEM_INTERFACES,
 )
 from .encryption import Encryption
 from .exceptions import DeviceException
@@ -36,30 +40,44 @@ from .helper import deep_into
 from .sensors import Sensors
 from .strings import Strings
 
+
 _LOGGER = logging.getLogger(__name__)
 
 
 class Gateway:
     """Gateway to Bosch thermostat."""
 
-    def __init__(self, session, host, access_key, password=None):
+    def __init__(self, session, session_type, host, access_key, device_type="IVT", password=None):
         """
         Initialize gateway.
 
         :param access_key:
         :param password:
         :param host:
+        :param device_type -> IVT or NEFIT
         """
         self._host = host
         if password:
             access_token = access_key.replace("-", "")
-            _encryption = Encryption(access_token, password)
+            _encryption = Encryption(access_token, device_type, password)
         else:
-            _encryption = Encryption(access_key)
-        if type(session).__name__ == "ClientSession":
+            _encryption = Encryption(access_key, device_type)
+        if session_type == "http":
             self._connector = HttpConnector(host, session, _encryption)
         else:
-            return
+            if device_type.upper() == "IVT":
+                self._connector = IVTConnector(
+                    serial_number=host,
+                    loop=session,
+                    access_key=access_token,
+                    encryption=_encryption)
+            else:
+                self._connector = NefitConnector(
+                    serial_number=host,
+                    loop=session,
+                    access_key=access_token,
+                    encryption=_encryption)
+        self._session_type = session_type
         self._data = {GATEWAY: {}, HC: None, DHW: None, SENSORS: None}
         self._firmware_version = None
         self._device = None
@@ -101,6 +119,7 @@ class Gateway:
             return model_scheme.get(CAN)
         self._bus_type = EMS
         system_info = self._data[GATEWAY].get(SYSTEM_INFO)
+        # if not 
         if system_info:
             for info in system_info:
                 model = model_scheme.get(info.get("Id", -1))
@@ -264,3 +283,12 @@ class Gateway:
             _LOGGER.debug("Failed to check_connection: %s", err)
         uuid = self.get_info(UUID)
         return uuid
+
+    async def test_connection(self):
+        response = await self._connector.get("/heatingCircuits/hc2/operationMode")
+        # response = await self._connector.get("/")
+        # for root in ROOT_PATHS:
+        #     rawlist.append(await deep_into(root, [], self._connector.get))
+        # return rawlist
+        print("RESPONSE")
+        print(response)

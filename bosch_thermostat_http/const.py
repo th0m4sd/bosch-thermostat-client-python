@@ -1,9 +1,11 @@
 """Constants used in Bosch thermostat."""
 
 BS = 16
-MAGIC = bytearray.fromhex(
+MAGIC_HTTP = bytearray.fromhex(
     "867845e97c4e29dce522b9a7d3a3e07b152bffadddbed7f5ffd842e9895ad1e4")
 
+MAGIC_XMPP = bytearray.fromhex(
+    "58f18d70f667c9c79ef7de435bf0f9b1553bbb6e61816212ab80e5b0d351fbb1")
 GET = "get"
 SUBMIT = "submit"
 NAME = "name"
@@ -71,6 +73,7 @@ SYSTEM_BRAND = "brand"
 SYSTEM_TYPE = "systemType"
 SYSTEM_INFO = "systemInfo"
 SYSTEM_BUS = "systemBus"
+SYSTEM_INTERFACES = "systemInterfaces"
 CAN = "CAN"
 EMS = "EMS"
 DEFAULT = "default"
@@ -78,6 +81,7 @@ DEFAULT = "default"
 USER_AGENT = "User-agent"
 CONNECTION = "Connection"
 TELEHEATER = "TeleHeater"
+NEFITEASY = "NefitEasy"
 KEEP_ALIVE = "keep-alive"
 CONENT_TYPE = "Content-Type"
 APP_JSON = "application/json"

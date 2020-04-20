@@ -18,6 +18,7 @@
         "brand": "/system/brand",
         "systemInfo": "/system/info",
         "systemType": "/system/systemType",
+        "systemInterfaces": "system/interfaces",
         "dateTime": "/gateway/DateTime"
     },
     "models": {
