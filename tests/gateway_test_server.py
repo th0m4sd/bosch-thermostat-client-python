@@ -1,7 +1,6 @@
 import aiohttp
 import asyncio
-import json
-from bosch_thermostat_http.encryption import Encryption
+
 
 class GatewayTestServer(aiohttp.test_utils.RawTestServer):
     ''' Test server that relies on test case to supply responses and control timing '''
@@ -28,7 +27,7 @@ class GatewayTestServer(aiohttp.test_utils.RawTestServer):
             return await response
         finally:
             del self._responses[id(request)]
-            
+
     @property
     def awaiting_request_count(self):
         return self._requests.qsize()
@@ -41,6 +40,7 @@ class GatewayTestServer(aiohttp.test_utils.RawTestServer):
         :see: :meth:`send_response`
         '''
         return await asyncio.wait_for(self._requests.get(), timeout=timeout)
+
     def send_response(self, request, *args, **kwargs):
         ''' Reply to a received request.
         :param request: the request to respond to.

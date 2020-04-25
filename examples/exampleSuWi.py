@@ -3,9 +3,9 @@ import time
 import aiohttp
 import binascii
 import hashlib
-from bosch_thermostat_http.helper import crawl
+from bosch_thermostat_client.helper import crawl
 import bosch_thermostat_http as bosch
-from bosch_thermostat_http.const import (FIRMWARE_VERSION, HARDWARE_VERSION,
+from bosch_thermostat_client.const import (FIRMWARE_VERSION, HARDWARE_VERSION,
                                          UUID, SENSORS, DHW, HC, GATEWAY,
                                          OPERATION_MODE, DHW_OFFTEMP_LEVEL,
                                          HC_CURRENT_ROOMSETPOINT)

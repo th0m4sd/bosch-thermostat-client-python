@@ -1,0 +1,17 @@
+{
+  "versionFirmwarePath": "/gateway/versionFirmware",
+  "gateway": {
+    "uuid": "/gateway/uuid",
+    "systemBus": "/system/interfaces",
+    "versionFirmware": "/gateway/versionFirmware",
+    "productID": "/gateway/productID",
+    "dateTime": "/gateway/time/timestamp"
+  },
+  "models": {
+    "7736701042": {
+      "value": "TC100",
+      "name": "Bosch TC100",
+      "type": "NEFIT"
+    }
+  }
+}

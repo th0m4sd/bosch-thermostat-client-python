@@ -1,4 +1,4 @@
-from bosch_thermostat_http.encryption import Encryption
+from bosch_thermostat_client.encryption import Encryption
 
 client = Encryption('xxx', 'xxx2')
 text_encrypted = client.encrypt("testing text")

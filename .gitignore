@@ -52,3 +52,6 @@ docs/build
 password
 data_file.txt
 data_file*
+scan*json
+
+*old*

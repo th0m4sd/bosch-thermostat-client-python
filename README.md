@@ -1,27 +1,13 @@
 
 
 # bosch-thermostat-http-client-python
-Python3 asyncio package to talk to Bosch Thermostats via their gateway, especially for Buderus KM200/KM50 and Nefit IP modules used in Enviline heat pumps. These gateways support Http access in local network.
+Python3 asyncio package to talk to Bosch Thermostats via their gateway.
+Suppored protocols are HTTP and XMPP.
+
+Both are still in development.
 
 example :
-```python
-import asyncio 
-import aiohttp
-
-from buderus.gateway import Gateway
-async def main():
-    async with aiohttp.ClientSession() as session:
-        gateway =  Gateway(session, '<Local IP of gateway>','<gateway password>','<user password>')
-        await gateway.initialize()
-       
-      
-        print(gateway.info.uuid)
-
-        for sensor in gateway.sensors.items:
-            print (sensor.name, sensor.value)
-
-asyncio.get_event_loop().run_until_complete(main())
-```
+Follow examples dir and try to figure it out or post issue/contact on discord on more instructions.
 
 To run this code do the following:
 

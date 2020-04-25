@@ -1,10 +1,10 @@
-""" Test script of bosch_thermostat_http. """
+""" Test script of bosch_thermostat_client. """
 import asyncio
 
 import aiohttp
 import bosch_thermostat_http as bosch
-from bosch_thermostat_http.const import FIRMWARE_VERSION
-from bosch_thermostat_http.db import bosch_sensors
+from bosch_thermostat_client.const import FIRMWARE_VERSION
+from bosch_thermostat_client.db import bosch_sensors
 
 
 async def main():

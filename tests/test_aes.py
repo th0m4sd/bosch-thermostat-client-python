@@ -1,12 +1,10 @@
 import unittest
-import json
-from bosch_thermostat_http.encryption import Encryption
+from bosch_thermostat_client.encryption import Encryption
 
 
 class AesTest(unittest.TestCase):
 
-
-    def setUp(self):
+    def setup(self):
         self.client = Encryption('abc1abc2abc3abc4', 'passworddddd')
 
     # encrypt and decrypt a string
