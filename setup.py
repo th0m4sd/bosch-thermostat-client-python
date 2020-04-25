@@ -19,7 +19,7 @@ with open("README.md", "r") as fh:
 setup(
     name='bosch-thermostat-client',
     version=__version__,  # type: ignore # noqa: F821,
-    description='Python API for talking to Bosch™ Heating gateway using HTTP ',
+    description='Python API for talking to Bosch™ Heating gateway using HTTP or XMPP',
     long_description=long_description,
     long_description_content_type="text/markdown",
     author='Ludovic Laurent, Pawel Szafer',
