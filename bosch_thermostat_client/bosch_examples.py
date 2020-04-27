@@ -1,7 +1,7 @@
 import click
 import logging
 import aiohttp
-import bosch_thermostat_http as bosch
+import bosch_thermostat_client as bosch
 from bosch_thermostat_client.db import open_json, MAINPATH
 from bosch_thermostat_client.const import HC, SENSORS, DHW
 import os

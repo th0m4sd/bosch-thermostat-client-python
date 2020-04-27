@@ -4,7 +4,7 @@ import logging
 import json
 import aiohttp
 import time
-import bosch_thermostat_http as bosch
+import bosch_thermostat_client as bosch
 from bosch_thermostat_client.const import DHW, HC, OPERATION_MODE, UUID, DATE
 
 #logging.basicConfig()

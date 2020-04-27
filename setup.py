@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-from setuptools import setup
+from setuptools import setup, find_packages
 
 with open("bosch_thermostat_client/version.py") as f:
     exec(f.read())
@@ -26,7 +26,7 @@ setup(
     author_email='ludovic.laurent@gmail.com, pszafer@gmail.com',
     url='https://github.com/bosch-thermostat/bosch-thermostat-client-python',
     download_url='https://github.com/bosch-thermostat/bosch-thermostat-client-python/archive/{}.zip'.format(__version__),
-    packages=["bosch_thermostat_client"],
+    packages=find_packages(exclude=["tests*"]),
     install_requires=REQUIRES,
     include_package_data=True,
     license='Apache License 2.0',

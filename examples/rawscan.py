@@ -2,7 +2,7 @@
 import asyncio
 
 import aiohttp
-import bosch_thermostat_http as bosch
+import bosch_thermostat_client as bosch
 from bosch_thermostat_client.const import FIRMWARE_VERSION
 # from bosch_thermostat_client.db import bosch_sensors
 

@@ -1,6 +1,6 @@
 
 
-# bosch-thermostat-http-client-python
+# bosch-thermostat-client-python
 Python3 asyncio package to talk to Bosch Thermostats via their gateway.
 Suppored protocols are HTTP and XMPP.
 
