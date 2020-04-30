@@ -66,3 +66,4 @@ class NefitGateway(BaseGateway):
                 break
         if self._bus_type == EMS:
             return model_scheme.get(product_id)
+        _LOGGER.error(f"Couldn't find device model. Got product ID: {product_id}")
