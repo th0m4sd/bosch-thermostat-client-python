@@ -89,6 +89,7 @@ class XMPPBaseConnector:
 
     async def get(self, path):
         data = None
+        _LOGGER.debug("Sending GET request to %s", path)
         async with self._lock:
             async with self.xmppclient.connected():
                 self.msg_event = asyncio.Event()
@@ -107,6 +108,7 @@ class XMPPBaseConnector:
 
     async def put(self, path, value):
         data = self._encryption.encrypt(json.dumps({"value": value}, separators=(',', ':')))
+        _LOGGER.debug("Sending PUT request to %s", path)
         async with self._lock:
             async with self.xmppclient.connected():
                 self.msg_event = asyncio.Event()
