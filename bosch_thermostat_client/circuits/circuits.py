@@ -42,7 +42,6 @@ class Circuits(BoschEntities):
             return None
         circuits = await self.retrieve_from_module(1, f"/{db_prefix}")
         for circuit in circuits:
-            print(circuit)
             if "references" in circuit:
                 circuit_object = self.create_circuit(
                     circuit, database, current_date
@@ -50,12 +49,10 @@ class Circuits(BoschEntities):
                 if circuit_object:
                     await circuit_object.initialize()
                     if circuit_object.state:
-                        print("idzie")
                         self._items.append(circuit_object)
 
     def create_circuit(self, circuit, database, current_date):
         """Create single circuit of given type."""
-        print("TWORZE CIRCUIT")
         if self._circuit_type in (HC, DHW):
             Circuit = choose_circuit_type(self._device_type)
             return Circuit(self._connector, circuit[ID],

@@ -48,6 +48,9 @@ class BaseGateway:
         self._initialized = None
         self._bus_type = None
 
+    def device_model(self):
+        raise NotImplementedError
+
     def get_base_db(self):
         return get_initial_db(self.device_type)
 
@@ -115,8 +118,13 @@ class BaseGateway:
         self._connector.set_timeout(timeout)
 
     @property
-    def access_key(self):
+    def access_token(self):
         """Return key to store in config entry."""
+        return self._access_token
+
+    @property
+    def access_key(self):
+        """Return original access key to store in config entry. Need to XMPP communication."""
         return self._connector.encryption_key
 
     @property
@@ -161,7 +169,6 @@ class BaseGateway:
     async def get_capabilities(self):
         supported = []
         for circuit in CIRCUIT_TYPES.keys():
-            print(circuit)
             try:
                 circuit_object = await self.initialize_circuits(circuit)
                 if circuit_object:
@@ -223,15 +230,3 @@ class BaseGateway:
             _LOGGER.debug("Failed to check_connection: %s", err)
         uuid = self.get_info(UUID)
         return uuid
-
-    async def test_connection(self):
-        # response = self._connector.build_message(
-        #     "/heatingCircuits/hc1/temperatureRoomManual", 23.0)
-        # response = await self._connector.put("/heatingCircuits/hc1/temperatureRoomManual", 19.0)
-        response1 = await self._connector.get("/gateway/uuid")
-        # response2 = await self._connector.get("/heatingCircuits/hc1/temperatureRoomSetpoint")
-        # for root in ROOT_PATHS:
-        #     rawlist.append(await deep_into(root, [], self._connector.get))
-        # return rawlist
-        print("RESPONSE")
-        print(response1)

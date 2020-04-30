@@ -42,6 +42,10 @@ class XMPPBaseConnector:
             aioxmpp.dispatcher.SimpleMessageDispatcher
         )
 
+    @property
+    def encryption_key(self):
+        return self._encryption.key
+
     def register_callbacks(self):
         self.message_dispatcher.register_callback(
             aioxmpp.MessageType.NORMAL,

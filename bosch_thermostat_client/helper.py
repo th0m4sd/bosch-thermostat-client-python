@@ -2,7 +2,21 @@
 
 import re
 import logging
-from bosch_thermostat_client.const import ID, NAME, PATH, RESULT, TYPE, REGULAR, URI, VALUE, MAX_VALUE, MIN_VALUE, UNITS
+from bosch_thermostat_client.const import (
+    ID,
+    NAME,
+    PATH,
+    RESULT,
+    TYPE,
+    REGULAR,
+    URI,
+    VALUE,
+    MAX_VALUE,
+    MIN_VALUE,
+    UNITS,
+    STATUS,
+    TIMESTAMP,
+)
 from bosch_thermostat_client.const.ivt import ALLOWED_VALUES, STATE
 
 from .exceptions import DeviceException, EncryptionException
@@ -111,7 +125,9 @@ class BoschSingleEntity:
                 MIN_VALUE,
                 MAX_VALUE,
                 ALLOWED_VALUES,
-                UNITS
+                UNITS,
+                STATUS,
+                TIMESTAMP,
             ]:
                 if res_key in result:
                     if res_key in data and result[res_key] == data[res_key]:
@@ -120,10 +136,11 @@ class BoschSingleEntity:
                     self._update_initialized = True
                     updated = True
         if STATE in result:
-            data[STATE] = {}
             for state in result[STATE]:
                 for key, item in state.items():
-                    data[STATE][key] = item
+                    if key in data:
+                        _LOGGER.error(f"This key already exists! {key}, {data[key]}, {item}. Write to developer!")
+                    data[STATE + "_" + key] = item
         return data if return_data else updated
 
     @property

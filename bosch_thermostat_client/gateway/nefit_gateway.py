@@ -5,7 +5,7 @@ from .base_gateway import BaseGateway
 
 from bosch_thermostat_client.connectors import NefitConnector
 from bosch_thermostat_client.encryption import NefitEncryption as Encryption
-from bosch_thermostat_client.const import XMPP, GATEWAY, MODELS, EMS, SYSTEM_BUS, VALUE, VALUES, REFERENCES, ID
+from bosch_thermostat_client.const import XMPP, GATEWAY, MODELS, EMS, SYSTEM_BUS, VALUE, REFERENCES, ID
 from bosch_thermostat_client.const.nefit import NEFIT, PRODUCT_ID
 from bosch_thermostat_client.exceptions import DeviceException
 
@@ -18,7 +18,7 @@ class NefitGateway(BaseGateway):
 
     device_type = NEFIT
 
-    def __init__(self, session, session_type, host, access_key, password=None):
+    def __init__(self, session, session_type, host, access_token, access_key=None, password=None):
         """
         Initialize gateway.
 
@@ -27,16 +27,21 @@ class NefitGateway(BaseGateway):
         :param host:
         :param device_type -> IVT or NEFIT
         """
+        self._access_token = access_token.replace("-", "")
         if password:
-            access_token = access_key.replace("-", "")
+            access_key = self._access_token
         self._connector = NefitConnector(
             host=host,
             loop=session,
-            access_key=access_token,
-            encryption=Encryption(access_token, password),
+            access_key=self._access_token,
+            encryption=Encryption(access_key, password)
         )
         self._session_type = XMPP
         super().__init__(host)
+
+    @property
+    def device_model(self):
+        return self._device.get(VALUE, "Unknown")
 
     async def _update_info(self, initial_db):
         """Update gateway info from Bosch device."""

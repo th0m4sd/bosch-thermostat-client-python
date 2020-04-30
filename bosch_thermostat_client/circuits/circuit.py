@@ -14,9 +14,9 @@ from bosch_thermostat_client.const import (
     CIRCUIT_TYPES,
     ACTIVE_PROGRAM,
     MODE_TO_SETPOINT,
-    HA_NAME,
-    BOSCH_NAME,
     UNITS,
+    BOSCH_NAME,
+    HA_NAME
 )
 from bosch_thermostat_client.helper import BoschSingleEntity
 from bosch_thermostat_client.exceptions import DeviceException
@@ -152,8 +152,10 @@ class Circuit(BasicCircuit):
             self.get_property(CURRENT_TEMP),
         )
         temp = self.get_value(CURRENT_TEMP)
-        if temp and temp > 0 and temp < 120:
-            return temp
+        if temp:
+            temp = float(temp)
+            if temp > 0 and temp < 120:
+                return temp
 
     @property
     def temp_units(self):
@@ -163,11 +165,7 @@ class Circuit(BasicCircuit):
     @property
     def ha_modes(self):
         """Retrieve HA modes."""
-        return [
-            v[HA_NAME]
-            for v in self._hastates
-            if any(x in self._op_mode.available_modes for x in v[BOSCH_NAME])
-        ]
+        raise NotImplementedError
 
     @property
     def ha_mode(self):

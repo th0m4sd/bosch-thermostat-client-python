@@ -14,7 +14,9 @@ from bosch_thermostat_client.const import (
     MAX_REF,
     RESULT,
     VALUE,
-    URI
+    URI,
+    HA_NAME,
+    BOSCH_NAME
 )
 from bosch_thermostat_client.const.ivt import CURRENT_SETPOINT, CAN
 from bosch_thermostat_client.schedule import Schedule
@@ -154,3 +156,12 @@ class IVTCircuit(Circuit):
         elif prop_name == MAX_VALUE:
             default = DEFAULT_MAX_TEMP
         return activeSetpointValue.get(prop_name, default)
+
+    @property
+    def ha_modes(self):
+        """Retrieve HA modes."""
+        return [
+            v[HA_NAME]
+            for v in self._hastates
+            if any(x in self._op_mode.available_modes for x in v[BOSCH_NAME])
+        ]

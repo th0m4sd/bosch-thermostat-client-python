@@ -22,6 +22,7 @@ async def main():
     if you can retrieve data from your thermostat.
     """
     data_file = open("data_file_nefit.txt", "r")
+    # data_file = open("data_file_nefit_pass.txt", "r")
     # data_file = open("data_file.txt", "r")
     data = data_file.read().splitlines()
     loop = asyncio.get_event_loop()
@@ -29,8 +30,9 @@ async def main():
     gateway = BoschGateway(session=loop,
                            session_type=XMPP,
                            host=data[0],
-                           access_key=data[1],
-                           password=data[2])
+                           access_token=data[1],
+                           access_key=data[2])
+                        #    password=data[2])
     # gateway = BoschGateway(session=loop,
     #                        session_type="xmpp",
     #                        host=data[0],

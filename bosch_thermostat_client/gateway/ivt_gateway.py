@@ -24,7 +24,7 @@ class IVTGateway(BaseGateway):
 
     device_type = IVT
 
-    def __init__(self, session, session_type, host, access_key, password=None):
+    def __init__(self, session, session_type, host, access_token, access_key=None, password=None):
         """IVT Gateway constructor
 
         Args:
@@ -34,16 +34,21 @@ class IVTGateway(BaseGateway):
             access_key (str): access key to Bosch Gateway
             password (str, optional): Password to Bosch Gateway. Defaults to None.
         """
+        self._access_token = access_token.replace("-", "")
         if password:
-            access_token = access_key.replace("-", "")
+            access_key = self._access_token
         Connector = connector_ivt_chooser(session_type)
         self._connector = Connector(
             host=host,
             loop=session,
-            encryption=Encryption(access_token, password),
-            access_key=access_key,
+            access_key=self._access_token,
+            encryption=Encryption(access_key, password)
         )
         super().__init__(host)
+
+    @property
+    def device_model(self):
+        return self._device.get(VALUE, "Unknown")
 
     async def _update_info(self, initial_db):
         """Update gateway info from Bosch device."""

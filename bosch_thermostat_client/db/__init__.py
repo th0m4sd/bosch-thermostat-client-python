@@ -37,10 +37,7 @@ def get_db_of_firmware(device_type, firmware_version):
     filepath = os.path.join(MAINPATH, filename)
     _db = open_json(filepath)
     if _db:
-        print(_db)
-        print(firmware_version)
         if firmware_version in _db:
-            print("MAM BAZE")
             return _db[firmware_version]
     return None
 

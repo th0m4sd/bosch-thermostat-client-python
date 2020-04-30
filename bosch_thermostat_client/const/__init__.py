@@ -36,7 +36,7 @@ PATH = "path"
 RESULT = "result"  # to not mismarch with value
 TYPE = "type"
 URI = "uri"
-
+TIMESTAMP = "timestamp"
 REGULAR = "regular"
 AUTO = "auto"
 MANUAL = "manual"

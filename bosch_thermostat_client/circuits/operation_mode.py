@@ -42,8 +42,6 @@ class OperationModeHelper:
     def temp_setpoint(self, mode=None):
         """Check which temp property to use. Key READ or WRITE"""
         mode = self.current_mode if not mode else mode
-        print("MODE")
-        print(mode)
         return self._mode_to_setpoint.get(mode, {}).get(SETPOINT)
 
     @property
