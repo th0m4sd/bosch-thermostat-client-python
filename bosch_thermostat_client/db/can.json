@@ -111,7 +111,7 @@
                 {
                     "haname": "performance",
                     "boschname": ["Automatic", "supersaver"]
-                }
+                },
                 {
                     "haname": "high_demand",
                     "boschname": ["comfort"]
