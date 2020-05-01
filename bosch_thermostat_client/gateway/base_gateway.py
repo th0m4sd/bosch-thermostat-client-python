@@ -60,6 +60,7 @@ class BaseGateway:
         await self._update_info(initial_db.get(GATEWAY))
         self._firmware_version = self._data[GATEWAY].get(FIRMWARE_VERSION)
         self._device = await self.get_device_model(initial_db)
+        print(self._device)
         if self._device and VALUE in self._device:
             self._db = get_db_of_firmware(self._device[TYPE], self._firmware_version)
             if self._db:

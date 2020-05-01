@@ -12,6 +12,11 @@
       "value": "TC100",
       "name": "Bosch TC100",
       "type": "NEFIT"
+    },
+    "7736701047": {
+      "value": "CT100",
+      "name": "Junkers CT100",
+      "type": "NEFIT"
     }
   }
 }

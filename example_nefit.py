@@ -21,7 +21,7 @@ async def main():
     Provide data_file.txt with ip, access_key, password and check
     if you can retrieve data from your thermostat.
     """
-    data_file = open("data_file_nefit.txt", "r")
+    data_file = open("data_file_nefit_joanet.txt", "r")
     # data_file = open("data_file_nefit_pass.txt", "r")
     # data_file = open("data_file.txt", "r")
     data = data_file.read().splitlines()
@@ -31,17 +31,17 @@ async def main():
                            session_type=XMPP,
                            host=data[0],
                            access_token=data[1],
-                           access_key=data[2])
-                        #    password=data[2])
+                        #    access_key=data[2],
+                           password=data[2])
     # gateway = BoschGateway(session=loop,
     #                        session_type="xmpp",
     #                        host=data[0],
     #                        access_key=data[1],
     #                        password=data[2])
-    # print(await gateway.rawscan())
+    print(await gateway.rawscan())
     # await gateway.initialize()
     # return
-    print(f"UUID {await gateway.check_connection()}")
+    # print(f"UUID {await gateway.check_connection()}")
 
     # small = await gateway.smallscan(DHW_CIRCUITS)
 #        myjson = json.loads(small)
