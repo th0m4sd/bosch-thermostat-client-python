@@ -148,6 +148,40 @@
                 }
             }
         },
+        "solarCircuits": {
+            "refs": {
+                "collectorTemperature": {
+                    "id": "collectorTemperature",
+                    "name": "collectorTemperature",
+                    "type": "regular"
+                },
+                "dhwTankTemperature": {
+                    "id": "dhwTankTemperature",
+                    "name": "dhwTankTemperature",
+                    "type": "regular"
+                },
+                "solarYield": {
+                    "id": "solarYield",
+                    "name": "solarYield",
+                    "type": "regular"
+                },
+                "pumpModulation": {
+                    "id": "pumpModulation",
+                    "name": "pumpModulation",
+                    "type": "regular"
+                },
+                "actuatorStatus": {
+                    "id": "actuatorStatus",
+                    "name": "actuatorStatus",
+                    "type": "regular"
+                },
+                "status": {
+                    "id": "status",
+                    "name": "status",
+                    "type": "regular"
+                }
+            }
+        },
         "sensors": {
             "outdoor_t1": {
                 "id": "/system/sensors/temperatures/outdoor_t1",

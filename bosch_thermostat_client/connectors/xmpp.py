@@ -85,6 +85,8 @@ class XMPPBaseConnector:
             self.msg_event.data = None
         elif "HTTP/1.0 200" in body[0]:
             self.msg_event.data = self._encryption.json_encrypt(body[-1:][0])
+            if self.msg_event.data == "{}":
+                _LOGGER.error(f"Wrong body {body}")
         self.msg_event.set()
 
     async def get(self, path):

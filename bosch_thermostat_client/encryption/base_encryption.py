@@ -1,13 +1,15 @@
 """Encryption logic of Bosch thermostat."""
+import logging
 import base64
 import hashlib
 import binascii
 import json
-
 from pyaes import PADDING_NONE, AESModeOfOperationECB, Decrypter, Encrypter
 
 from bosch_thermostat_client.const import BS
 from bosch_thermostat_client.exceptions import EncryptionException, DeviceException
+
+_LOGGER = logging.getLogger(__name__)
 
 
 class BaseEncryption:
@@ -59,6 +61,7 @@ class BaseEncryption:
         Decrypt raw message only if length > 2.
         Padding is not working for lenght less than 2.
         """
+        decrypted = "{}"
         try:
             if enc and len(enc) > 2:
                 enc = base64.b64decode(enc)
@@ -69,6 +72,9 @@ class BaseEncryption:
                 )
                 decrypted = cipher.feed(enc) + cipher.feed()
                 return decrypted.decode("utf8").rstrip(chr(0))
+            return decrypted
+        except UnicodeDecodeError as err:
+            _LOGGER.error(f"Unable to decrypt: {decrypted} with error: {err}")
             return "{}"
         except Exception as err:
             raise EncryptionException(f"Unable to decrypt: {err}")

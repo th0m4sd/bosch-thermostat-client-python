@@ -56,7 +56,7 @@ class BasicCircuit(BoschSingleEntity):
 
     @property
     def state(self):
-        raise NotImplementedError
+        return self._state
 
     async def initialize(self):
         """Check each uri if return json with values."""
