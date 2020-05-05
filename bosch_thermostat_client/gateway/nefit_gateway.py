@@ -22,7 +22,7 @@ class NefitGateway(BaseGateway):
         """
         Initialize gateway.
 
-        :param access_key:
+        :param access_token:
         :param password:
         :param host:
         :param device_type -> IVT or NEFIT
