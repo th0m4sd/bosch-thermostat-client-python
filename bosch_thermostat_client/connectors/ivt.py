@@ -9,6 +9,7 @@ class IVTXMPPConnector(XMPPBaseConnector):
     _accesskey_prefix = 'C6u9jPue_'
     _rrc_contact_prefix = 'contact_'
     _rrc_gateway_prefix = 'gateway_'
+    xmpp_host = "wa2-mz36-qrmzh6.bosch.de"
 
     def __init__(self, host, loop, access_key, encryption):
         """IVTConnector constructor

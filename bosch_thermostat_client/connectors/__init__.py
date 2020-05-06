@@ -1,6 +1,7 @@
 from .http import HttpConnector
 from .ivt import IVTXMPPConnector
 from .nefit import NefitConnector
+from .nefit2 import NefitConnector2
 
 from bosch_thermostat_client.const.ivt import HTTP
 
@@ -13,4 +14,4 @@ def connector_ivt_chooser(session_type):
     )
 
 
-__all__ = ["NefitConnector", "IVTXMPPConnector", "HttpConnector"]
+__all__ = ["NefitConnector", "NefitConnector2", "IVTXMPPConnector", "HttpConnector"]

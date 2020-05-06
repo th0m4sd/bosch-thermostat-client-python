@@ -18,7 +18,7 @@ class NefitGateway(BaseGateway):
 
     device_type = NEFIT
 
-    def __init__(self, session, session_type, host, access_token, access_key=None, password=None):
+    def __init__(self, session, session_type, host, access_token, access_key=None, password=None, nefit_connector=None):
         """
         Initialize gateway.
 
@@ -30,7 +30,9 @@ class NefitGateway(BaseGateway):
         self._access_token = access_token.replace("-", "")
         if password:
             access_key = self._access_token
-        self._connector = NefitConnector(
+        if not nefit_connector:
+            nefit_connector = NefitConnector
+        self._connector = nefit_connector(
             host=host,
             loop=session,
             access_key=self._access_token,

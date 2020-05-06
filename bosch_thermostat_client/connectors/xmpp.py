@@ -1,7 +1,8 @@
 """XMPP Connector to talk to bosch."""
 import logging
 import json
-# import slixmpp
+import re
+
 import asyncio
 
 import aioxmpp
@@ -10,7 +11,6 @@ from bosch_thermostat_client.const import GET, PUT
 
 
 _LOGGER = logging.getLogger(__name__)
-HOST = "wa2-mz36-qrmzh6.bosch.de"
 
 
 class XMPPBaseConnector:
@@ -30,7 +30,7 @@ class XMPPBaseConnector:
         self._lock = asyncio.Lock()
         self.msg_event = None
 
-        identifier = self.serial_number + "@" + HOST
+        identifier = self.serial_number + "@" + self.xmpp_host
         self._from = self._rrc_contact_prefix + identifier
         self._to = self.jid(self._rrc_gateway_prefix + identifier)
         self._jid = self.jid(self._from)
@@ -75,15 +75,19 @@ class XMPPBaseConnector:
         pass
 
     def message_received(self, msg):
+        print("SELF")
+        print(msg)
         if not msg.body:
             self.stop_signal.set()
             return
         body = msg.body.lookup(
             [aioxmpp.structs.LanguageRange.fromstr("*")]
         ).split("\n")
-        if "HTTP/1.0 40" in body[0]:
+        if re.match(r"HTTP/1.[0-1] 40*", body[0]):
+            print("error")
+            _LOGGER.error(f"400 HTTP Error - {body}")
             self.msg_event.data = None
-        elif "HTTP/1.0 200" in body[0]:
+        elif re.match(r"HTTP/1.[0-1] 20*", body[0]):
             self.msg_event.data = self._encryption.json_encrypt(body[-1:][0])
             if self.msg_event.data == "{}":
                 _LOGGER.error(f"Wrong body {body}")

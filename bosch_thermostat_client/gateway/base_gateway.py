@@ -231,3 +231,7 @@ class BaseGateway:
             _LOGGER.debug("Failed to check_connection: %s", err)
         uuid = self.get_info(UUID)
         return uuid
+
+    async def custom_test(self):
+        response = await self._connector.get("/gateway/uuid")
+        print(response)
