@@ -48,3 +48,8 @@ def get_custom_db(firmware_version, _db):
         if firmware_version in _db:
             return _db[firmware_version]
     return None
+
+
+def get_ivt_errors():
+    """Get error codes of IVT devices."""
+    return open_json(os.path.join(MAINPATH, "errorcodes_ivt.json"))

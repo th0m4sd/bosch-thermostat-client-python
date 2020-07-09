@@ -108,7 +108,11 @@ class BoschSingleEntity:
         self._type = _type
         self._update_initialized = False
         self._state = False
+        # self._interrupt = False
         self._extra_message = "Waiting to fetch data"
+
+    # def interrupt(self):
+    #     self._interrupt = True
 
     @property
     def connector(self):
@@ -194,6 +198,6 @@ class BoschSingleEntity:
                     self.process_results(result, key)
             self._state = True
         except DeviceException as err:
-            _LOGGER.error(f"Can't update data for {self.name} with message: {err}")
+            _LOGGER.error(f"Can't update data for {self.name}. Trying uri: {item[URI]}. Error message: {err}")
             self._state = False
             self._extra_message = f"Can't update data. Error: {err}"

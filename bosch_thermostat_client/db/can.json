@@ -92,6 +92,20 @@
                     "name": "Active Switch Program",
                     "type": "activeProgram"
                 }
+            },
+            "sensors": {
+                "heatingCurveSettingPercentage": {
+                    "id": "heatingCurveSetting/percentage",
+                    "name": "Heating Curve Setting %"
+                },
+                "holidayModeActivated": {
+                    "id": "holidayMode/activated",
+                    "name": "Holiday Mode Activated"
+                },
+                "supplyTemperatureSetpoint": {
+                    "id": "supplyTemperatureSetpoint",
+                    "name": "Supply temperature setpoint"
+                }
             }
         },
         "dhwCircuits": {
@@ -182,7 +196,8 @@
                     "name": "Active Switch Program",
                     "type": "activeProgram"
                 }
-            }
+            },
+            "sensors": {}
         },
         "sensors": {
             "outdoor_t1": {

@@ -75,8 +75,6 @@ class XMPPBaseConnector:
         pass
 
     def message_received(self, msg):
-        print("SELF")
-        print(msg)
         if not msg.body:
             self.stop_signal.set()
             return
@@ -84,7 +82,6 @@ class XMPPBaseConnector:
             [aioxmpp.structs.LanguageRange.fromstr("*")]
         ).split("\n")
         if re.match(r"HTTP/1.[0-1] 40*", body[0]):
-            print("error")
             _LOGGER.error(f"400 HTTP Error - {body}")
             self.msg_event.data = None
         elif re.match(r"HTTP/1.[0-1] 20*", body[0]):
@@ -95,7 +92,7 @@ class XMPPBaseConnector:
 
     async def get(self, path):
         data = None
-        _LOGGER.debug("Sending GET request to %s", path)
+        _LOGGER.debug("Sending GET request to %s by %s", path, id(self))
         async with self._lock:
             async with self.xmppclient.connected():
                 self.msg_event = asyncio.Event()

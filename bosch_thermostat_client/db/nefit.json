@@ -60,7 +60,8 @@
                     "name": "Heating circuit status",
                     "type": "regular"
                 }
-            }
+            },
+            "sensors": {}
         },
         "sensors": {
             "outdoor_t1": {
@@ -143,7 +144,8 @@
                     "name": "Heating circuit status",
                     "type": "regular"
                 }
-            }
+            },
+            "sensors": {}
         },
         "sensors": {
             "outdoor_t1": {

@@ -75,6 +75,36 @@
                     "name": "Heating circuit status",
                     "type": "regular"
                 }
+            },
+            "sensors": {
+                "heatCurveMax": {
+                    "id": "heatCurveMax",
+                    "name": "heatCurveMax"
+                },
+                "controlType": {
+                    "id": "controlType",
+                    "name": "controlType"
+                },
+                "roomInfluence": {
+                    "id": "roomInfluence",
+                    "name": "roomInfluence"
+                },
+                "roomTempOffset": {
+                    "id": "roomTempOffset",
+                    "name": "roomTempOffset"
+                },
+                 "suWiSwitchMode": {
+                    "id": "suWiSwitchMode",
+                    "name": "Summer Winter Switchmode"
+                },
+                "suWiThreshold": {
+                    "id": "suWiThreshold",
+                    "name": "Summer Winter Threshold"
+                },
+                "pumpModulation": {
+                    "id": "pumpModulation",
+                    "name": "Pump Modulation"
+                }
             }
         },
         "dhwCircuits": {
@@ -146,35 +176,42 @@
                     "name": "Active Switch Program",
                     "type": "activeProgram"
                 }
+            },
+            "sensors": {
+                "waterFlow": {
+                    "id": "waterFlow",
+                    "name": "Water flow"
+                },
+                "workingTime": {
+                    "id": "workingTime",
+                    "name": "Working time"
+                }
             }
         },
         "solarCircuits": {
-            "refs": {
+            "sensors": {
                 "collectorTemperature": {
                     "id": "collectorTemperature",
-                    "name": "collectorTemperature",
-                    "type": "regular"
+                    "name": "collectorTemperature"
                 },
                 "dhwTankTemperature": {
                     "id": "dhwTankTemperature",
-                    "name": "dhwTankTemperature",
-                    "type": "regular"
+                    "name": "dhwTankTemperature"
                 },
                 "solarYield": {
                     "id": "solarYield",
-                    "name": "solarYield",
-                    "type": "regular"
+                    "name": "solarYield"
                 },
                 "pumpModulation": {
                     "id": "pumpModulation",
-                    "name": "pumpModulation",
-                    "type": "regular"
+                    "name": "pumpModulation"
                 },
                 "actuatorStatus": {
                     "id": "actuatorStatus",
-                    "name": "actuatorStatus",
-                    "type": "regular"
-                },
+                    "name": "actuatorStatus"
+                }
+            },
+            "refs": {
                 "status": {
                     "id": "status",
                     "name": "status",

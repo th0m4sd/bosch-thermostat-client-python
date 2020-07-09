@@ -19,6 +19,7 @@ from bosch_thermostat_client.const import (
     ROOT_PATHS,
     SC,
     SENSORS,
+    SENSOR,
     TYPE,
     UUID,
     VALUE
@@ -60,10 +61,10 @@ class BaseGateway:
         await self._update_info(initial_db.get(GATEWAY))
         self._firmware_version = self._data[GATEWAY].get(FIRMWARE_VERSION)
         self._device = await self.get_device_model(initial_db)
-        print(self._device)
         if self._device and VALUE in self._device:
             self._db = get_db_of_firmware(self._device[TYPE], self._firmware_version)
             if self._db:
+                _LOGGER.debug(f"Loading database: {self._device[TYPE]}")
                 initial_db.pop(MODELS, None)
                 self._db.update(initial_db)
                 self._initialized = True
@@ -177,6 +178,8 @@ class BaseGateway:
             except DeviceException as err:
                 _LOGGER.debug("Circuit %s not found. Skipping it. %s", circuit, err)
                 pass
+        self.initialize_sensors()
+        supported.append(SENSOR)
         return supported
 
     async def initialize_circuits(self, circ_type):
@@ -234,4 +237,3 @@ class BaseGateway:
 
     async def custom_test(self):
         response = await self._connector.get("/gateway/uuid")
-        print(response)

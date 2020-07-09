@@ -16,10 +16,12 @@ from bosch_thermostat_client.const import (
     MODE_TO_SETPOINT,
     UNITS,
     BOSCH_NAME,
-    HA_NAME
+    HA_NAME,
+    SENSORS,
 )
 from bosch_thermostat_client.helper import BoschSingleEntity
 from bosch_thermostat_client.exceptions import DeviceException
+from bosch_thermostat_client.sensors import Sensors
 
 from .operation_mode import OperationModeHelper
 
@@ -38,6 +40,9 @@ class BasicCircuit(BoschSingleEntity):
         for key, value in self._db[REFS].items():
             uri = f"{self._main_uri}/{value[ID]}"
             self._data[key] = {RESULT: {}, URI: uri, TYPE: value[TYPE]}
+        self._sensors = Sensors(
+            connector, self._db.get(SENSORS), self._db.get(SENSORS), self._main_uri
+        )
 
     @property
     def db_json(self):
@@ -58,6 +63,10 @@ class BasicCircuit(BoschSingleEntity):
     def state(self):
         return self._state
 
+    @property
+    def sensors(self):
+        return self._sensors
+
     async def initialize(self):
         """Check each uri if return json with values."""
         await self.update_requested_key(STATUS)
@@ -76,6 +85,7 @@ class Circuit(BasicCircuit):
     def schedule(self):
         """Retrieve schedule of HC/DHW."""
         raise NotImplementedError
+
 
     @property
     def _hastates(self):

@@ -69,6 +69,32 @@
                     "name": "Active Switch Program",
                     "type": "activeProgram"
                 }
+            },
+            "sensors": {
+                "supplyTemperatureSetpoint": {
+                    "id": "supplyTemperatureSetpoint",
+                    "name": "supplyTemperatureSetpoint"
+                },
+                "suWiThreshold": {
+                    "id": "suWiThreshold",
+                    "name": "Summer Winter Threshold"
+                },
+                "switchProgramMode":{
+                    "id": "switchProgramMode",
+                    "name": "switchProgramMode"
+                },
+                "pumpModulation": {
+                    "id": "pumpModulation",
+                    "name": "Pump Modulation"
+                },
+                "suWiSwitchMode": {
+                    "id": "suWiSwitchMode",
+                    "name": "Summer Winter Switchmode"
+                },
+                "currentSuWiMode": {
+                    "id": "currentSuWiMode",
+                    "name": "Current Summer Winter Mode"
+                }
             }
         },
         "dhwCircuits": {
@@ -187,10 +213,31 @@
                     "name": "Active Switch Program",
                     "type": "activeProgram"
                 }
+            },
+            "sensors": {
+                "waterFlow": {
+                    "id": "waterFlow",
+                    "name": "Water flow"
+                },
+                "workingTime": {
+                    "id": "workingTime",
+                    "name": "Working time"
+                },
+                "charge": {
+                    "id": "charge",
+                    "name": "Charge"
+                }
             }
         },
         "solarCircuits": {
             "refs": {
+                "status": {
+                    "id": "status",
+                    "name": "status",
+                    "type": "regular"
+                }
+            },
+            "sensors": {
                 "collectorTemperature": {
                     "id": "collectorTemperature",
                     "name": "collectorTemperature",
@@ -214,11 +261,6 @@
                 "actuatorStatus": {
                     "id": "actuatorStatus",
                     "name": "actuatorStatus",
-                    "type": "regular"
-                },
-                "status": {
-                    "id": "status",
-                    "name": "status",
                     "type": "regular"
                 }
             }
@@ -287,6 +329,10 @@
             "numberOfStarts": {
                 "id": "/heatSources/numberOfStarts",
                 "name": "numberOfStarts"
+            },
+            "notifications": {
+                "id": "/notifications",
+                "name": "Notifications"
             }
         },
         "versionFirmware": "04.06.07"
