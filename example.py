@@ -41,7 +41,7 @@ async def main():
         print("=================")
         print(notification_sensor.get_data)
         print(notification_sensor.get_property("notifications"))
-        return
+        # return
         # for sensor in sensors:
         #     await sensor.update()
 
@@ -51,6 +51,8 @@ async def main():
         dhw = dhws[0]
         time.sleep(1)
         await dhw.update()
+        print(dhw.min_temp)
+        print(dhw.max_temp)
         for sensor in dhw.sensors:
             await sensor.update()
             print(sensor.state)
