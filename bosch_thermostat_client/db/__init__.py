@@ -4,7 +4,7 @@ import os
 
 from bosch_thermostat_client.const import DEFAULT
 from bosch_thermostat_client.const.nefit import NEFIT
-from bosch_thermostat_client.const.ivt import CAN, RC300
+from bosch_thermostat_client.const.ivt import CAN, NSC_ICOM_GATEWAY, RC300
 
 MAINPATH = os.path.join(os.path.dirname(__file__))
 
@@ -14,6 +14,7 @@ DEVICE_TYPES = {
     DEFAULT: "default.json",
     CAN: "can.json",
     NEFIT: "nefit.json",
+    NSC_ICOM_GATEWAY: "nsc_icom_gateway.json",
 }
 
 
