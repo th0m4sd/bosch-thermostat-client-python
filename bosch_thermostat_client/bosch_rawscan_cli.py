@@ -59,8 +59,8 @@ async def cli(ctx, host: str, token: str, password: str, protocol: str, device: 
             await scan(gateway, smallscan, output, stdout)
     elif protocol.upper() == HTTP and device.upper() == IVT:
         async with aiohttp.ClientSession() as session:
-            _LOGGER.debug("Connecting to %s with token '%s' and password '%s'", ip, token, password)
-            gateway = BoschGateway(session=asyncio.get_event_loop(),
+            _LOGGER.debug("Connecting to %s with token '%s' and password '%s'", host, token, password)
+            gateway = BoschGateway(session=session,
                                    session_type=HTTP,
                                    host=host,
                                    access_token=token,
