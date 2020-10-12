@@ -616,9 +616,9 @@
                 "id": "/system/sensors/temperatures/supply_t1",
                 "name": "Actual supply temp"
             },
-            "return": {
-                "id": "/system/sensors/temperatures/return",
-                "name": "Return temp"
+            "switch_temperature": {
+                "id": "/system/sensors/temperatures/switch",
+                "name": "Switch temp"
             },
             "healthStatus": {
                 "id": "/system/healthStatus",
