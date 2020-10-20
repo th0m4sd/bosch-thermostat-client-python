@@ -18,6 +18,7 @@ from bosch_thermostat_client.const import (
     BOSCH_NAME,
     HA_NAME,
     SENSORS,
+    SWITCH_PROGRAMS
 )
 from bosch_thermostat_client.helper import BoschSingleEntity
 from bosch_thermostat_client.exceptions import DeviceException
@@ -186,7 +187,7 @@ class Circuit(BasicCircuit):
                     return v[HA_NAME]
         return OFF
 
-    def get_activeswitchprogram(self, result=None):
+    def get_activeswitchprogram(self):
         """
         Retrieve active program from thermostat.
         If ActiveSwitch program is not present
@@ -196,6 +197,7 @@ class Circuit(BasicCircuit):
         if active_program:
             return active_program
         try:
+            result = self.get_property(SWITCH_PROGRAMS)
             return result["references"][0][ID].split("/")[-1]
         except IndexError:
             return None
@@ -230,13 +232,13 @@ class Circuit(BasicCircuit):
                 self.process_results(result, key)
             except DeviceException:
                 continue
-            if item[TYPE] == ACTIVE_PROGRAM and self._schedule:
-                active_program = self.get_activeswitchprogram(result)
-                if active_program:
-                    await self._schedule.update_schedule(active_program)
             if not self._op_mode.is_set and is_operation_type and result:
                 self._op_mode.init_op_mode(
                     self.process_results(result, key, True), item[URI]
                 )
             if key == last_item:
                 self._state = True
+        if self._schedule:
+            active_program = self.get_activeswitchprogram()
+            if active_program:
+                await self._schedule.update_schedule(active_program)

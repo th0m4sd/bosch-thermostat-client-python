@@ -44,6 +44,11 @@
                     "name": "Room temperature",
                     "type": "regular"
                 },
+                "switchPrograms": {
+                    "id": "switchPrograms",
+                    "name": "Switch Programs",
+                    "type": "regular"
+                },
                 "operation_mode": {
                     "id": "operationMode",
                     "name": "Operation mode",
@@ -381,6 +386,11 @@
                 "current_temp": {
                     "id": "roomtemperature",
                     "name": "Room temperature",
+                    "type": "regular"
+                },
+                "switchPrograms": {
+                    "id": "switchPrograms",
+                    "name": "Switch Programs",
                     "type": "regular"
                 },
                 "operation_mode": {

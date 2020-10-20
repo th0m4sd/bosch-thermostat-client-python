@@ -40,6 +40,7 @@ TIMESTAMP = "timestamp"
 REGULAR = "regular"
 AUTO = "auto"
 MANUAL = "manual"
+SWITCH_PROGRAMS = "switchPrograms"
 
 OPERATION_MODE = "operation_mode"
 VALUE = "value"

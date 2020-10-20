@@ -73,8 +73,11 @@ class Schedule:
             self._circuit_name, active_program
         )
         if SWITCHPROGRAM_MODE in self._db[REFS]:
-            switch_program_result = await self._connector.get(f"/{self._circuit_type}/{self._circuit_name}/{SWITCHPROGRAM_MODE}")
-            self._switchprogram_mode = switch_program_result.get(VALUE, LEVELS)
+            try:
+                switch_program_result = await self._connector.get(f"/{self._circuit_type}/{self._circuit_name}/{SWITCHPROGRAM_MODE}")
+                self._switchprogram_mode = switch_program_result.get(VALUE, LEVELS)
+            except DeviceException:
+                pass
         try:
             self._time = await self._time_retrieve()
             result = await self._connector.get(self._active_program_uri)
