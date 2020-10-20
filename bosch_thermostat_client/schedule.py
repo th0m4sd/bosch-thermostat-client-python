@@ -16,7 +16,13 @@ from bosch_thermostat_client.const import (
     MIN_VALUE,
     ON,
     URI,
-    ACTIVE_PROGRAM
+    ACTIVE_PROGRAM,
+    SWITCHPROGRAM_MODE,
+    LEVELS,
+    ABSOLUTE,
+    REFS,
+    DEFAULT_MAX_HC_TEMP,
+    DEFAULT_MIN_HC_TEMP
 )
 
 from bosch_thermostat_client.const.ivt import DAYOFWEEK, TIME, TEMP, SETPOINT_PROP, SWITCH_POINTS, CAN
@@ -57,6 +63,7 @@ class Schedule:
         self._bus_type = bus_type
         self._db = db
         self._op_mode = op_mode
+        self._switchprogram_mode = LEVELS
         self._schedule_found = False
 
     async def update_schedule(self, active_program):
@@ -65,6 +72,9 @@ class Schedule:
         self._active_program_uri = self._db[SWITCHPROGRAM].format(
             self._circuit_name, active_program
         )
+        if SWITCHPROGRAM_MODE in self._db[REFS]:
+            switch_program_result = await self._connector.get(f"/{self._circuit_type}/{self._circuit_name}/{SWITCHPROGRAM_MODE}")
+            self._switchprogram_mode = switch_program_result.get(VALUE, LEVELS)
         try:
             self._time = await self._time_retrieve()
             result = await self._connector.get(self._active_program_uri)
@@ -139,7 +149,7 @@ class Schedule:
         """Convert Bosch schedule to dict format."""
         for switch in switch_points:
             setpoint = switch[SETPOINT]
-            if setpoint not in self._setpoints_temp:
+            if setpoint not in self._setpoints_temp and self._switchprogram_mode == LEVELS:
                 self._setpoints_temp[setpoint] = await self._get_setpoint_temp(
                     setpoint_property, setpoint
                 )
@@ -230,13 +240,22 @@ class Schedule:
                 _prev_setpoint = switch_points[
                     switch_points.index(current_setpoint) - 1
                 ][SETPOINT]
-                return {
-                    MODE: _prev_setpoint,
-                    TEMP: self._setpoints_temp[_prev_setpoint][VALUE],
-                    MAX: self._setpoints_temp[_prev_setpoint][MAX],
-                    MIN: self._setpoints_temp[_prev_setpoint][MIN],
-                    URI: self._setpoints_temp[_prev_setpoint][URI],
-                }
+                if self._switchprogram_mode == LEVELS:
+                    return {
+                        MODE: _prev_setpoint,
+                        TEMP: self._setpoints_temp[_prev_setpoint][VALUE],
+                        MAX: self._setpoints_temp[_prev_setpoint][MAX],
+                        MIN: self._setpoints_temp[_prev_setpoint][MIN],
+                        URI: self._setpoints_temp[_prev_setpoint][URI],
+                    }
+                elif self._switchprogram_mode == ABSOLUTE:
+                    return {
+                        MODE: ABSOLUTE,
+                        TEMP: _prev_setpoint,
+                        MAX: DEFAULT_MAX_HC_TEMP,
+                        MIN: DEFAULT_MIN_HC_TEMP,
+                        URI: None
+                    }
         return {}
 
     def _get_minutes_since_midnight(self, date):

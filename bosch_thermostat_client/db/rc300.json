@@ -68,6 +68,11 @@
                     "id": "activeSwitchProgram",
                     "name": "Active Switch Program",
                     "type": "activeProgram"
+                },
+                "switchProgramMode":{
+                    "id": "switchProgramMode",
+                    "name": "switchProgramMode",
+                    "type": "switchProgramMode"
                 }
             },
             "sensors": {
@@ -78,10 +83,6 @@
                 "suWiThreshold": {
                     "id": "suWiThreshold",
                     "name": "Summer Winter Threshold"
-                },
-                "switchProgramMode":{
-                    "id": "switchProgramMode",
-                    "name": "switchProgramMode"
                 },
                 "pumpModulation": {
                     "id": "pumpModulation",
@@ -402,6 +403,11 @@
                     "name": "Heating circuit status",
                     "type": "regular"
                 },
+                "switchProgramMode":{
+                    "id": "switchProgramMode",
+                    "name": "switchProgramMode",
+                    "type": "switchProgramMode"
+                },
                 "activeProgram": {
                     "id": "activeSwitchProgram",
                     "name": "Active Switch Program",
@@ -417,10 +423,7 @@
                     "id": "suWiThreshold",
                     "name": "Summer Winter Threshold"
                 },
-                "switchProgramMode":{
-                    "id": "switchProgramMode",
-                    "name": "switchProgramMode"
-                },
+                
                 "pumpModulation": {
                     "id": "pumpModulation",
                     "name": "Pump Modulation"

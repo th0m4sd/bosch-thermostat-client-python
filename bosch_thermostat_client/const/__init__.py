@@ -57,6 +57,8 @@ ACTIVE_PROGRAM = "activeProgram"
 
 DEFAULT_MIN_TEMP = 0
 DEFAULT_MAX_TEMP = 100
+DEFAULT_MAX_HC_TEMP = 30
+DEFAULT_MIN_HC_TEMP = 5
 SETPOINT = "setpoint"
 
 DAYS = {
@@ -81,6 +83,9 @@ BOSCH_NAME = "boschname"
 
 MODE = "mode"
 SWITCHPROGRAM = "switchprogram"
+SWITCHPROGRAM_MODE = 'switchProgramMode'
+LEVELS = "levels"
+ABSOLUTE = "absolute"
 MAX = "max"
 MIN = "min"
 ON = "on"

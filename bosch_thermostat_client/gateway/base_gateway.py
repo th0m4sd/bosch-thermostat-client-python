@@ -204,20 +204,24 @@ class BaseGateway:
             rawlist.append(await deep_into(root, [], self._connector.get))
         return rawlist
 
-    async def smallscan(self, _type=HC):
+    async def smallscan(self, _type=HC, circuit_number=None):
         """Print out all info from gateway from HC1 or DHW1 only for now."""
         if _type == HC:
+            _LOGGER.info("Scanning HC1")
             refs = self._db.get(HEATING_CIRCUITS).get(REFS)
-            format_string = "hc1"
+            _main_uri = f"/{CIRCUIT_TYPES[_type]}/hc{circuit_number if circuit_number else 1}/"
         elif _type == DHW:
+            _LOGGER.info("Scanning DHW1")
             refs = self._db.get(DHW_CIRCUITS).get(REFS)
-            format_string = "dhw1"
+            _main_uri = f"/{CIRCUIT_TYPES[_type]}/dhw{circuit_number if circuit_number else 1}/"
         else:
+            _LOGGER.info("Scanning Sensors.")
             refs = self._db.get(SENSORS)
-            format_string = ""
+            _main_uri = ""
         rawlist = []
         for item in refs.values():
-            uri = item[ID].format(format_string)
+            uri = f"{_main_uri}{item[ID]}"
+            _LOGGER.info(f"Scanning {uri}")
             rawlist.append(await deep_into(uri, [], self._connector.get))
         return rawlist
 

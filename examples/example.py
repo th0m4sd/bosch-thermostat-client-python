@@ -6,6 +6,7 @@ import aiohttp
 import time
 import bosch_thermostat_client as bosch
 from bosch_thermostat_client.const.ivt import IVT, HTTP
+from bosch_thermostat_client.const import HC
 
 logging.basicConfig()
 logging.getLogger().setLevel(logging.DEBUG)
@@ -25,11 +26,11 @@ async def main():
         gateway = BoschGateway(session=session,
                                session_type=HTTP,
                                host=data[0],
-                               access_key=data[1],
+                               access_token=data[1],
                                password=data[2])
         print(await gateway.check_connection())
+        await gateway.initialize_circuits(HC)
         # await gateway.test_connection()
-        return
         # small = await gateway.smallscan(DHW_CIRCUITS)
 #        myjson = json.loads(small)
         # print(small)
@@ -38,18 +39,13 @@ async def main():
         # for sensor in sensors:
         #     await sensor.update()
 
-        dhws = gateway.dhw_circuits
-        print("DHWS", dhws)
-        return
-        dhw = dhws[0]
-        time.sleep(1)
-        await dhw.update()
-#        await hc.set_ha_mode("auto") #MEANS AUTO
- #       await hc.update()
-        # time.sleep(4)
-        print("hvac mode", dhw.ha_mode)
-        print("target temp ->", dhw.target_temperature)
-        await dhw.set_temperature(53.0)
+        hcs = gateway.heating_circuits
+        for hc in hcs:
+            time.sleep(1)
+            await hc.update()
+            print("hvac mode", hc.ha_mode)
+            print("target temp ->", hc.target_temperature)
+        # await dhw.set_temperature(53.0)
         # return
         # return
         # await dhw.set_ha_mode("performance") #MEANS MANUAL
