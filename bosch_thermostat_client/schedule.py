@@ -254,7 +254,7 @@ class Schedule:
                 elif self._switchprogram_mode == ABSOLUTE:
                     return {
                         MODE: ABSOLUTE,
-                        TEMP: _prev_setpoint,
+                        TEMP: float(_prev_setpoint),
                         MAX: DEFAULT_MAX_HC_TEMP,
                         MIN: DEFAULT_MIN_HC_TEMP,
                         URI: None
