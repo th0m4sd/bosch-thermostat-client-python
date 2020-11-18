@@ -40,23 +40,26 @@ async def cli(ctx):
 
 
 @cli.command()
-@click.option("--ip", envvar="BOSCH_IP", type=str, required=True, help="IP address of gateway")
+@click.option("--host", envvar="BOSCH_HOST", type=str, required=True, help="IP address of gateway")
 @click.option("--token", envvar="BOSCH_ACCESS_TOKEN", type=str, required=True, help="Token from sticker without dashes.")
 @click.option("--password", envvar="BOSCH_PASSWORD", type=str, required=False, help="Password you set in mobile app.")
+@click.option("--device", envvar="BOSCH_DEVICE", type=click.Choice([NEFIT, IVT], case_sensitive=False), required=True, help="Bosch device type. NEFIT or IVT.")
 @click.option("-d", "--debug", default=False, count=True)
 @click.option('--sensor', '-s', multiple=True, help="You can use multiple sensors. Possible values: %s" % sensor_list)
 @click.pass_context
 @coro
-async def sensors(ctx, ip: str, token: str, password: str, debug: int, sensor):
+async def sensors(ctx, host: str, token: str, password: str, debug: int, sensor):
     if debug:
         logging.basicConfig(level=logging.DEBUG)
         _LOGGER.info("Debug mode active")
-        _LOGGER.debug(f"Lib version is {bosch.version.__version__}")
+        _LOGGER.debug(f"Lib version is {bosch.version}")
     else:
         logging.basicConfig(level=logging.INFO)
     async with aiohttp.ClientSession() as session:
+        if device.upper() == NEFIT or device.upper() == IVT:
+            BoschGateway = bosch.gateway_chooser(device_type=device)
         gateway = bosch.Gateway(
-            session=session, host=ip, access_key=token, password=password
+            session=session, host=host, access_key=token, password=password
         )
         _LOGGER.debug("Trying to connect to gateway.")
         if await gateway.check_connection():
