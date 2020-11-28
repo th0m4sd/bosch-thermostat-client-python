@@ -199,7 +199,8 @@ class Circuit(BasicCircuit):
         try:
             result = self.get_property(SWITCH_PROGRAMS)
             return result["references"][0][ID].split("/")[-1]
-        except IndexError:
+        except (IndexError, KeyError) as err:
+            _LOGGER.debug("Error getting data from result %s. Result  %s", err, result)
             return None
 
     @property
