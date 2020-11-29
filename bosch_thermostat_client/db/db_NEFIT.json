@@ -17,6 +17,11 @@
       "value": "CT100",
       "name": "Junkers CT100",
       "type": "NEFIT"
+    },
+    "7736701040": {
+      "value": "CT100",
+      "name": "Bosch Remote room controller CT100",
+      "type": "NEFIT"
     }
   }
 }
