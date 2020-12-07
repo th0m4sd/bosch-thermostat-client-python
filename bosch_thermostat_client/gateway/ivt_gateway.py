@@ -72,8 +72,15 @@ class IVTGateway(BaseGateway):
             return model_scheme.get(CAN)
         self._bus_type = EMS
         system_info = self._data[GATEWAY].get(SYSTEM_INFO)
+        attached_devices = {}
         if system_info:
             for info in system_info:
-                model = model_scheme.get(info.get("Id", -1))
-                if model:
-                    return model
+                _id = info.get("Id", -1)
+                model = model_scheme.get(_id)
+                if model is not None:
+                    _LOGGER.debug("Found supported device %s with id %s", model, _id)
+                    attached_devices[_id] = model
+            if attached_devices:
+                found_model = attached_devices[sorted(attached_devices.keys())[0]]
+                _LOGGER.debug("Using model %s as database schema", found_model[VALUE])
+                return found_model
