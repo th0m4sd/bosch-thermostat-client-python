@@ -1,10 +1,13 @@
 """Retrieve standard data."""
+import logging
 import json
 import os
 
 from bosch_thermostat_client.const import DEFAULT
 from bosch_thermostat_client.const.nefit import NEFIT
 from bosch_thermostat_client.const.ivt import CAN, NSC_ICOM_GATEWAY, RC300
+
+_LOGGER = logging.getLogger(__name__)
 
 MAINPATH = os.path.join(os.path.dirname(__file__))
 
@@ -36,6 +39,7 @@ def get_db_of_firmware(device_type, firmware_version):
     """Get db of specific device."""
     filename = DEVICE_TYPES[device_type]
     filepath = os.path.join(MAINPATH, filename)
+    _LOGGER.debug("Attempt to load database from file %s", filepath)
     _db = open_json(filepath)
     if _db:
         if firmware_version in _db:

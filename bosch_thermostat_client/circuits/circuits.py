@@ -1,4 +1,5 @@
 """Circuits module of Bosch thermostat."""
+import logging
 from bosch_thermostat_client.const import ID, CIRCUIT_TYPES, HC, DHW, SC
 from bosch_thermostat_client.helper import BoschEntities
 from .circuit import BasicCircuit
@@ -6,6 +7,7 @@ from .ivt_circuit import IVTCircuit
 from .nefit_circuit import NefitCircuit
 from bosch_thermostat_client.const.ivt import IVT
 
+_LOGGER = logging.getLogger(__name__)
 
 def choose_circuit_type(device_type):
     return IVTCircuit if device_type == IVT else NefitCircuit
@@ -39,6 +41,7 @@ class Circuits(BoschEntities):
             return None
         db_prefix = CIRCUIT_TYPES[self._circuit_type]
         if db_prefix not in database:
+            _LOGGER.debug("Circuit not exist in database %s", db_prefix)
             return None
         circuits = await self.retrieve_from_module(1, f"/{db_prefix}")
         for circuit in circuits:
