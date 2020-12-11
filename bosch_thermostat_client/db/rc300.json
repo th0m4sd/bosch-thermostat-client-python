@@ -786,6 +786,10 @@
                 "currentSuWiMode": {
                     "id": "currentSuWiMode",
                     "name": "Current Summer Winter Mode"
+                },
+                "actualSupplyTemperature": {
+                    "id": "actualSupplyTemperature",
+                    "name": "Actual supply temperature for HC"
                 }
             }
         },
