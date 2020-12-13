@@ -6,6 +6,7 @@ import aiohttp
 import time
 import bosch_thermostat_client as bosch
 from bosch_thermostat_client.const.ivt import IVT, HTTP
+from bosch_thermostat_client.const import HC, DHW
 
 logging.basicConfig()
 logging.getLogger().setLevel(logging.DEBUG)
@@ -18,7 +19,7 @@ async def main():
     """
     
     async with aiohttp.ClientSession() as session:
-        data_file = open("data_file_sim.txt", "r")
+        data_file = open("data_file.txt", "r")
         # data_file = open("data_file.txt", "r")
         data = data_file.read().splitlines()
         BoschGateway = bosch.gateway_chooser(device_type=IVT)
@@ -28,42 +29,23 @@ async def main():
                                access_token=data[1],
                                password=data[2])
         print(await gateway.check_connection())
-        await gateway.get_capabilities()
+        await gateway.initialize_circuits(DHW)
         # await gateway.test_connection()
-        # return
         # small = await gateway.smallscan(DHW_CIRCUITS)
 #        myjson = json.loads(small)
         # print(small)
         # return
-        sensors = list(gateway.sensors)
-        notification_sensor = sensors[-1]
-        await notification_sensor.update()
-        print("=================")
-        print(notification_sensor.get_data)
-        print(notification_sensor.get_property("notifications"))
-        # return
+        # sensors = gateway.initialize_sensors()
         # for sensor in sensors:
         #     await sensor.update()
 
         dhws = gateway.dhw_circuits
-        print("DHWS", dhws)
-        # return
-        dhw = dhws[0]
-        time.sleep(1)
-        await dhw.update()
-        print(dhw.min_temp)
-        print(dhw.max_temp)
-        for sensor in dhw.sensors:
-            await sensor.update()
-            print(sensor.state)
-        # print(dhw.sensors)
-        return
-#        await hc.set_ha_mode("auto") #MEANS AUTO
- #       await hc.update()
-        # time.sleep(4)
-        print("hvac mode", dhw.ha_mode)
-        print("target temp ->", dhw.target_temperature)
-        await dhw.set_temperature(53.0)
+        for dhw in dhws:
+            time.sleep(1)
+            await dhw.update()
+            print("hvac mode", dhw.current_temp)
+            print("target temp ->", dhw.target_temperature)
+        # await dhw.set_temperature(53.0)
         # return
         # return
         # await dhw.set_ha_mode("performance") #MEANS MANUAL

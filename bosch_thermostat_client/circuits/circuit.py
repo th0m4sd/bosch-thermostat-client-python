@@ -205,7 +205,7 @@ class Circuit(BasicCircuit):
 
     @property
     def target_temperature(self):
-        """Get target temperature of Circtuit. Temporary or Room set point."""
+        """Get target temperature of Circuit. Temporary or Room set point."""
         raise NotImplementedError
 
     @property

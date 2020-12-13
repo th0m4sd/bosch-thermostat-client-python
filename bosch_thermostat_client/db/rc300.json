@@ -904,6 +904,11 @@
                     "id": "switchPrograms",
                     "name": "Active Switch Program",
                     "type": "activeProgram"
+                },
+                "switchPrograms": {
+                    "id": "switchPrograms",
+                    "name": "Switch Programs",
+                    "type": "regular"
                 }
             },
             "sensors": {
