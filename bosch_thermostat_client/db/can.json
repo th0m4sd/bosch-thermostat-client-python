@@ -102,6 +102,10 @@
                     "id": "holidayMode/activated",
                     "name": "Holiday Mode Activated"
                 },
+                "roomtemperature": {
+                    "id": "roomtemperature",
+                    "name": "Room temperature"
+                },
                 "supplyTemperatureSetpoint": {
                     "id": "supplyTemperatureSetpoint",
                     "name": "Supply temperature setpoint"
