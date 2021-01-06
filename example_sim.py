@@ -51,19 +51,20 @@ async def main():
         dhw = dhws[0]
         time.sleep(1)
         await dhw.update()
-        print(dhw.min_temp)
-        print(dhw.max_temp)
-        for sensor in dhw.sensors:
-            await sensor.update()
-            print(sensor.state)
+        print("LOW", dhw.min_temp)
+        print("MAX", dhw.max_temp)
+        # for sensor in dhw.sensors:
+        #     await sensor.update()
+        #     print(sensor.state)
         # print(dhw.sensors)
-        return
+        # return
 #        await hc.set_ha_mode("auto") #MEANS AUTO
  #       await hc.update()
         # time.sleep(4)
         print("hvac mode", dhw.ha_mode)
+        print("current temp -->", dhw.current_temp)
         print("target temp ->", dhw.target_temperature)
-        await dhw.set_temperature(53.0)
+        # await dhw.set_temperature(53.0)
         # return
         # return
         # await dhw.set_ha_mode("performance") #MEANS MANUAL

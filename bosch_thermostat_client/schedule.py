@@ -125,6 +125,7 @@ class Schedule:
         """Download temp for setpoint."""
         try:
             uri = f"{setpoint_property[ID]}/{setpoint}"
+            _LOGGER.debug("Getting setpoint for URI %s", uri)
             result = await self._connector.get(uri)
             if self._bus_type == CAN and result.get(VALUE, 0) == 1:
                 uri = f"/{self._circuit_type}/{self._circuit_name}/currentSetpoint"
@@ -133,13 +134,10 @@ class Schedule:
             _LOGGER.debug("Bug %s", err)
             if setpoint == ON and self._bus_type != CAN:
                 setpoint = "high"
-                try:
-                    result = await self._connector.get(
-                        f"{setpoint_property[ID]}/{setpoint}"
-                    )
-                except DeviceException:
-                    pass
-            pass
+                result = await self._connector.get(
+                    f"{setpoint_property[ID]}/{setpoint}"
+                )
+            raise DeviceException
         return {
             MODE: setpoint,
             VALUE: result.get(VALUE, 0),
