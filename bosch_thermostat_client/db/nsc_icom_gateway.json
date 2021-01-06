@@ -316,6 +316,11 @@
             "min_ref": "setpoint2",
             "max_ref": "setpoint2",
             "refs": {
+                "current_temp": {
+                    "id": "roomtemperature",
+                    "name": "Room temperature",
+                    "type": "regular"
+                },
                 "operation_mode": {
                     "id": "operationMode",
                     "name": "Operation mode",
