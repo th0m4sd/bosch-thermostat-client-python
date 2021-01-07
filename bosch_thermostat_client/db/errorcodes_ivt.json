@@ -245,6 +245,39 @@
       }
     ]
   },
+  "3121": {
+    "level": "Installer",
+    "title": "A32 on Circuit 1",
+    "description": "Connection terminal MC15 and MC16 not equipped with bridge or temperature limiter",
+    "alternatives": [
+      {
+        "reason": "Broken bridge or temperature sensor.",
+        "action": "The sensor must be replaced or bridged."
+      }
+    ]
+  },
+  "3122": {
+    "level": "Installer",
+    "title": "A32 on Circuit 2",
+    "description": "Connection terminal MC15 and MC16 not equipped with bridge or temperature limiter",
+    "alternatives": [
+      {
+        "reason": "Broken bridge or temperature sensor.",
+        "action": "The sensor must be replaced or bridged."
+      }
+    ]
+  },
+  "3123": {
+    "level": "Installer",
+    "title": "A32 on Circuit 3",
+    "description": "Connection terminal MC15 and MC16 not equipped with bridge or temperature limiter",
+    "alternatives": [
+      {
+        "reason": "Broken bridge or temperature sensor.",
+        "action": "The sensor must be replaced or bridged."
+      }
+    ]
+  },
   "5201": {
     "level": "Installer",
     "title": "Warning Outside temp. sensor T1 open circuit",

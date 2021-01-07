@@ -44,7 +44,7 @@ async def main():
         # return
         # for sensor in sensors:
         #     await sensor.update()
-
+        return
         dhws = gateway.dhw_circuits
         print("DHWS", dhws)
         # return
