@@ -69,7 +69,7 @@ class BaseGateway:
                 self._db.update(initial_db)
                 self._initialized = True
                 return
-            _LOGGER.error("You might have unsuporrted firmware version %s", self._firmware_version)
+            _LOGGER.error("You might have unsupported firmware version %s", self._firmware_version)
 
     def custom_initialize(self, extra_db):
         "Custom initialization of component"
