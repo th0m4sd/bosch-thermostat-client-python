@@ -9,7 +9,7 @@ with open("bosch_thermostat_client/version.py") as f:
 REQUIRES = [
     'pyaes>=1.6.1',
     'aiohttp',
-    'aioxmpp',
+    'aioxmpp>=0.12.0',
     "click>=7"
 ]
 

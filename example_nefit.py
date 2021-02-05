@@ -38,15 +38,15 @@ async def main():
     #                        host=data[0],
     #                        access_key=data[1],
     #                        password=data[2])
-    print(await gateway.rawscan())
-    # await gateway.initialize()
+    # print(await gateway.rawscan())
+    await gateway.initialize()
     # return
-    # print(f"UUID {await gateway.check_connection()}")
+    print(f"UUID {await gateway.check_connection()}")
 
     # small = await gateway.smallscan(DHW_CIRCUITS)
 #        myjson = json.loads(small)
     # print(small)
-    # return
+    return
     sensors = gateway.initialize_sensors()
     for sensor in sensors:
         await sensor.update()

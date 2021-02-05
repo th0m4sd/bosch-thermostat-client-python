@@ -25,9 +25,11 @@ class IVTXMPPConnector(XMPPBaseConnector):
 
     def _build_message(self, method, path, data=None):
         msg = aioxmpp.stanza.Message(
+            # id_=1,
             to=self._to,
             type_=aioxmpp.MessageType.CHAT,
         )
+        msg.autoset_id()
         if method == GET:
             body = "\r\r".join([
                 f'GET {path} HTTP/1.1',

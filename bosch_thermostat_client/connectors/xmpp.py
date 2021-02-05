@@ -29,6 +29,7 @@ class XMPPBaseConnector:
         self._request_timeout = 10
         self._lock = asyncio.Lock()
         self.msg_event = None
+        self.msg_fut = None
 
         identifier = self.serial_number + "@" + self.xmpp_host
         self._from = self._rrc_contact_prefix + identifier
@@ -41,6 +42,8 @@ class XMPPBaseConnector:
         self.message_dispatcher = self.xmppclient.summon(
             aioxmpp.dispatcher.SimpleMessageDispatcher
         )
+        self.register_callbacks()
+        _LOGGER.debug("Done __INIT__ function")
 
     @property
     def encryption_key(self):
@@ -85,27 +88,36 @@ class XMPPBaseConnector:
             _LOGGER.error(f"400 HTTP Error - {body}")
             self.msg_event.data = None
         elif re.match(r"HTTP/1.[0-1] 20*", body[0]):
-            self.msg_event.data = self._encryption.json_encrypt(body[-1:][0])
-            if self.msg_event.data == "{}":
+            body = self._encryption.json_encrypt(body[-1:][0])
+            if body == "{}":
                 _LOGGER.error(f"Wrong body {body}")
-        self.msg_event.set()
+                self.msg_fut.set_exception()
+            else:
+                self.msg_fut.set_result(body)
 
     async def get(self, path):
+        print("working")
         data = None
         _LOGGER.debug("Sending GET request to %s by %s", path, id(self))
         async with self._lock:
+            _LOGGER.debug("Running ASYNC with self.xmppclient.connected")
             async with self.xmppclient.connected():
-                self.msg_event = asyncio.Event()
-                self.register_callbacks()
-                await self.xmppclient.send(self._build_message(
-                    method=GET,
-                    path=path))
-                await asyncio.wait_for(self.msg_event.wait(), self._request_timeout)
-                self.unregister_callbacks()
-                if hasattr(self.msg_event, 'data'):
-                    data = self.msg_event.data
-                self.msg_event = None
-                if not data:
+                print("going inside")
+                self.msg_fut = asyncio.Future(loop=self.loop)
+                msg = self._build_message(method=GET, path=path)
+                await self.xmppclient.send(msg)
+                try:
+                # data = await self.msg_fut
+                    done = await asyncio.wait_for(self.msg_fut, self._request_timeout)
+                    if done:
+                        data = done
+                        self.msg_fut.done()
+                # print("waiting for unregister")
+                # print("next")
+                # if hasattr(self.msg_event, 'data'):
+                #     data = self.msg_event.data
+                #     print("outtt", data)
+                except asyncio.TimeoutError:
                     raise DeviceException(f"Error requesting data from {path}")
         return data
 
@@ -114,8 +126,7 @@ class XMPPBaseConnector:
         _LOGGER.debug("Sending PUT request to %s", path)
         async with self._lock:
             async with self.xmppclient.connected():
-                self.msg_event = asyncio.Event()
-                self.register_callbacks()
+                self.msg_fut = asyncio.Future(loop=self.loop)
                 await self.xmppclient.send(self._build_message(
                     method=PUT,
                     path=path,

@@ -35,9 +35,14 @@ def coro(f):
 async def cli(ctx, host: str, token: str, password: str, protocol: str, device: str, output: str, stdout: int, debug: int, smallscan: str):
     """A tool to create rawscan of Bosch thermostat."""
     if debug:
-        logging.basicConfig(level=logging.DEBUG)
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format='%(asctime)s:%(levelname)s:%(name)s:%(message)s',
+            filename="out.log",
+            filemode='a'
+        )
         _LOGGER.info("Debug mode active")
-        _LOGGER.debug(f"Lib version is {bosch.version.__version__}")
+        _LOGGER.debug(f"Lib version is {bosch.version}")
     else:
         logging.basicConfig(level=logging.INFO)
     logging.getLogger('aioxmpp').setLevel(logging.WARN)
