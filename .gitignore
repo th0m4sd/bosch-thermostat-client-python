@@ -27,6 +27,9 @@ pip-log.txt
 .python-version
 .vscode
 
+.env
+.env*
+
 # emacs auto backups
 *~
 *#

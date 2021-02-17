@@ -241,5 +241,6 @@ class BaseGateway:
         uuid = self.get_info(UUID)
         return uuid
 
-    async def custom_test(self):
-        response = await self._connector.get("/gateway/uuid")
+    async def raw_query(self, path):
+        """Run RAW query like /gateway/uuid."""
+        return await self._connector.get(path)

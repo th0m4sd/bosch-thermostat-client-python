@@ -2,3 +2,4 @@ pyaes>=1.6.1
 aiohttp
 aioxmpp>=0.12.0
 click>=7
+colorlog

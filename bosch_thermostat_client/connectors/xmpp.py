@@ -91,35 +91,29 @@ class XMPPBaseConnector:
             body = self._encryption.json_encrypt(body[-1:][0])
             if body == "{}":
                 _LOGGER.error(f"Wrong body {body}")
-                self.msg_fut.set_exception()
+                self.msg_fut.set_exception(DeviceException(""))
             else:
                 self.msg_fut.set_result(body)
 
     async def get(self, path):
-        print("working")
-        data = None
         _LOGGER.debug("Sending GET request to %s by %s", path, id(self))
+        done = None
         async with self._lock:
             _LOGGER.debug("Running ASYNC with self.xmppclient.connected")
-            async with self.xmppclient.connected():
-                print("going inside")
-                self.msg_fut = asyncio.Future(loop=self.loop)
-                msg = self._build_message(method=GET, path=path)
-                await self.xmppclient.send(msg)
-                try:
-                # data = await self.msg_fut
-                    done = await asyncio.wait_for(self.msg_fut, self._request_timeout)
+            try:
+                print("===============START=================")
+                async with self.xmppclient.connected():
+                    self.msg_fut = asyncio.Future(loop=self.loop)
+                    msg = self._build_message(method=GET, path=path)
+                    await self.xmppclient.send(msg)
+                    done = await asyncio.wait_for(self.msg_fut, self._request_timeout) 
                     if done:
-                        data = done
-                        self.msg_fut.done()
-                # print("waiting for unregister")
-                # print("next")
-                # if hasattr(self.msg_event, 'data'):
-                #     data = self.msg_event.data
-                #     print("outtt", data)
-                except asyncio.TimeoutError:
-                    raise DeviceException(f"Error requesting data from {path}")
-        return data
+                        print("DONE ====>", done)
+                        return done
+                print("==============STOP===============")
+            except (asyncio.TimeoutError, asyncio.InvalidStateError, DeviceException):
+                print("==========OUT==========")
+                raise DeviceException(f"Error requesting data from {path}")
 
     async def put(self, path, value):
         data = self._encryption.encrypt(json.dumps({"value": value}, separators=(',', ':')))
@@ -132,7 +126,6 @@ class XMPPBaseConnector:
                     path=path,
                     data=data))
                 await asyncio.wait_for(self.msg_event.wait(), self._request_timeout)
-                self.unregister_callbacks()
                 if hasattr(self.msg_event, 'data'):
                     data = self.msg_event.data
                 self.msg_event = None
