@@ -40,9 +40,7 @@ class XMPPBaseConnector:
         self.message_dispatcher = self.xmppclient.summon(
             aioxmpp.dispatcher.SimpleMessageDispatcher
         )
-        self._get_future = asyncio.Future(loop=self.loop)
-        self._put_future = asyncio.Future(loop=self.loop)
-        self._msg_to_send = None
+        self._req_future = asyncio.Future(loop=self.loop)
         self.register_callbacks()
         asyncio.create_task(self._xmpp_connect())
 
@@ -122,7 +120,7 @@ class XMPPBaseConnector:
         try:
             async with self.xmppclient.connected() as stream:
                 while True:
-                    done, pending = await asyncio.wait(self._req_future)
+                    done, pending = await asyncio.wait([self._req_future])
                     if self._req_future in done:
                         msg = self._req_future.result()
                         if not msg:
