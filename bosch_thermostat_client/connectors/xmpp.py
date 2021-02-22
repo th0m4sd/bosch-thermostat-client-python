@@ -108,9 +108,7 @@ class XMPPBaseConnector:
             self.msg_fut = asyncio.Future(loop=self.loop)
             try:
                 self._req_future.set_result(msg)
-                async with self.xmppclient.connected():
-                    await self.xmppclient.send(msg)
-                    done = await asyncio.wait_for(self.msg_fut, REQUEST_TIMEOUT)
+                done = await asyncio.wait_for(self.msg_fut, REQUEST_TIMEOUT)
             except (asyncio.TimeoutError, MsgException):
                 _LOGGER.warn("Msg exception.")
             else:
