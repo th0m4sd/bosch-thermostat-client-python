@@ -92,11 +92,15 @@ class XMPPBaseConnector:
 
     async def put(self, path, value):
         _LOGGER.debug("Sending PUT request to %s", path)
-        data = await self._request(msg=self._build_message(
-            method=PUT,
-            path=path,
-            data=self._encryption.encrypt(json.dumps({"value": value}, separators=(",", ":")))
-        ))
+        data = await self._request(
+            msg=self._build_message(
+                method=PUT,
+                path=path,
+                data=self._encryption.encrypt(
+                    json.dumps({"value": value}, separators=(",", ":"))
+                ),
+            )
+        )
         if data:
             return True
 
@@ -118,12 +122,7 @@ class XMPPBaseConnector:
         try:
             async with self.xmppclient.connected() as stream:
                 while True:
-                    done, pending = await asyncio.wait(
-                        [
-                            self._req_future
-                        ],
-                        return_when=asyncio.FIRST_COMPLETED,
-                    )
+                    done, pending = await asyncio.wait(self._req_future)
                     if self._req_future in done:
                         msg = self._req_future.result()
                         if not msg:
