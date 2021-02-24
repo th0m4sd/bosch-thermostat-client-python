@@ -85,8 +85,6 @@ class HttpConnector:
     async def put(self, path, value):
         """Send message to API with given path."""
         async with self._lock:
-            msg_to_send = json.dumps({"value": value})
-            encrypted_msg = self._encryption.encrypt(msg_to_send)
             return await self._request(
                 self._websession.put,
                 path,
