@@ -15,9 +15,6 @@ from bosch_thermostat_client.exceptions import DeviceException, ResponseExceptio
 
 _LOGGER = logging.getLogger(__name__)
 
-REQUEST_TIMEOUT = 10
-
-
 class HttpConnector:
     """HTTP connector to Bosch thermostat."""
 
