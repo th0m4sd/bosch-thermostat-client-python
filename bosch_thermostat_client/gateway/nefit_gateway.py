@@ -41,10 +41,6 @@ class NefitGateway(BaseGateway):
         self._session_type = XMPP
         super().__init__(host)
 
-    @property
-    def device_model(self):
-        return self._device.get(VALUE, "Unknown")
-
     async def _update_info(self, initial_db):
         """Update gateway info from Bosch device."""
         for name, uri in initial_db.items():

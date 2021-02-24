@@ -10,6 +10,9 @@ GATEWAY = "gateway"
 MODELS = "models"
 
 TIMEOUT = 10
+REQUEST_TIMEOUT = 3
+BODY_400 = "400Error"
+WRONG_ENCRYPTION = "WrongEncryption"
 
 USER_AGENT = "User-Agent"
 CONTENT_TYPE = "Content-Type"
@@ -92,6 +95,7 @@ MIN = "min"
 ON = "on"
 
 FIRMWARE_VERSION = "versionFirmware"
+BASE_FIRMWARE_VERSION = "versionFirmwarePath"
 
 ROOT_PATHS = ["/dhwCircuits", "/gateway", "/heatingCircuits",
               "/heatSources", "/notifications", "/system", "/solarCircuits"]

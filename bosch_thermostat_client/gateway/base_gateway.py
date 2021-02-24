@@ -22,13 +22,14 @@ from bosch_thermostat_client.const import (
     SENSOR,
     TYPE,
     UUID,
-    VALUE
+    VALUE,
+    BASE_FIRMWARE_VERSION
 )
 from bosch_thermostat_client.db import get_custom_db, get_db_of_firmware, get_initial_db
-from bosch_thermostat_client.exceptions import DeviceException
+from bosch_thermostat_client.exceptions import DeviceException, FirmwareException, UnknownDevice
 from bosch_thermostat_client.helper import deep_into
 from bosch_thermostat_client.sensors import Sensors
-
+import json
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -44,9 +45,11 @@ class BaseGateway:
         self._host = host
         self._data = {GATEWAY: {}, HC: None, DHW: None, SENSORS: None}
         self._firmware_version = None
+        self._supported_firmware = False
         self._device = None
         self._db = None
         self._initialized = None
+        self.initialization_msg = None
         self._bus_type = None
 
     def device_model(self):
@@ -62,6 +65,7 @@ class BaseGateway:
         self._firmware_version = self._data[GATEWAY].get(FIRMWARE_VERSION)
         self._device = await self.get_device_model(initial_db)
         if self._device and VALUE in self._device:
+            _LOGGER.debug("Found device %s", json.dumps(self._device))
             self._db = get_db_of_firmware(self._device[TYPE], self._firmware_version)
             if self._db:
                 _LOGGER.debug(f"Loading database: {self._device[TYPE]}")
@@ -69,7 +73,10 @@ class BaseGateway:
                 self._db.update(initial_db)
                 self._initialized = True
                 return
-            _LOGGER.error("You might have unsuporrted firmware version %s", self._firmware_version)
+            else:
+                raise FirmwareException("You might have unsuporrted firmware version %s" % self._firmware_version)
+        else:
+            raise UnknownDevice("Your device is unknown %s" % json.dumps(self._device))
 
     def custom_initialize(self, extra_db):
         "Custom initialization of component"
@@ -96,6 +103,12 @@ class BaseGateway:
         """Device friendly name based on model."""
         if self._device:
             return self._device.get(NAME)
+
+    @property
+    def device_model(self):
+        if self._device:
+            return self._device.get(VALUE, "Unknown")
+        return "Unknown"
 
     @property
     def bus_type(self):
@@ -163,6 +176,10 @@ class BaseGateway:
     @property
     def uuid(self):
         return self.get_info(UUID)
+
+    @property
+    def initialized(self):
+        return self._initialized
 
     def get_info(self, key):
         """Get gateway info given key."""
@@ -238,9 +255,22 @@ class BaseGateway:
                     self._data[GATEWAY][UUID] = response[VALUE]
         except DeviceException as err:
             _LOGGER.debug("Failed to check_connection: %s", err)
-        uuid = self.get_info(UUID)
-        return uuid
+        return self.uuid
 
     async def raw_query(self, path):
         """Run RAW query like /gateway/uuid."""
-        return await self._connector.get(path)
+        try:
+            return await self._connector.get(path)
+        except DeviceException as err:
+            _LOGGER.error(err)
+
+    async def close(self):
+        await self._connector.close()
+
+    async def check_firmware_validity(self):
+        """Run query against firmware version."""
+        fw = await self._connector.get(BASE_FIRMWARE_VERSION)
+        self._db = get_db_of_firmware(self._device[TYPE], fw)
+        if self._db:
+            return True
+        raise FirmwareException("You might have unsuporrted firmware version %s. Maybe it get updated?" % self._firmware_version)

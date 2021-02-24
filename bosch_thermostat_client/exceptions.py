@@ -17,6 +17,35 @@ class DeviceException(BoschException):
 
     pass
 
+class MsgException(BoschException):
+    """
+    Invalid request.
+
+    Unable to fulfill request.
+    Raised when host or API cannot be reached.
+    """
+
+    pass
+
+class FirmwareException(BoschException):
+    """
+    Wrong firmware version.
+
+    Unable to fulfill request.
+    Raised when host or API cannot be reached.
+    """
+
+    pass
+
+class UnknownDevice(BoschException):
+    """
+    Unknown device.
+
+    Unable to fulfill request.
+    Raised when host or API cannot be reached.
+    """
+
+    pass
 
 class ResponseException(BoschException):
     """

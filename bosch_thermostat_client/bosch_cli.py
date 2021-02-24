@@ -9,6 +9,7 @@ from bosch_thermostat_client.const.nefit import NEFIT
 import json
 import asyncio
 from functools import wraps
+import os
 
 _LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -29,6 +30,30 @@ logging.getLogger().handlers[0].setFormatter(
         },
     )
 )
+
+
+async def _scan(gateway, smallscan, output, stdout):
+    _LOGGER.info("Successfully connected to gateway. Found UUID: %s", gateway.uuid)
+    if smallscan:
+        result = await gateway.smallscan(_type=smallscan.lower())
+        out_file = output if output else f"smallscan_{gateway.uuid}.json"
+    else:
+        result = await gateway.rawscan()
+        out_file = output if output else f"rawscan_{gateway.uuid}.json"
+    if stdout:
+        click.secho(json.dumps(result, indent=4), fg='green')
+    else:
+        with open(out_file, "w") as logfile:
+            json.dump(result, logfile, indent=4)
+            _LOGGER.info("Successfully saved result to file: %s", out_file)
+            _LOGGER.debug("Job done.")
+
+
+async def _runquery(gateway, path):
+    _LOGGER.debug("Trying to connect to gateway.")
+    _LOGGER.info("Query succeed: %s", path)
+    result = await gateway.raw_query(path)
+    click.secho(json.dumps(result, indent=4, sort_keys=True), fg='green')
 
 
 def coro(f):
@@ -73,7 +98,7 @@ async def cli(ctx):
 @click.option(
     "--protocol",
     envvar="BOSCH_PROTOCOL",
-    type=click.Choice([XMPP, HTTP], case_sensitive=False),
+    type=click.Choice([XMPP, HTTP], case_sensitive=True),
     required=True,
     help="Bosch protocol. Either XMPP or HTTP.",
 )
@@ -135,64 +160,32 @@ async def scan(
     else:
         _LOGGER.error("Wrong device type.")
         return
-    if protocol.upper() == XMPP:
+    session_type = protocol.upper()
+    if session_type == XMPP:
+        session = asyncio.get_event_loop()
+    elif session_type == HTTP and device.upper() == IVT:
+        session = aiohttp.ClientSession()
+    else:
+        _LOGGER.error("Wrong protocol for this device")
+        return
+    try:
         gateway = BoschGateway(
-            session=asyncio.get_event_loop(),
+            session=session,
             session_type=XMPP,
             host=host,
             access_token=token,
             password=password,
         )
-        if await gateway.check_connection():
-            _LOGGER.info("Running scan")
-            await gateway.raw_query(path)
-    elif protocol.upper() == HTTP and device.upper() == IVT:
-        session = aiohttp.ClientSession()
-        _LOGGER.debug(
-            "Connecting to %s with token '%s' and password '%s'",
-            host,
-            token,
-            password,
-        )
-        gateway = BoschGateway(
-            session=session,
-            session_type=HTTP,
-            host=host,
-            access_token=token,
-            password=password,
-        )
+            
         _LOGGER.debug("Trying to connect to gateway.")
         if await gateway.check_connection():
             _LOGGER.info("Running scan")
             await _scan(gateway, smallscan, output, stdout)
         else:
             _LOGGER.error("Couldn't connect to gateway!")
+    finally:
+        await gateway.close()
 
-
-async def _scan(gateway, smallscan, output, stdout):
-    _LOGGER.info("Successfully connected to gateway. Found UUID: %s", gateway.uuid)
-    if smallscan:
-        result = await gateway.smallscan(smallscan)
-        out_file = output if output else f"smallscan_{gateway.uuid}.json"
-    else:
-        result = await gateway.rawscan()
-        out_file = output if output else f"rawscan_{gateway.uuid}.json"
-    if stdout:
-        click.secho(json.dumps(result, indent=4), fg='green')
-    else:
-        with open(out_file, "w") as logfile:
-            json.dump(result, logfile, indent=4)
-            _LOGGER.info("Successfully saved result to file: %s", out_file)
-            _LOGGER.debug("Job done.")
-
-async def _runquery(gateway, path):
-    _LOGGER.debug("Trying to connect to gateway.")
-    if await gateway.check_connection():
-        _LOGGER.info("Query succeed: %s", path)
-        result = await gateway.raw_query(path)
-        click.secho(json.dumps(result, indent=4, sort_keys=True), fg='green')
-    else:
-        _LOGGER.error("Couldn't connect to gateway!")
 
 @cli.command()
 @click.option(
@@ -255,23 +248,19 @@ async def query(
     protocol: str,
     device: str,
     path: str,
-    debug: int,
+    debug: int
 ):
     """Create rawscan of Bosch thermostat."""
     if debug == 0:
         logging.basicConfig(level=logging.INFO)
     if debug > 0:
-        logging.basicConfig(
-            level=logging.DEBUG,
-            format="%(asctime)s:%(levelname)s:%(name)s:%(message)s",
-        )
         _LOGGER.info("Debug mode active")
         _LOGGER.debug(f"Lib version is {bosch.version}")
     if debug > 1:
         logging.getLogger("aioxmpp").setLevel(logging.DEBUG)
         logging.getLogger("aioopenssl").setLevel(logging.DEBUG)
-        logging.getLogger("aiosasl").setLevel(logging.WARN)
-        logging.getLogger("asyncio").setLevel(logging.WARN)
+        logging.getLogger("aiosasl").setLevel(logging.DEBUG)
+        logging.getLogger("asyncio").setLevel(logging.DEBUG)
     else:
         logging.getLogger("aioxmpp").setLevel(logging.WARN)
         logging.getLogger("aioopenssl").setLevel(logging.WARN)
@@ -293,6 +282,7 @@ async def query(
     elif session_type == HTTP and device.upper() == IVT:
         session = aiohttp.ClientSession()
     else:
+        _LOGGER.error("Wrong protocol for this device")
         return
     gateway = BoschGateway(
         session=session,
@@ -302,8 +292,7 @@ async def query(
         password=password,
     )
     await _runquery(gateway, path)
-    if session_type == HTTP:
-        await session.close()
+    await gateway.close()
 
 
 if __name__ == "__main__":

@@ -11,6 +11,14 @@ from bosch_thermostat_client.const import HC, DHW
 logging.basicConfig()
 logging.getLogger().setLevel(logging.DEBUG)
 
+async def hc_circuits_test(gateway):
+    await gateway.initialize_circuits(HC)
+    hcs = gateway.heating_circuits
+    hc2 = hcs[1]
+    await hc2.update()
+    print("hvac mode", hc2.current_temp)
+    print("target temp ->", hc2.target_temperature)
+    await hc2.set_temperature(27.0)
 
 async def main():
     """
@@ -28,8 +36,9 @@ async def main():
                                host=data[0],
                                access_token=data[1],
                                password=data[2])
-        print(await gateway.check_connection())
-        await gateway.initialize_circuits(DHW)
+        await gateway.check_connection()
+        await hc_circuits_test(gateway)
+        return
         # await gateway.test_connection()
         # small = await gateway.smallscan(DHW_CIRCUITS)
 #        myjson = json.loads(small)

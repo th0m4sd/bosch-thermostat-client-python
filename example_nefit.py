@@ -6,7 +6,7 @@ import aiohttp
 import time
 import bosch_thermostat_client as bosch
 from bosch_thermostat_client.const.nefit import NEFIT
-from bosch_thermostat_client.const import XMPP
+from bosch_thermostat_client.const import XMPP, HC
 
 logging.basicConfig()
 logging.getLogger().setLevel(logging.DEBUG)
@@ -39,13 +39,13 @@ async def main():
     #                        access_key=data[1],
     #                        password=data[2])
     # print(await gateway.rawscan())
-    await gateway.initialize()
+    # await gateway.initialize()
     # return
     print(f"UUID {await gateway.check_connection()}")
 
-    # small = await gateway.smallscan(DHW_CIRCUITS)
-#        myjson = json.loads(small)
-    # print(small)
+    small = await gateway.smallscan(HC)
+    # myjson = json.loads(small)
+    print(small)
     return
     sensors = gateway.initialize_sensors()
     for sensor in sensors:

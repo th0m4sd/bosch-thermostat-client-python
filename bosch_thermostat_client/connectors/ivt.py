@@ -24,8 +24,9 @@ class IVTXMPPConnector(XMPPBaseConnector):
         super().__init__(host, loop, access_key, encryption)
 
     def _build_message(self, method, path, data=None):
+        if not path:
+            return
         msg = aioxmpp.stanza.Message(
-            # id_=1,
             to=self._to,
             type_=aioxmpp.MessageType.CHAT,
         )
@@ -34,6 +35,7 @@ class IVTXMPPConnector(XMPPBaseConnector):
             body = "\r\r".join([
                 f'GET {path} HTTP/1.1',
                 f'{USER_AGENT}: {TELEHEATER}',
+                f'Seq-No: {self._seqno}',
                 '\r\r'
             ])
         elif method == PUT and data:
@@ -42,10 +44,12 @@ class IVTXMPPConnector(XMPPBaseConnector):
                 f'{USER_AGENT}: {TELEHEATER}',
                 f'{CONTENT_TYPE}: {APP_JSON}',
                 f'Content-Length: {len(data)}',
+                f'Seq-No: {self._seqno}',
                 '',
                 data.decode('utf-8'),
-                '\r\r'
             ])
+        else:
+            return
         msg.body[None] = body
         self._seqno += 1
         return msg

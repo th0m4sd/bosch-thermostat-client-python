@@ -8,7 +8,18 @@ from bosch_thermostat_client.const.ivt import IVT, HTTP
 from bosch_thermostat_client.const import HC, DHW, XMPP
 
 logging.basicConfig()
-logging.getLogger().setLevel(logging.DEBUG)
+logging.getLogger().setLevel(logging.WARN)
+
+
+async def hc_circuits_test(gateway):
+    await gateway.initialize_circuits(HC)
+    hcs = gateway.heating_circuits
+    hc2 = hcs[1]
+    await hc2.update()
+    print("hvac mode", hc2.current_temp)
+    print("target temp ->", hc2.target_temperature)
+    await hc2.set_temperature(27.0)
+
 
 
 async def main():
@@ -25,10 +36,10 @@ async def main():
                            session_type=XMPP,
                            host=data[0],
                            access_token=data[1],
-                        #    access_key=data[2],
                            password=data[2])
-    print(await gateway.check_connection())
-    return
+    await gateway.check_connection()
+    await hc_circuits_test(gateway)
+    
         # await gateway.test_connection()
         # small = await gateway.smallscan(DHW_CIRCUITS)
 #        myjson = json.loads(small)
@@ -37,14 +48,7 @@ async def main():
         # sensors = gateway.initialize_sensors()
         # for sensor in sensors:
         #     await sensor.update()
-
-    dhws = gateway.dhw_circuits
-    for dhw in dhws:
-        time.sleep(1)
-        await dhw.update()
-        print("hvac mode", dhw.current_temp)
-        print("target temp ->", dhw.target_temperature)
-    # await dhw.set_temperature(53.0)
+    
     # return
     # return
     # await dhw.set_ha_mode("performance") #MEANS MANUAL

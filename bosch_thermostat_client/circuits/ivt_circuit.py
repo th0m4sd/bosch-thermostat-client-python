@@ -102,6 +102,9 @@ class IVTCircuit(Circuit):
         active_program_not_in_schedule = False
         if self._op_mode.is_off:
             return False
+        if target_temp == temperature:
+            _LOGGER.debug("Temperature is the same as already set. Exiting")
+            return True
         if self.min_temp < temperature < self.max_temp and target_temp != temperature:
             if self._temp_setpoint:
                 target_uri = self._data[self._temp_setpoint][URI]

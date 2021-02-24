@@ -774,7 +774,6 @@
                     "id": "suWiThreshold",
                     "name": "Summer Winter Threshold"
                 },
-                
                 "pumpModulation": {
                     "id": "pumpModulation",
                     "name": "Pump Modulation"

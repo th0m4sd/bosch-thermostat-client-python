@@ -15,6 +15,8 @@ from bosch_thermostat_client.exceptions import DeviceException, ResponseExceptio
 
 _LOGGER = logging.getLogger(__name__)
 
+REQUEST_TIMEOUT = 10
+
 
 class HttpConnector:
     """HTTP connector to Bosch thermostat."""
@@ -86,6 +88,8 @@ class HttpConnector:
     async def put(self, path, value):
         """Send message to API with given path."""
         async with self._lock:
+            msg_to_send = json.dumps({"value": value})
+            encrypted_msg = self._encryption.encrypt(msg_to_send)
             return await self._request(
                 self._websession.put,
                 path,
@@ -93,3 +97,6 @@ class HttpConnector:
                 headers=HTTP_HEADER,
                 timeout=self._request_timeout,
             )
+
+    async def close(self):
+        await self._websession.close()
