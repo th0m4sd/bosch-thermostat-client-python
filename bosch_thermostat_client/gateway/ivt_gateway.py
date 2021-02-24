@@ -1,6 +1,7 @@
 """Gateway module connecting to Bosch thermostat."""
 
 import logging
+import json
 from .base_gateway import BaseGateway
 from bosch_thermostat_client.const import (
     GATEWAY,
@@ -46,10 +47,6 @@ class IVTGateway(BaseGateway):
         )
         super().__init__(host)
 
-    @property
-    def device_model(self):
-        return self._device.get(VALUE, "Unknown")
-
     async def _update_info(self, initial_db):
         """Update gateway info from Bosch device."""
         for name, uri in initial_db.items():
@@ -84,3 +81,4 @@ class IVTGateway(BaseGateway):
                 found_model = attached_devices[sorted(attached_devices.keys())[0]]
                 _LOGGER.debug("Using model %s as database schema", found_model[VALUE])
                 return found_model
+        _LOGGER.error("I cannot find supported device. Your devices: %s", json.dumps(system_info))

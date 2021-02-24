@@ -40,10 +40,15 @@
       "name": "RC20F",
       "type": "default"
     },
+    "157": {
+      "value": "RC200",
+      "name": "RC200/CW100",
+      "type": "RC300_RC200"
+    },
     "158": {
       "value": "RC300",
       "name": "RC300/RC310/Nefit Moduline 3000",
-      "type": "RC300"
+      "type": "RC300_RC200"
     },
     "172": {
       "value": "iCom_Low_NSC_v1",

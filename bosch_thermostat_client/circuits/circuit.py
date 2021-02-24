@@ -239,7 +239,7 @@ class Circuit(BasicCircuit):
                 )
             if key == last_item:
                 self._state = True
-        if self._schedule:
+        if self.schedule:
             active_program = self.get_activeswitchprogram()
             if active_program:
-                await self._schedule.update_schedule(active_program)
+                await self.schedule.update_schedule(active_program)

@@ -75,7 +75,7 @@ class BaseEncryption:
             return decrypted
         except UnicodeDecodeError as err:
             _LOGGER.error(f"Unable to decrypt: {decrypted} with error: {err}")
-            return "{}"
+            raise EncryptionException(f"Unable to decrypt: {err}")
         except Exception as err:
             raise EncryptionException(f"Unable to decrypt: {err}")
 

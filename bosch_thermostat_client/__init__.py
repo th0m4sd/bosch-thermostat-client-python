@@ -2,8 +2,10 @@
 from .exceptions import (
     BoschException,
     DeviceException,
+    FirmwareException,
     ResponseException,
     EncryptionException,
+    MsgException
 )
 from .gateway import gateway_chooser
 

@@ -9,7 +9,7 @@ with open("bosch_thermostat_client/version.py") as f:
 REQUIRES = [
     'pyaes>=1.6.1',
     'aiohttp',
-    'aioxmpp',
+    'aioxmpp>=0.12.0',
     "click>=7"
 ]
 
@@ -44,7 +44,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "bosch_scan=bosch_thermostat_client.bosch_rawscan_cli:cli",
+            "bosch_cli=bosch_thermostat_client.bosch_cli:cli",
             "bosch_examples=bosch_thermostat_client.bosch_examples:cli"
         ]
     }

@@ -2,18 +2,24 @@
 import asyncio
 import logging
 import json
-import aiohttp
 import time
 import bosch_thermostat_client as bosch
-from bosch_thermostat_client.const.nefit import NEFIT
-from bosch_thermostat_client.const import XMPP, HC
+from bosch_thermostat_client.const.ivt import IVT, HTTP
+from bosch_thermostat_client.const import HC, DHW, XMPP
 
 logging.basicConfig()
-logging.getLogger().setLevel(logging.DEBUG)
-logging.getLogger('aioxmpp').setLevel(logging.WARN)
-logging.getLogger('aioopenssl').setLevel(logging.WARN)
-logging.getLogger('aiosasl').setLevel(logging.WARN)
-logging.getLogger('asyncio').setLevel(logging.WARN)
+logging.getLogger().setLevel(logging.WARN)
+
+
+async def hc_circuits_test(gateway):
+    await gateway.initialize_circuits(HC)
+    hcs = gateway.heating_circuits
+    hc2 = hcs[1]
+    await hc2.update()
+    print("hvac mode", hc2.current_temp)
+    print("target temp ->", hc2.target_temperature)
+    await hc2.set_temperature(27.0)
+
 
 
 async def main():
@@ -21,48 +27,28 @@ async def main():
     Provide data_file.txt with ip, access_key, password and check
     if you can retrieve data from your thermostat.
     """
-    # data_file = open("data_file_nefit_joanet.txt", "r")
-    data_file = open("data_file_nefit_pass.txt", "r")
-    # data_file = open("data_file.txt", "r")
+    
+    data_file = open("data_file_my_xmpp.txt", "r")
     data = data_file.read().splitlines()
     loop = asyncio.get_event_loop()
-    BoschGateway = bosch.gateway_chooser(device_type=NEFIT)
+    BoschGateway = bosch.gateway_chooser(device_type=IVT)
     gateway = BoschGateway(session=loop,
                            session_type=XMPP,
                            host=data[0],
                            access_token=data[1],
-                        #    access_key=data[2],
                            password=data[2])
-    # gateway = BoschGateway(session=loop,
-    #                        session_type="xmpp",
-    #                        host=data[0],
-    #                        access_key=data[1],
-    #                        password=data[2])
-    # print(await gateway.rawscan())
-    # await gateway.initialize()
-    # return
-    print(f"UUID {await gateway.check_connection()}")
-
-    small = await gateway.smallscan(HC)
-    # myjson = json.loads(small)
-    print(small)
-    return
-    sensors = gateway.initialize_sensors()
-    for sensor in sensors:
-        await sensor.update()
-    for sensor in sensors:
-        print(f"{sensor.name} : {sensor.state}")
-    await gateway.get_capabilities()
-    for hc in gateway.heating_circuits:
-        await hc.update()
-        print("hvac mode", hc.ha_mode)
-        print("target temp ->", hc.target_temperature)
-    return
+    await gateway.check_connection()
+    await hc_circuits_test(gateway)
     
-#        await hc.set_ha_mode("auto") #MEANS AUTO
-#       await hc.update()
-    # time.sleep(4)
-    await dhw.set_temperature(53.0)
+        # await gateway.test_connection()
+        # small = await gateway.smallscan(DHW_CIRCUITS)
+#        myjson = json.loads(small)
+        # print(small)
+        # return
+        # sensors = gateway.initialize_sensors()
+        # for sensor in sensors:
+        #     await sensor.update()
+    
     # return
     # return
     # await dhw.set_ha_mode("performance") #MEANS MANUAL
@@ -115,8 +101,5 @@ async def main():
         aa = aa+1
 
     # print(gateway.get_property(TYPE_INFO, UUID))
-    await loop.close()
 
-asyncio.run(main())
-
-# asyncio.get_event_loop().run_until_complete(main())
+asyncio.get_event_loop().run_until_complete(main())

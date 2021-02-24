@@ -5,7 +5,7 @@ import os
 
 from bosch_thermostat_client.const import DEFAULT
 from bosch_thermostat_client.const.nefit import NEFIT
-from bosch_thermostat_client.const.ivt import CAN, NSC_ICOM_GATEWAY, RC300
+from bosch_thermostat_client.const.ivt import CAN, NSC_ICOM_GATEWAY, RC300_RC200
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -13,7 +13,7 @@ MAINPATH = os.path.join(os.path.dirname(__file__))
 
 FILENAME = os.path.join(MAINPATH, "db.json")
 DEVICE_TYPES = {
-    RC300: "rc300.json",
+    RC300_RC200: "rc300_rc200.json",
     DEFAULT: "default.json",
     CAN: "can.json",
     NEFIT: "nefit.json",
