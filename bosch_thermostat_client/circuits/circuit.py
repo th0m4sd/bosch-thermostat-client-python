@@ -18,7 +18,7 @@ from bosch_thermostat_client.const import (
     BOSCH_NAME,
     HA_NAME,
     SENSORS,
-    SWITCH_PROGRAMS
+    SWITCH_PROGRAMS,
 )
 from bosch_thermostat_client.helper import BoschSingleEntity
 from bosch_thermostat_client.exceptions import DeviceException
@@ -86,7 +86,6 @@ class Circuit(BasicCircuit):
     def schedule(self):
         """Retrieve schedule of HC/DHW."""
         raise NotImplementedError
-
 
     @property
     def _hastates(self):

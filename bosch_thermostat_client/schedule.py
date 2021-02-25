@@ -22,10 +22,17 @@ from bosch_thermostat_client.const import (
     ABSOLUTE,
     REFS,
     DEFAULT_MAX_HC_TEMP,
-    DEFAULT_MIN_HC_TEMP
+    DEFAULT_MIN_HC_TEMP,
 )
 
-from bosch_thermostat_client.const.ivt import DAYOFWEEK, TIME, TEMP, SETPOINT_PROP, SWITCH_POINTS, CAN
+from bosch_thermostat_client.const.ivt import (
+    DAYOFWEEK,
+    TIME,
+    TEMP,
+    SETPOINT_PROP,
+    SWITCH_POINTS,
+    CAN,
+)
 from .exceptions import DeviceException
 
 _LOGGER = logging.getLogger(__name__)
@@ -74,7 +81,9 @@ class Schedule:
         )
         if SWITCHPROGRAM_MODE in self._db[REFS]:
             try:
-                switch_program_result = await self._connector.get(f"/{self._circuit_type}/{self._circuit_name}/{SWITCHPROGRAM_MODE}")
+                switch_program_result = await self._connector.get(
+                    f"/{self._circuit_type}/{self._circuit_name}/{SWITCHPROGRAM_MODE}"
+                )
                 self._switchprogram_mode = switch_program_result.get(VALUE, LEVELS)
             except DeviceException:
                 pass
@@ -150,7 +159,10 @@ class Schedule:
         """Convert Bosch schedule to dict format."""
         for switch in switch_points:
             setpoint = switch[SETPOINT]
-            if setpoint not in self._setpoints_temp and self._switchprogram_mode == LEVELS:
+            if (
+                setpoint not in self._setpoints_temp
+                and self._switchprogram_mode == LEVELS
+            ):
                 self._setpoints_temp[setpoint] = await self._get_setpoint_temp(
                     setpoint_property, setpoint
                 )
@@ -255,7 +267,7 @@ class Schedule:
                         TEMP: float(_prev_setpoint),
                         MAX: DEFAULT_MAX_HC_TEMP,
                         MIN: DEFAULT_MIN_HC_TEMP,
-                        URI: None
+                        URI: None,
                     }
         return {}
 

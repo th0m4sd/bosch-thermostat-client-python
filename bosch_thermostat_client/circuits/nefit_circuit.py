@@ -11,7 +11,7 @@ from bosch_thermostat_client.const import (
     VALUE,
     URI,
     MIN_VALUE,
-    MAX_VALUE
+    MAX_VALUE,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -30,9 +30,7 @@ class NefitCircuit(Circuit):
         if self._op_mode.is_off:
             return DEFAULT_MIN_TEMP
         else:
-            return self.get_property(self._db[MIN_REF]).get(
-                MIN_VALUE, DEFAULT_MIN_TEMP
-            )
+            return self.get_property(self._db[MIN_REF]).get(MIN_VALUE, DEFAULT_MIN_TEMP)
 
     @property
     def max_temp(self):
@@ -40,9 +38,7 @@ class NefitCircuit(Circuit):
         if self._op_mode.is_off:
             return DEFAULT_MAX_TEMP
         else:
-            return self.get_property(self._db[MAX_REF]).get(
-                MAX_VALUE, DEFAULT_MAX_TEMP
-            )
+            return self.get_property(self._db[MAX_REF]).get(MAX_VALUE, DEFAULT_MAX_TEMP)
 
     @property
     def target_temperature(self):
@@ -79,9 +75,11 @@ class NefitCircuit(Circuit):
         return False
 
     @property
+    def schedule(self):
+        """Nefit doesn't use schedule."""
+        return None
+
+    @property
     def ha_modes(self):
         """Retrieve HA modes."""
-        return [
-            v[HA_NAME]
-            for v in self._hastates
-        ]
+        return [v[HA_NAME] for v in self._hastates]

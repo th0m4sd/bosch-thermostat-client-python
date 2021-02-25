@@ -5,7 +5,7 @@ from .exceptions import (
     FirmwareException,
     ResponseException,
     EncryptionException,
-    MsgException
+    MsgException,
 )
 from .gateway import gateway_chooser
 
@@ -21,4 +21,6 @@ __all__ = [
     "DeviceException",
     "ResponseException",
     "EncryptionException",
+    "FirmwareException",
+    "MsgException",
 ]

@@ -16,7 +16,7 @@ from bosch_thermostat_client.const import (
     VALUE,
     URI,
     HA_NAME,
-    BOSCH_NAME
+    BOSCH_NAME,
 )
 from bosch_thermostat_client.const.ivt import CURRENT_SETPOINT, CAN
 from bosch_thermostat_client.schedule import Schedule

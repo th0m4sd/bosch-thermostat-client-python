@@ -5,7 +5,16 @@ from .base_gateway import BaseGateway
 
 from bosch_thermostat_client.connectors import NefitConnector
 from bosch_thermostat_client.encryption import NefitEncryption as Encryption
-from bosch_thermostat_client.const import XMPP, GATEWAY, MODELS, EMS, SYSTEM_BUS, VALUE, REFERENCES, ID
+from bosch_thermostat_client.const import (
+    XMPP,
+    GATEWAY,
+    MODELS,
+    EMS,
+    SYSTEM_BUS,
+    VALUE,
+    REFERENCES,
+    ID,
+)
 from bosch_thermostat_client.const.nefit import NEFIT, PRODUCT_ID
 from bosch_thermostat_client.exceptions import DeviceException
 
@@ -18,7 +27,16 @@ class NefitGateway(BaseGateway):
 
     device_type = NEFIT
 
-    def __init__(self, session, session_type, host, access_token, access_key=None, password=None, nefit_connector=None):
+    def __init__(
+        self,
+        session,
+        session_type,
+        host,
+        access_token,
+        access_key=None,
+        password=None,
+        nefit_connector=None,
+    ):
         """
         Initialize gateway.
 
@@ -36,7 +54,7 @@ class NefitGateway(BaseGateway):
             host=host,
             loop=session,
             access_key=self._access_token,
-            encryption=Encryption(access_key, password)
+            encryption=Encryption(access_key, password),
         )
         self._session_type = XMPP
         super().__init__(host)

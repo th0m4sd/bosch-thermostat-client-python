@@ -30,11 +30,7 @@ HC = "hc"
 NAME = "name"
 DHW = "dhw"
 SC = "sc"
-CIRCUIT_TYPES = {
-    HC: HEATING_CIRCUITS,
-    DHW: DHW_CIRCUITS,
-    SC: SOLAR_CIRCUITS
-}
+CIRCUIT_TYPES = {HC: HEATING_CIRCUITS, DHW: DHW_CIRCUITS, SC: SOLAR_CIRCUITS}
 PATH = "path"
 RESULT = "result"  # to not mismarch with value
 TYPE = "type"
@@ -87,7 +83,7 @@ BOSCH_NAME = "boschname"
 
 MODE = "mode"
 SWITCHPROGRAM = "switchprogram"
-SWITCHPROGRAM_MODE = 'switchProgramMode'
+SWITCHPROGRAM_MODE = "switchProgramMode"
 LEVELS = "levels"
 ABSOLUTE = "absolute"
 MAX = "max"
@@ -97,8 +93,15 @@ ON = "on"
 FIRMWARE_VERSION = "versionFirmware"
 BASE_FIRMWARE_VERSION = "versionFirmwarePath"
 
-ROOT_PATHS = ["/dhwCircuits", "/gateway", "/heatingCircuits",
-              "/heatSources", "/notifications", "/system", "/solarCircuits"]
+ROOT_PATHS = [
+    "/dhwCircuits",
+    "/gateway",
+    "/heatingCircuits",
+    "/heatSources",
+    "/notifications",
+    "/system",
+    "/solarCircuits",
+]
 SENSORS = "sensors"
 SENSOR = "sensor"
 VALUES = "values"

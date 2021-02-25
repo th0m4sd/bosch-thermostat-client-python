@@ -9,6 +9,7 @@ from bosch_thermostat_client.const.ivt import IVT
 
 _LOGGER = logging.getLogger(__name__)
 
+
 def choose_circuit_type(device_type):
     return IVTCircuit if device_type == IVT else NefitCircuit
 
@@ -24,7 +25,9 @@ class Circuits(BoschEntities):
         :param obj put -> put http function
         :param str circuit_type: is it HC or DHW
         """
-        self._circuit_type = circuit_type if circuit_type in CIRCUIT_TYPES.keys() else None
+        self._circuit_type = (
+            circuit_type if circuit_type in CIRCUIT_TYPES.keys() else None
+        )
         self._connector = connector
         self._bus_type = bus_type
         self._device_type = device_type
@@ -46,9 +49,7 @@ class Circuits(BoschEntities):
         circuits = await self.retrieve_from_module(1, f"/{db_prefix}")
         for circuit in circuits:
             if "references" in circuit:
-                circuit_object = self.create_circuit(
-                    circuit, database, current_date
-                )
+                circuit_object = self.create_circuit(circuit, database, current_date)
                 if circuit_object:
                     await circuit_object.initialize()
                     if circuit_object.state:
@@ -58,11 +59,20 @@ class Circuits(BoschEntities):
         """Create single circuit of given type."""
         if self._circuit_type in (HC, DHW):
             Circuit = choose_circuit_type(self._device_type)
-            return Circuit(self._connector, circuit[ID],
-                           database, self._circuit_type,
-                           self._bus_type, current_date)
+            return Circuit(
+                self._connector,
+                circuit[ID],
+                database,
+                self._circuit_type,
+                self._bus_type,
+                current_date,
+            )
         elif self._circuit_type == SC:
-            return BasicCircuit(self._connector, circuit[ID],
-                                database, self._circuit_type,
-                                self._bus_type)
+            return BasicCircuit(
+                self._connector,
+                circuit[ID],
+                database,
+                self._circuit_type,
+                self._bus_type,
+            )
         return None

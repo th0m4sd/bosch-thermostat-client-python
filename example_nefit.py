@@ -15,6 +15,13 @@ logging.getLogger('aioopenssl').setLevel(logging.WARN)
 logging.getLogger('aiosasl').setLevel(logging.WARN)
 logging.getLogger('asyncio').setLevel(logging.WARN)
 
+async def hc_circuits_test(gateway):
+    await gateway.initialize_circuits(HC)
+    hcs = gateway.heating_circuits
+    hc = hcs[0]
+    await hc.update()
+    print("hvac mode", hc.current_temp)
+    print("target temp ->", hc.target_temperature)
 
 async def main():
     """
@@ -39,7 +46,9 @@ async def main():
     #                        access_key=data[1],
     #                        password=data[2])
     # print(await gateway.rawscan())
-    # await gateway.initialize()
+    await gateway.initialize()
+    await hc_circuits_test(gateway)
+    return
     # return
     print(f"UUID {await gateway.check_connection()}")
 

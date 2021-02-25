@@ -9,7 +9,7 @@ from bosch_thermostat_client.const import (
     EMS,
     SYSTEM_BUS,
     VALUE,
-    VALUES
+    VALUES,
 )
 from bosch_thermostat_client.const.ivt import IVT, SYSTEM_INFO, CAN
 from bosch_thermostat_client.connectors import connector_ivt_chooser
@@ -25,7 +25,9 @@ class IVTGateway(BaseGateway):
 
     device_type = IVT
 
-    def __init__(self, session, session_type, host, access_token, access_key=None, password=None):
+    def __init__(
+        self, session, session_type, host, access_token, access_key=None, password=None
+    ):
         """IVT Gateway constructor
 
         Args:
@@ -43,7 +45,7 @@ class IVTGateway(BaseGateway):
             host=host,
             loop=session,
             access_key=self._access_token,
-            encryption=Encryption(access_key, password)
+            encryption=Encryption(access_key, password),
         )
         super().__init__(host)
 
@@ -81,4 +83,6 @@ class IVTGateway(BaseGateway):
                 found_model = attached_devices[sorted(attached_devices.keys())[0]]
                 _LOGGER.debug("Using model %s as database schema", found_model[VALUE])
                 return found_model
-        _LOGGER.error("I cannot find supported device. Your devices: %s", json.dumps(system_info))
+        _LOGGER.error(
+            "I cannot find supported device. Your devices: %s", json.dumps(system_info)
+        )

@@ -17,6 +17,7 @@ class DeviceException(BoschException):
 
     pass
 
+
 class MsgException(BoschException):
     """
     Invalid request.
@@ -26,6 +27,7 @@ class MsgException(BoschException):
     """
 
     pass
+
 
 class FirmwareException(BoschException):
     """
@@ -37,6 +39,7 @@ class FirmwareException(BoschException):
 
     pass
 
+
 class UnknownDevice(BoschException):
     """
     Unknown device.
@@ -46,6 +49,7 @@ class UnknownDevice(BoschException):
     """
 
     pass
+
 
 class ResponseException(BoschException):
     """

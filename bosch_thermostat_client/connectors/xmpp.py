@@ -7,8 +7,18 @@ import re
 import asyncio
 from contextlib import AsyncExitStack
 import aioxmpp
-from bosch_thermostat_client.exceptions import DeviceException, MsgException, EncryptionException
-from bosch_thermostat_client.const import GET, PUT, REQUEST_TIMEOUT, BODY_400, WRONG_ENCRYPTION
+from bosch_thermostat_client.exceptions import (
+    DeviceException,
+    MsgException,
+    EncryptionException,
+)
+from bosch_thermostat_client.const import (
+    GET,
+    PUT,
+    REQUEST_TIMEOUT,
+    BODY_400,
+    WRONG_ENCRYPTION,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -103,8 +113,8 @@ class XMPPBaseConnector:
                 if method == PUT and http_response == "HTTP/1.0 204 No Content":
                     future.set_result(True)
                 if recv_body == BODY_400:
-                    future.set_exception(MsgException(f"400 HTTP Error"))
-                elif recv_body== None and http_response == WRONG_ENCRYPTION:
+                    future.set_exception(MsgException("400 HTTP Error"))
+                elif recv_body is None and http_response == WRONG_ENCRYPTION:
                     future.set_exception(MsgException("Can't decrypt for %s" % path))
                 elif method == GET and recv_body.get("id") == path:
                     future.set_result(recv_body)
@@ -123,7 +133,6 @@ class XMPPBaseConnector:
             return data
 
     def main_listener(self, msg):
-
         def notify_error(body, response):
             if len(self.listeners) == 1:
                 for listener in self.listeners:
@@ -136,7 +145,7 @@ class XMPPBaseConnector:
             body = msg.body.lookup([aioxmpp.structs.LanguageRange.fromstr("*")]).split(
                 "\n"
             )
-        except AttributeError as err:
+        except AttributeError:
             return
         http_response = body[0]
         if re.match(r"HTTP/1.[0-1] 20*", http_response):
@@ -150,5 +159,4 @@ class XMPPBaseConnector:
             return
         if re.match(r"HTTP/1.[0-1] 40*", http_response):
             _LOGGER.info(f"400 HTTP Error - {body}")
-            notify_error(body=BODY_400,response=http_response)
-    
+            notify_error(body=BODY_400, response=http_response)

@@ -9,7 +9,6 @@ from bosch_thermostat_client.const.nefit import NEFIT
 import json
 import asyncio
 from functools import wraps
-import os
 
 _LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -41,7 +40,7 @@ async def _scan(gateway, smallscan, output, stdout):
         result = await gateway.rawscan()
         out_file = output if output else f"rawscan_{gateway.uuid}.json"
     if stdout:
-        click.secho(json.dumps(result, indent=4), fg='green')
+        click.secho(json.dumps(result, indent=4), fg="green")
     else:
         with open(out_file, "w") as logfile:
             json.dump(result, logfile, indent=4)
@@ -53,7 +52,7 @@ async def _runquery(gateway, path):
     _LOGGER.debug("Trying to connect to gateway.")
     _LOGGER.info("Query succeed: %s", path)
     result = await gateway.raw_query(path)
-    click.secho(json.dumps(result, indent=4, sort_keys=True), fg='green')
+    click.secho(json.dumps(result, indent=4, sort_keys=True), fg="green")
 
 
 def coro(f):
@@ -69,7 +68,7 @@ def coro(f):
 @coro
 async def cli(ctx):
     """A tool to run commands against Bosch thermostat."""
-    
+
     pass
 
 
@@ -176,7 +175,7 @@ async def scan(
             access_token=token,
             password=password,
         )
-            
+
         _LOGGER.debug("Trying to connect to gateway.")
         if await gateway.check_connection():
             _LOGGER.info("Running scan")
@@ -194,7 +193,7 @@ async def scan(
     type=str,
     required=True,
     help="IP address of gateway or SERIAL for XMPP",
-    show_envvar=True
+    show_envvar=True,
 )
 @click.option(
     "--token",
@@ -248,7 +247,7 @@ async def query(
     protocol: str,
     device: str,
     path: str,
-    debug: int
+    debug: int,
 ):
     """Create rawscan of Bosch thermostat."""
     if debug == 0:
@@ -272,11 +271,7 @@ async def query(
         _LOGGER.error("Wrong device type.")
         return
     session_type = protocol.upper()
-    _LOGGER.info(
-        "Connecting to %s with '%s'",
-        host,
-        session_type
-    )
+    _LOGGER.info("Connecting to %s with '%s'", host, session_type)
     if session_type == XMPP:
         session = asyncio.get_event_loop()
     elif session_type == HTTP and device.upper() == IVT:

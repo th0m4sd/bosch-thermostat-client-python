@@ -6,9 +6,9 @@ from .xmpp import XMPPBaseConnector
 
 
 class IVTXMPPConnector(XMPPBaseConnector):
-    _accesskey_prefix = 'C6u9jPue_'
-    _rrc_contact_prefix = 'contact_'
-    _rrc_gateway_prefix = 'gateway_'
+    _accesskey_prefix = "C6u9jPue_"
+    _rrc_contact_prefix = "contact_"
+    _rrc_gateway_prefix = "gateway_"
     xmpp_host = "wa2-mz36-qrmzh6.bosch.de"
 
     def __init__(self, host, loop, access_key, encryption):
@@ -32,22 +32,26 @@ class IVTXMPPConnector(XMPPBaseConnector):
         )
         msg.autoset_id()
         if method == GET:
-            body = "\r\r".join([
-                f'GET {path} HTTP/1.1',
-                f'{USER_AGENT}: {TELEHEATER}',
-                f'Seq-No: {self._seqno}',
-                '\r\r'
-            ])
+            body = "\r\r".join(
+                [
+                    f"GET {path} HTTP/1.1",
+                    f"{USER_AGENT}: {TELEHEATER}",
+                    f"Seq-No: {self._seqno}",
+                    "\r\r",
+                ]
+            )
         elif method == PUT and data:
-            body = "\r\r".join([
-                f'PUT {path} HTTP/1.1',
-                f'{USER_AGENT}: {TELEHEATER}',
-                f'{CONTENT_TYPE}: {APP_JSON}',
-                f'Content-Length: {len(data)}',
-                f'Seq-No: {self._seqno}',
-                '',
-                data.decode('utf-8'),
-            ])
+            body = "\r\r".join(
+                [
+                    f"PUT {path} HTTP/1.1",
+                    f"{USER_AGENT}: {TELEHEATER}",
+                    f"{CONTENT_TYPE}: {APP_JSON}",
+                    f"Content-Length: {len(data)}",
+                    f"Seq-No: {self._seqno}",
+                    "",
+                    data.decode("utf-8"),
+                ]
+            )
         else:
             return
         msg.body[None] = body

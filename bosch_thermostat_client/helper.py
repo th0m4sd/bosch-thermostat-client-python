@@ -16,7 +16,7 @@ from bosch_thermostat_client.const import (
     UNITS,
     STATUS,
     TIMESTAMP,
-    REFERENCES
+    REFERENCES,
 )
 from bosch_thermostat_client.const.ivt import ALLOWED_VALUES, STATE
 
@@ -133,7 +133,7 @@ class BoschSingleEntity:
                 UNITS,
                 STATUS,
                 TIMESTAMP,
-                REFERENCES
+                REFERENCES,
             ]:
                 if res_key in result:
                     if res_key in data and result[res_key] == data[res_key]:
@@ -145,7 +145,9 @@ class BoschSingleEntity:
             for state in result[STATE]:
                 for key, item in state.items():
                     if key in data:
-                        _LOGGER.error(f"This key already exists! {key}, {data[key]}, {item}. Write to developer!")
+                        _LOGGER.error(
+                            f"This key already exists! {key}, {data[key]}, {item}. Write to developer!"
+                        )
                     data[STATE + "_" + key] = item
         return data if return_data else updated
 
@@ -200,6 +202,8 @@ class BoschSingleEntity:
                     self.process_results(result, key)
             self._state = True
         except DeviceException as err:
-            _LOGGER.error(f"Can't update data for {self.name}. Trying uri: {item[URI]}. Error message: {err}")
+            _LOGGER.error(
+                f"Can't update data for {self.name}. Trying uri: {item[URI]}. Error message: {err}"
+            )
             self._state = False
             self._extra_message = f"Can't update data. Error: {err}"

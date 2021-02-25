@@ -23,13 +23,18 @@ from bosch_thermostat_client.const import (
     TYPE,
     UUID,
     VALUE,
-    BASE_FIRMWARE_VERSION
+    BASE_FIRMWARE_VERSION,
 )
 from bosch_thermostat_client.db import get_custom_db, get_db_of_firmware, get_initial_db
-from bosch_thermostat_client.exceptions import DeviceException, FirmwareException, UnknownDevice
+from bosch_thermostat_client.exceptions import (
+    DeviceException,
+    FirmwareException,
+    UnknownDevice,
+)
 from bosch_thermostat_client.helper import deep_into
 from bosch_thermostat_client.sensors import Sensors
 import json
+
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -52,9 +57,6 @@ class BaseGateway:
         self.initialization_msg = None
         self._bus_type = None
 
-    def device_model(self):
-        raise NotImplementedError
-
     def get_base_db(self):
         return get_initial_db(self.device_type)
 
@@ -74,7 +76,10 @@ class BaseGateway:
                 self._initialized = True
                 return
             else:
-                raise FirmwareException("You might have unsuporrted firmware version %s" % self._firmware_version)
+                raise FirmwareException(
+                    "You might have unsuporrted firmware version %s"
+                    % self._firmware_version
+                )
         else:
             raise UnknownDevice("Your device is unknown %s" % json.dumps(self._device))
 
@@ -203,7 +208,9 @@ class BaseGateway:
 
     async def initialize_circuits(self, circ_type):
         """Initialize circuits objects of given type (dhw/hcs)."""
-        self._data[circ_type] = Circuits(self._connector, circ_type, self._bus_type, self.device_type)
+        self._data[circ_type] = Circuits(
+            self._connector, circ_type, self._bus_type, self.device_type
+        )
         await self._data[circ_type].initialize(self._db, self.current_date)
         return self.get_circuits(circ_type)
 
@@ -228,11 +235,15 @@ class BaseGateway:
         if _type == HC:
             _LOGGER.info("Scanning HC1")
             refs = self._db.get(HEATING_CIRCUITS).get(REFS)
-            _main_uri = f"/{CIRCUIT_TYPES[_type]}/hc{circuit_number if circuit_number else 1}/"
+            _main_uri = (
+                f"/{CIRCUIT_TYPES[_type]}/hc{circuit_number if circuit_number else 1}/"
+            )
         elif _type == DHW:
             _LOGGER.info("Scanning DHW1")
             refs = self._db.get(DHW_CIRCUITS).get(REFS)
-            _main_uri = f"/{CIRCUIT_TYPES[_type]}/dhw{circuit_number if circuit_number else 1}/"
+            _main_uri = (
+                f"/{CIRCUIT_TYPES[_type]}/dhw{circuit_number if circuit_number else 1}/"
+            )
         else:
             _LOGGER.info("Scanning Sensors.")
             refs = self._db.get(SENSORS)
@@ -273,4 +284,7 @@ class BaseGateway:
         self._db = get_db_of_firmware(self._device[TYPE], fw)
         if self._db:
             return True
-        raise FirmwareException("You might have unsuporrted firmware version %s. Maybe it get updated?" % self._firmware_version)
+        raise FirmwareException(
+            "You might have unsuporrted firmware version %s. Maybe it get updated?"
+            % self._firmware_version
+        )
