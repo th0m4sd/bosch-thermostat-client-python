@@ -51,6 +51,7 @@ MODE_TO_SETPOINT = "mode_to_setpoint"
 REFS = "refs"
 HA_STATES = "hastates"
 REFERENCES = "references"
+RECORDINGS = "recordings"
 STATUS = "status"
 OFF = "off"
 ACTIVE_PROGRAM = "activeProgram"
@@ -101,6 +102,7 @@ ROOT_PATHS = [
     "/notifications",
     "/system",
     "/solarCircuits",
+    "/recordings",
 ]
 SENSORS = "sensors"
 SENSOR = "sensor"

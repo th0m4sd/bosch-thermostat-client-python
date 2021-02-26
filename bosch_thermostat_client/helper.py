@@ -2,6 +2,7 @@
 
 import re
 import logging
+from datetime import datetime, timedelta
 from bosch_thermostat_client.const import (
     ID,
     NAME,
@@ -17,6 +18,7 @@ from bosch_thermostat_client.const import (
     STATUS,
     TIMESTAMP,
     REFERENCES,
+    RECORDINGS,
 )
 from bosch_thermostat_client.const.ivt import ALLOWED_VALUES, STATE
 
@@ -25,6 +27,17 @@ from .exceptions import DeviceException, EncryptionException
 _LOGGER = logging.getLogger(__name__)
 
 HTTP_REGEX = re.compile("http://\\d+\\.\\d+\\.\\d+\\.\\d+/", re.IGNORECASE)
+
+
+def get_all_intervals():
+    yesterday = datetime.today() - timedelta(days=1)
+    ytt = yesterday.timetuple()
+    yttiso = yesterday.isocalendar()
+    return [
+        f"{ytt[0]}-{ytt[1]}-{ytt[2]}",
+        f"{ytt[0]}-{ytt[1]}",
+        f"{ytt[0]}-W{yttiso[1]}",
+    ]
 
 
 async def crawl(url, _list, deep, get, exclude=()):
@@ -51,6 +64,14 @@ async def deep_into(url, _list, get):
         new_resp = resp
         if URI in new_resp:
             new_resp[URI] = remove_all_ip_occurs(resp[URI])
+        if RECORDINGS in new_resp.get(ID, "") and REFERENCES not in new_resp:
+            intervals = get_all_intervals()
+            for ivs in intervals:
+                try:
+                    ivs_resp = await get(f"{url}?interval={ivs}")
+                    _list.append(ivs_resp)
+                except (DeviceException, EncryptionException):
+                    pass
         if ID in new_resp and new_resp[ID] == "/gateway/uuid":
             new_resp[VALUE] = "-1"
             if ALLOWED_VALUES in new_resp:
@@ -60,12 +81,12 @@ async def deep_into(url, _list, get):
                 new_resp["setpointProperty"][URI]
             )
         _list.append(resp)
-        if "references" in resp:
+        if REFERENCES in resp:
             for idx, val in enumerate(resp["references"]):
                 val2 = val
                 if URI in val2:
                     val2[URI] = remove_all_ip_occurs(val2[URI])
-                new_resp["references"][idx] = val2
+                new_resp[REFERENCES][idx] = val2
                 await deep_into(val[ID], _list, get)
     except (DeviceException, EncryptionException):
         pass

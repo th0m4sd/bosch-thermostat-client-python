@@ -120,7 +120,7 @@ async def cli(ctx):
 @click.option(
     "-s",
     "--smallscan",
-    type=click.Choice(["HC", "DHW", "SENSORS"], case_sensitive=False),
+    type=click.Choice(["HC", "DHW", "SENSORS", "RECORDINGS"], case_sensitive=False),
     help="Scan only single circuit of thermostat.",
 )
 @click.pass_context
@@ -170,7 +170,7 @@ async def scan(
     try:
         gateway = BoschGateway(
             session=session,
-            session_type=XMPP,
+            session_type=session_type,
             host=host,
             access_token=token,
             password=password,

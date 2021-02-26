@@ -24,6 +24,7 @@ from bosch_thermostat_client.const import (
     UUID,
     VALUE,
     BASE_FIRMWARE_VERSION,
+    RECORDINGS,
 )
 from bosch_thermostat_client.db import get_custom_db, get_db_of_firmware, get_initial_db
 from bosch_thermostat_client.exceptions import (
@@ -232,6 +233,7 @@ class BaseGateway:
 
     async def smallscan(self, _type=HC, circuit_number=None):
         """Print out all info from gateway from HC1 or DHW1 only for now."""
+        rawlist = []
         if _type == HC:
             _LOGGER.info("Scanning HC1")
             refs = self._db.get(HEATING_CIRCUITS).get(REFS)
@@ -244,11 +246,15 @@ class BaseGateway:
             _main_uri = (
                 f"/{CIRCUIT_TYPES[_type]}/dhw{circuit_number if circuit_number else 1}/"
             )
+        elif _type == RECORDINGS:
+            _LOGGER.info("Scanning recordings.")
+            _main_uri = f"/{RECORDINGS}"
+            rawlist.append(await deep_into(_main_uri, [], self._connector.get))
+            return rawlist
         else:
             _LOGGER.info("Scanning Sensors.")
             refs = self._db.get(SENSORS)
             _main_uri = ""
-        rawlist = []
         for item in refs.values():
             uri = f"{_main_uri}{item[ID]}"
             _LOGGER.info(f"Scanning {uri}")
