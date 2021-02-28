@@ -109,3 +109,4 @@ SENSOR = "sensor"
 VALUES = "values"
 
 SYSTEM_BUS = "systemBus"
+WRITABLE = "writeable"

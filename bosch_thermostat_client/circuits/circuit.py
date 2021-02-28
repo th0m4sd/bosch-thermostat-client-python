@@ -5,6 +5,7 @@ from bosch_thermostat_client.const import (
     CURRENT_TEMP,
     OPERATION_MODE,
     REFS,
+    REFERENCES,
     HA_STATES,
     STATUS,
     TYPE,
@@ -127,6 +128,10 @@ class Circuit(BasicCircuit):
     def _temp_setpoint(self):
         return self._op_mode.temp_setpoint()
 
+    @property
+    def support_presets(self):
+        return False
+
     async def set_ha_mode(self, ha_mode):
         """Helper to set operation mode."""
         old_setpoint = self._temp_setpoint
@@ -197,7 +202,7 @@ class Circuit(BasicCircuit):
             return active_program
         try:
             result = self.get_property(SWITCH_PROGRAMS)
-            return result["references"][0][ID].split("/")[-1]
+            return result[REFERENCES][0][ID].split("/")[-1]
         except (IndexError, KeyError) as err:
             _LOGGER.debug("Error getting data from result %s. Result  %s", err, result)
             return None

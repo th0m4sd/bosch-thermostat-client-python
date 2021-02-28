@@ -19,6 +19,7 @@ from bosch_thermostat_client.const import (
     TIMESTAMP,
     REFERENCES,
     RECORDINGS,
+    WRITABLE,
 )
 from bosch_thermostat_client.const.ivt import ALLOWED_VALUES, STATE
 
@@ -155,6 +156,7 @@ class BoschSingleEntity:
                 STATUS,
                 TIMESTAMP,
                 REFERENCES,
+                WRITABLE,
             ]:
                 if res_key in result:
                     if res_key in data and result[res_key] == data[res_key]:

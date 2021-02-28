@@ -1,6 +1,6 @@
 """Circuits module of Bosch thermostat."""
 import logging
-from bosch_thermostat_client.const import ID, CIRCUIT_TYPES, HC, DHW, SC
+from bosch_thermostat_client.const import ID, CIRCUIT_TYPES, HC, DHW, SC, REFERENCES
 from bosch_thermostat_client.helper import BoschEntities
 from .circuit import BasicCircuit
 from .ivt_circuit import IVTCircuit
@@ -48,7 +48,7 @@ class Circuits(BoschEntities):
             return None
         circuits = await self.retrieve_from_module(1, f"/{db_prefix}")
         for circuit in circuits:
-            if "references" in circuit:
+            if REFERENCES in circuit:
                 circuit_object = self.create_circuit(circuit, database, current_date)
                 if circuit_object:
                     await circuit_object.initialize()

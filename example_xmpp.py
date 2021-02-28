@@ -17,7 +17,9 @@ async def hc_circuits_test(gateway):
     await hc2.update()
     print("hvac mode", hc2.current_temp)
     print("target temp ->", hc2.target_temperature)
-    await hc2.set_temperature(27.0)
+    print("ACTIVE PROGRAM", hc2.preset_modes)
+    print("ACTIVE PROGRAM", hc2.preset_mode)
+    await hc2.set_preset_mode("A")
 
 
 async def main():
@@ -37,9 +39,9 @@ async def main():
         access_token=data[1],
         password=data[2],
     )
-    # await gateway.check_connection()
-    await gateway.smallscan(_type=RECORDINGS)
-    # await hc_circuits_test(gateway)
+    await gateway.check_connection()
+    # await gateway.smallscan(_type=RECORDINGS)
+    await hc_circuits_test(gateway)
 
     # await gateway.test_connection()
     # small = await gateway.smallscan(DHW_CIRCUITS)

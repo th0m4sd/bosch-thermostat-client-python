@@ -17,8 +17,16 @@ from bosch_thermostat_client.const import (
     URI,
     HA_NAME,
     BOSCH_NAME,
+    REFERENCES,
+    SWITCH_PROGRAMS,
+    ID,
+    WRITABLE,
 )
-from bosch_thermostat_client.const.ivt import CURRENT_SETPOINT, CAN
+from bosch_thermostat_client.const.ivt import (
+    CURRENT_SETPOINT,
+    CAN,
+    ALLOWED_VALUES,
+)
 from bosch_thermostat_client.schedule import Schedule
 
 _LOGGER = logging.getLogger(__name__)
@@ -41,6 +49,12 @@ class IVTCircuit(Circuit):
     def schedule(self):
         """Retrieve schedule of HC/DHW."""
         return self._schedule
+
+    @property
+    def support_presets(self):
+        if self._op_mode.is_auto:
+            return True
+        return False
 
     @property
     def setpoint(self):
@@ -168,3 +182,31 @@ class IVTCircuit(Circuit):
             for v in self._hastates
             if any(x in self._op_mode.available_modes for x in v[BOSCH_NAME])
         ]
+
+    @property
+    def preset_modes(self):
+        active_programs = self.get_property(ACTIVE_PROGRAM).get(ALLOWED_VALUES, [])
+        if active_programs:
+            return active_programs
+        result = self.get_property(SWITCH_PROGRAMS)
+        return [result[REFERENCES][0][ID].split("/")[-1]]
+
+    @property
+    def preset_mode(self):
+        return self.get_activeswitchprogram()
+
+    async def set_preset_mode(self, preset_mode):
+        act_program = self._data.get(ACTIVE_PROGRAM, {})
+        active_program_uri = act_program[URI]
+        active_program = act_program.get(RESULT, {})
+        allowed_presets = active_program.get(ALLOWED_VALUES, [])
+        if (
+            preset_mode in allowed_presets
+            and active_program.get(WRITABLE, False)
+            and active_program.get(VALUE) != preset_mode
+        ):
+            result = await self._connector.put(active_program_uri, preset_mode)
+            await self.update_requested_key(ACTIVE_PROGRAM)
+            new_program = self.get_activeswitchprogram()
+            await self._schedule.update_schedule(new_program)
+            return result
