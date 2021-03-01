@@ -4,3 +4,15 @@ MAGIC_NEFIT = bytearray.fromhex(
 NEFIT = "NEFIT"
 PRODUCT_ID = "productID"
 NEFITEASY = "NefitEasy"
+
+ROOT_PATHS = [
+    "/dhwCircuits",
+    "/gateway",
+    "/heatingCircuits",
+    "/heatSources",
+    "/notifications",
+    "/system",
+    "/solarCircuits",
+    "/recordings",
+    "/ecus",
+]

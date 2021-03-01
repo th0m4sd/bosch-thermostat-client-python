@@ -15,7 +15,8 @@ from bosch_thermostat_client.const import (
     REFERENCES,
     ID,
 )
-from bosch_thermostat_client.const.nefit import NEFIT, PRODUCT_ID
+from bosch_thermostat_client.const.nefit import NEFIT, PRODUCT_ID, ROOT_PATHS
+from bosch_thermostat_client.helper import deep_into
 from bosch_thermostat_client.exceptions import DeviceException
 
 
@@ -71,6 +72,13 @@ class NefitGateway(BaseGateway):
             except DeviceException as err:
                 _LOGGER.debug("Can't fetch data for update_info %s", err)
                 pass
+
+    async def rawscan(self):
+        """Print out all info from gateway."""
+        rawlist = []
+        for root in ROOT_PATHS:
+            rawlist.append(await deep_into(root, [], self._connector.get))
+        return rawlist
 
     async def get_device_model(self, _db):
         """Find device model."""

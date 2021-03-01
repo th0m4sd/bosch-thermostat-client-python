@@ -1,0 +1,4689 @@
+[
+    [
+        {
+            "id": "/dhwCircuits",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/dhwCircuits/dhwA"
+                }
+            ]
+        },
+        {
+            "id": "/dhwCircuits/dhwA",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/dhwCircuits/dhwA/dhwCurrentSwitchpoint"
+                },
+                {
+                    "id": "/dhwCircuits/dhwA/dhwNextSwitchpoint"
+                },
+                {
+                    "id": "/dhwCircuits/dhwA/dhwOffDuringAbsence"
+                },
+                {
+                    "id": "/dhwCircuits/dhwA/dhwOffDuringNight"
+                },
+                {
+                    "id": "/dhwCircuits/dhwA/dhwOperationClockMode"
+                },
+                {
+                    "id": "/dhwCircuits/dhwA/dhwOperationManualMode"
+                },
+                {
+                    "id": "/dhwCircuits/dhwA/dhwOperationMode"
+                },
+                {
+                    "id": "/dhwCircuits/dhwA/dhwOperationState"
+                },
+                {
+                    "id": "/dhwCircuits/dhwA/dhwOperationType"
+                },
+                {
+                    "id": "/dhwCircuits/dhwA/dhwProgram0"
+                },
+                {
+                    "id": "/dhwCircuits/dhwA/dhwProgram1"
+                },
+                {
+                    "id": "/dhwCircuits/dhwA/dhwProgram2"
+                },
+                {
+                    "id": "/dhwCircuits/dhwA/extraDhw"
+                },
+                {
+                    "id": "/dhwCircuits/dhwA/hotWaterSystem"
+                },
+                {
+                    "id": "/dhwCircuits/dhwA/thermaldesinfect"
+                }
+            ]
+        },
+        {
+            "id": "/dhwCircuits/dhwA/dhwCurrentSwitchpoint",
+            "type": "DhwProgram",
+            "recordable": 0,
+            "writeable": 0,
+            "value": [
+                {
+                    "d": "Mo",
+                    "t": 1020,
+                    "active": "on",
+                    "dhw": "on"
+                }
+            ]
+        },
+        {
+            "id": "/dhwCircuits/dhwA/dhwNextSwitchpoint",
+            "type": "DhwProgram",
+            "recordable": 0,
+            "writeable": 0,
+            "value": []
+        },
+        {
+            "id": "/dhwCircuits/dhwA/dhwOffDuringAbsence",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "true"
+        },
+        {
+            "id": "/dhwCircuits/dhwA/dhwOffDuringNight",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "true"
+        },
+        {
+            "id": "/dhwCircuits/dhwA/dhwOperationClockMode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "on"
+        },
+        {
+            "id": "/dhwCircuits/dhwA/dhwOperationManualMode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "on"
+        },
+        {
+            "id": "/dhwCircuits/dhwA/dhwOperationMode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "comfort"
+        },
+        {
+            "id": "/dhwCircuits/dhwA/dhwOperationState",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "on"
+        },
+        {
+            "id": "/dhwCircuits/dhwA/dhwOperationType",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "follow ch"
+        },
+        {
+            "id": "/dhwCircuits/dhwA/dhwProgram0",
+            "type": "DhwProgram",
+            "recordable": 0,
+            "writeable": 1,
+            "value": [
+                {
+                    "d": "Su",
+                    "t": 480,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Su",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Mo",
+                    "t": 420,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Mo",
+                    "t": 540,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Mo",
+                    "t": 1020,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Mo",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Mo",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Mo",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Tu",
+                    "t": 420,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Tu",
+                    "t": 540,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Tu",
+                    "t": 1020,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Tu",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Tu",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Tu",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "We",
+                    "t": 420,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "We",
+                    "t": 540,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "We",
+                    "t": 1020,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "We",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "We",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "We",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Th",
+                    "t": 420,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Th",
+                    "t": 540,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Th",
+                    "t": 1020,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Th",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Th",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Th",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Fr",
+                    "t": 420,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Fr",
+                    "t": 540,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Fr",
+                    "t": 1020,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Fr",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Fr",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Fr",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Sa",
+                    "t": 480,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Sa",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                }
+            ]
+        },
+        {
+            "id": "/dhwCircuits/dhwA/dhwProgram1",
+            "type": "DhwProgram",
+            "recordable": 0,
+            "writeable": 1,
+            "value": [
+                {
+                    "d": "Su",
+                    "t": 480,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Su",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Mo",
+                    "t": 420,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Mo",
+                    "t": 540,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Mo",
+                    "t": 1020,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Mo",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Mo",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Mo",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Tu",
+                    "t": 420,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Tu",
+                    "t": 540,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Tu",
+                    "t": 1020,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Tu",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Tu",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Tu",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "We",
+                    "t": 420,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "We",
+                    "t": 540,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "We",
+                    "t": 1020,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "We",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "We",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "We",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Th",
+                    "t": 420,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Th",
+                    "t": 540,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Th",
+                    "t": 1020,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Th",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Th",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Th",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Fr",
+                    "t": 420,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Fr",
+                    "t": 540,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Fr",
+                    "t": 1020,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Fr",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Fr",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Fr",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Sa",
+                    "t": 480,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Sa",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                }
+            ]
+        },
+        {
+            "id": "/dhwCircuits/dhwA/dhwProgram2",
+            "type": "DhwProgram",
+            "recordable": 0,
+            "writeable": 1,
+            "value": [
+                {
+                    "d": "Su",
+                    "t": 420,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Su",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Mo",
+                    "t": 420,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Mo",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Mo",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Mo",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Mo",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Mo",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Tu",
+                    "t": 420,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Tu",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Tu",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Tu",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Tu",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Tu",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "We",
+                    "t": 420,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "We",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "We",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "We",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "We",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "We",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Th",
+                    "t": 420,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Th",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Th",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Th",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Th",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Th",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Fr",
+                    "t": 420,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Fr",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Fr",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Fr",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Fr",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Fr",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Sa",
+                    "t": 420,
+                    "active": "on",
+                    "dhw": "on"
+                },
+                {
+                    "d": "Sa",
+                    "t": 1380,
+                    "active": "on",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "active": "off",
+                    "dhw": "off"
+                }
+            ]
+        },
+        {
+            "id": "/dhwCircuits/dhwA/extraDhw",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/dhwCircuits/dhwA/extraDhw/duration"
+                },
+                {
+                    "id": "/dhwCircuits/dhwA/extraDhw/status"
+                },
+                {
+                    "id": "/dhwCircuits/dhwA/extraDhw/supported"
+                }
+            ]
+        },
+        {
+            "id": "/dhwCircuits/dhwA/extraDhw/duration",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 20,
+            "unitOfMeasure": "Min",
+            "minValue": 5,
+            "maxValue": 60
+        },
+        {
+            "id": "/dhwCircuits/dhwA/extraDhw/status",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/dhwCircuits/dhwA/extraDhw/supported",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "false"
+        },
+        {
+            "id": "/dhwCircuits/dhwA/hotWaterSystem",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": 3,
+            "unitOfMeasure": "",
+            "minValue": 0,
+            "maxValue": 4
+        },
+        {
+            "id": "/dhwCircuits/dhwA/thermaldesinfect",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/dhwCircuits/dhwA/thermaldesinfect/lastresult"
+                },
+                {
+                    "id": "/dhwCircuits/dhwA/thermaldesinfect/state"
+                },
+                {
+                    "id": "/dhwCircuits/dhwA/thermaldesinfect/time"
+                },
+                {
+                    "id": "/dhwCircuits/dhwA/thermaldesinfect/weekday"
+                }
+            ]
+        },
+        {
+            "id": "/dhwCircuits/dhwA/thermaldesinfect/lastresult",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "Done"
+        },
+        {
+            "id": "/dhwCircuits/dhwA/thermaldesinfect/state",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "on"
+        },
+        {
+            "id": "/dhwCircuits/dhwA/thermaldesinfect/time",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 60,
+            "unitOfMeasure": "Min",
+            "minValue": 0,
+            "maxValue": 1440
+        },
+        {
+            "id": "/dhwCircuits/dhwA/thermaldesinfect/weekday",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "Su"
+        }
+    ],
+    [
+        {
+            "id": "/gateway",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/gateway/brand"
+                },
+                {
+                    "id": "/gateway/brandID"
+                },
+                {
+                    "id": "/gateway/installerenabled"
+                },
+                {
+                    "id": "/gateway/installerpassword"
+                },
+                {
+                    "id": "/gateway/outdoor"
+                },
+                {
+                    "id": "/gateway/productID"
+                },
+                {
+                    "id": "/gateway/remoteServicesPassword"
+                },
+                {
+                    "id": "/gateway/remote"
+                },
+                {
+                    "id": "/gateway/serialnumber"
+                },
+                {
+                    "id": "/gateway/softreset"
+                },
+                {
+                    "id": "/gateway/time"
+                },
+                {
+                    "id": "/gateway/update"
+                },
+                {
+                    "id": "/gateway/userpassword"
+                },
+                {
+                    "id": "/gateway/uuid"
+                },
+                {
+                    "id": "/gateway/versionFirmware"
+                },
+                {
+                    "id": "/gateway/versionHardware"
+                },
+                {
+                    "id": "/gateway/wifi"
+                }
+            ]
+        },
+        {
+            "id": "/gateway/brand",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "Bosch"
+        },
+        {
+            "id": "/gateway/brandID",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "0x1"
+        },
+        {
+            "id": "/gateway/installerenabled",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 0,
+            "unitOfMeasure": "Min",
+            "minValue": 0,
+            "maxValue": 120
+        },
+        {
+            "id": "/gateway/outdoor",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/gateway/outdoor/sensor"
+                },
+                {
+                    "id": "/gateway/outdoor/source"
+                }
+            ]
+        },
+        {
+            "id": "/gateway/outdoor/sensor",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "no"
+        },
+        {
+            "id": "/gateway/outdoor/source",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "current region temp"
+        },
+        {
+            "id": "/gateway/productID",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "7736701042"
+        },
+        {
+            "id": "/gateway/remoteServicesPassword",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "MA3Hg7VgKju4EtPm"
+        },
+        {
+            "id": "/gateway/remote",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/gateway/remote/emsread"
+                },
+                {
+                    "id": "/gateway/remote/emswrite"
+                },
+                {
+                    "id": "/gateway/remote/fdlogger"
+                },
+                {
+                    "id": "/gateway/remote/installername"
+                },
+                {
+                    "id": "/gateway/remote/invalidate"
+                },
+                {
+                    "id": "/gateway/remote/servicestate"
+                },
+                {
+                    "id": "/gateway/remote/sid"
+                },
+                {
+                    "id": "/gateway/remote/sidexptime"
+                },
+                {
+                    "id": "/gateway/remote/tempsid"
+                },
+                {
+                    "id": "/gateway/remote/tempsidexptime"
+                }
+            ]
+        },
+        {
+            "id": "/gateway/remote/installername",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": ""
+        },
+        {
+            "id": "/gateway/remote/servicestate",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "Remote service requested"
+        },
+        {
+            "id": "/gateway/remote/sid",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": ""
+        },
+        {
+            "id": "/gateway/remote/sidexptime",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "1970-01-01T00:00:00"
+        },
+        {
+            "id": "/gateway/remote/tempsid",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "DAF911"
+        },
+        {
+            "id": "/gateway/remote/tempsidexptime",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "2021-03-04T11:25:29"
+        },
+        {
+            "id": "/gateway/serialnumber",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "37206189116457736701042"
+        },
+        {
+            "id": "/gateway/time",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/gateway/time/current"
+                },
+                {
+                    "id": "/gateway/time/dst"
+                },
+                {
+                    "id": "/gateway/time/status"
+                },
+                {
+                    "id": "/gateway/time/summertime"
+                },
+                {
+                    "id": "/gateway/time/timestamp"
+                },
+                {
+                    "id": "/gateway/time/timezone"
+                },
+                {
+                    "id": "/gateway/time/timezoneUTCoffset"
+                },
+                {
+                    "id": "/gateway/time/wintertime"
+                }
+            ]
+        },
+        {
+            "id": "/gateway/time/current",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "2021-03-01T19:40:29+00:00 Mo"
+        },
+        {
+            "id": "/gateway/time/dst",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "false"
+        },
+        {
+            "id": "/gateway/time/status",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "configured"
+        },
+        {
+            "id": "/gateway/time/summertime",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "2021-03-28T02:00:00"
+        },
+        {
+            "id": "/gateway/time/timestamp",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "2021-03-01T17:24:34"
+        },
+        {
+            "id": "/gateway/time/timezone",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "Europe/Vilnius"
+        },
+        {
+            "id": "/gateway/time/timezoneUTCoffset",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "+00:00"
+        },
+        {
+            "id": "/gateway/time/wintertime",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "2021-10-31T03:00:00"
+        },
+        {
+            "id": "/gateway/update",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/gateway/update/lastcheck"
+                },
+                {
+                    "id": "/gateway/update/request"
+                },
+                {
+                    "id": "/gateway/update/strategy"
+                }
+            ]
+        },
+        {
+            "id": "/gateway/update/lastcheck",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "2021-03-01T01:26:53"
+        },
+        {
+            "id": "/gateway/update/strategy",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "automatic"
+        },
+        {
+            "id": "/gateway/uuid",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "-1"
+        },
+        {
+            "id": "/gateway/versionFirmware",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "02.21.00"
+        },
+        {
+            "id": "/gateway/versionHardware",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "4"
+        },
+        {
+            "id": "/gateway/wifi",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/gateway/wifi/status"
+                },
+                {
+                    "id": "/gateway/wifi/update"
+                },
+                {
+                    "id": "/gateway/wifi/versionFirmware"
+                }
+            ]
+        },
+        {
+            "id": "/gateway/wifi/status",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "configured"
+        },
+        {
+            "id": "/gateway/wifi/update",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/gateway/wifi/update/address"
+                },
+                {
+                    "id": "/gateway/wifi/update/dir"
+                },
+                {
+                    "id": "/gateway/wifi/update/file"
+                },
+                {
+                    "id": "/gateway/wifi/update/mode"
+                },
+                {
+                    "id": "/gateway/wifi/update/password"
+                },
+                {
+                    "id": "/gateway/wifi/update/port"
+                },
+                {
+                    "id": "/gateway/wifi/update/request"
+                },
+                {
+                    "id": "/gateway/wifi/update/timeout"
+                },
+                {
+                    "id": "/gateway/wifi/update/user"
+                }
+            ]
+        },
+        {
+            "id": "/gateway/wifi/update/address",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "198.175.253.161"
+        },
+        {
+            "id": "/gateway/wifi/update/dir",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "public"
+        },
+        {
+            "id": "/gateway/wifi/update/file",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "wifly-GSX.img"
+        },
+        {
+            "id": "/gateway/wifi/update/mode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "passive"
+        },
+        {
+            "id": "/gateway/wifi/update/password",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "Pass123"
+        },
+        {
+            "id": "/gateway/wifi/update/port",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 21,
+            "unitOfMeasure": "",
+            "minValue": 0,
+            "maxValue": 65535
+        },
+        {
+            "id": "/gateway/wifi/update/timeout",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 80,
+            "unitOfMeasure": "",
+            "minValue": 0,
+            "maxValue": 80
+        },
+        {
+            "id": "/gateway/wifi/update/user",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "roving"
+        },
+        {
+            "id": "/gateway/wifi/versionFirmware",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "4.00"
+        }
+    ],
+    [
+        {
+            "id": "/heatingCircuits",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/heatingCircuits/hc1"
+                }
+            ]
+        },
+        {
+            "id": "/heatingCircuits/hc1",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/heatingCircuits/hc1/actualSupplyTemperature"
+                },
+                {
+                    "id": "/heatingCircuits/hc1/control"
+                },
+                {
+                    "id": "/heatingCircuits/hc1/holidayMode"
+                },
+                {
+                    "id": "/heatingCircuits/hc1/manualTempOverride"
+                },
+                {
+                    "id": "/heatingCircuits/hc1/operationMode"
+                },
+                {
+                    "id": "/heatingCircuits/hc1/pband"
+                },
+                {
+                    "id": "/heatingCircuits/hc1/powerSetpoint"
+                },
+                {
+                    "id": "/heatingCircuits/hc1/roomtemperature"
+                },
+                {
+                    "id": "/heatingCircuits/hc1/supplyTemperatureSetpoint"
+                },
+                {
+                    "id": "/heatingCircuits/hc1/temperatureAdjustment"
+                },
+                {
+                    "id": "/heatingCircuits/hc1/temperatureRoomManual"
+                },
+                {
+                    "id": "/heatingCircuits/hc1/temperatureRoomSetpoint"
+                },
+                {
+                    "id": "/heatingCircuits/hc1/type"
+                },
+                {
+                    "id": "/heatingCircuits/hc1/usermode"
+                }
+            ]
+        },
+        {
+            "id": "/heatingCircuits/hc1/actualSupplyTemperature",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": 44.5,
+            "unitOfMeasure": "C",
+            "minValue": 0,
+            "maxValue": 100.0
+        },
+        {
+            "id": "/heatingCircuits/hc1/control",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "weather"
+        },
+        {
+            "id": "/heatingCircuits/hc1/holidayMode",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/heatingCircuits/hc1/holidayMode/activated"
+                },
+                {
+                    "id": "/heatingCircuits/hc1/holidayMode/end"
+                },
+                {
+                    "id": "/heatingCircuits/hc1/holidayMode/start"
+                },
+                {
+                    "id": "/heatingCircuits/hc1/holidayMode/status"
+                },
+                {
+                    "id": "/heatingCircuits/hc1/holidayMode/temperature"
+                }
+            ]
+        },
+        {
+            "id": "/heatingCircuits/hc1/holidayMode/activated",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/heatingCircuits/hc1/holidayMode/end",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "2000-01-01T00:00:00"
+        },
+        {
+            "id": "/heatingCircuits/hc1/holidayMode/start",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "2000-01-01T00:00:00"
+        },
+        {
+            "id": "/heatingCircuits/hc1/holidayMode/status",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/heatingCircuits/hc1/holidayMode/temperature",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 10.0,
+            "unitOfMeasure": "C",
+            "minValue": 5.0,
+            "maxValue": 30.0
+        },
+        {
+            "id": "/heatingCircuits/hc1/manualTempOverride",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/heatingCircuits/hc1/manualTempOverride/duration"
+                },
+                {
+                    "id": "/heatingCircuits/hc1/manualTempOverride/status"
+                },
+                {
+                    "id": "/heatingCircuits/hc1/manualTempOverride/temperature"
+                }
+            ]
+        },
+        {
+            "id": "/heatingCircuits/hc1/manualTempOverride/duration",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 0,
+            "unitOfMeasure": "Min",
+            "minValue": 0,
+            "maxValue": 1440
+        },
+        {
+            "id": "/heatingCircuits/hc1/manualTempOverride/status",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/heatingCircuits/hc1/manualTempOverride/temperature",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 17.0,
+            "unitOfMeasure": "C",
+            "minValue": 5.0,
+            "maxValue": 30.0
+        },
+        {
+            "id": "/heatingCircuits/hc1/operationMode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "auto"
+        },
+        {
+            "id": "/heatingCircuits/hc1/pband",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 1.42,
+            "unitOfMeasure": "",
+            "minValue": 0.01,
+            "maxValue": 5
+        },
+        {
+            "id": "/heatingCircuits/hc1/powerSetpoint",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": 0,
+            "unitOfMeasure": "%",
+            "minValue": 0,
+            "maxValue": 100
+        },
+        {
+            "id": "/heatingCircuits/hc1/roomtemperature",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "26.65",
+            "unitOfMeasure": "C",
+            "status": "ok"
+        },
+        {
+            "id": "/heatingCircuits/hc1/supplyTemperatureSetpoint",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": 45,
+            "unitOfMeasure": "C",
+            "minValue": 5,
+            "maxValue": 90
+        },
+        {
+            "id": "/heatingCircuits/hc1/temperatureAdjustment",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 0.0,
+            "unitOfMeasure": "C",
+            "minValue": -2.0,
+            "maxValue": 2.0
+        },
+        {
+            "id": "/heatingCircuits/hc1/temperatureRoomManual",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 25.5,
+            "unitOfMeasure": "C",
+            "minValue": 5.0,
+            "maxValue": 30.0
+        },
+        {
+            "id": "/heatingCircuits/hc1/temperatureRoomSetpoint",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": 25.5,
+            "unitOfMeasure": "C",
+            "minValue": 5.0,
+            "maxValue": 30.0
+        },
+        {
+            "id": "/heatingCircuits/hc1/type",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "floor"
+        },
+        {
+            "id": "/heatingCircuits/hc1/usermode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "manual"
+        }
+    ],
+    [],
+    [],
+    [
+        {
+            "id": "/system",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/system/appliance"
+                },
+                {
+                    "id": "/system/interfaces"
+                },
+                {
+                    "id": "/system/brand"
+                },
+                {
+                    "id": "/system/location"
+                },
+                {
+                    "id": "/system/sensors"
+                }
+            ]
+        },
+        {
+            "id": "/system/appliance",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/system/appliance/actualPower"
+                },
+                {
+                    "id": "/system/appliance/boilerblockingerror"
+                },
+                {
+                    "id": "/system/appliance/boilerlockingerror"
+                },
+                {
+                    "id": "/system/appliance/boilermaintenancerequest"
+                },
+                {
+                    "id": "/system/appliance/causecode"
+                },
+                {
+                    "id": "/system/appliance/cm"
+                },
+                {
+                    "id": "/system/appliance/displaycode"
+                },
+                {
+                    "id": "/system/appliance/serialnumber"
+                },
+                {
+                    "id": "/system/appliance/softreset"
+                },
+                {
+                    "id": "/system/appliance/systemPressure"
+                },
+                {
+                    "id": "/system/appliance/type"
+                },
+                {
+                    "id": "/system/appliance/version"
+                }
+            ]
+        },
+        {
+            "id": "/system/appliance/actualPower",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": 100,
+            "unitOfMeasure": "%",
+            "minValue": 0,
+            "maxValue": 100,
+            "reason": "CH"
+        },
+        {
+            "id": "/system/appliance/boilerblockingerror",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "false"
+        },
+        {
+            "id": "/system/appliance/boilerlockingerror",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "false"
+        },
+        {
+            "id": "/system/appliance/boilermaintenancerequest",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "false"
+        },
+        {
+            "id": "/system/appliance/causecode",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": 200,
+            "unitOfMeasure": "",
+            "minValue": 200,
+            "maxValue": 65535
+        },
+        {
+            "id": "/system/appliance/cm",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/system/appliance/cm/type"
+                },
+                {
+                    "id": "/system/appliance/cm/version"
+                }
+            ]
+        },
+        {
+            "id": "/system/appliance/cm/type",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "0x057B"
+        },
+        {
+            "id": "/system/appliance/cm/version",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "4"
+        },
+        {
+            "id": "/system/appliance/displaycode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "-H"
+        },
+        {
+            "id": "/system/appliance/serialnumber",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "    82901234567897736900838"
+        },
+        {
+            "id": "/system/appliance/systemPressure",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": 25.5,
+            "unitOfMeasure": "bar",
+            "minValue": 0.0,
+            "maxValue": 25.0
+        },
+        {
+            "id": "/system/appliance/type",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "0x7B"
+        },
+        {
+            "id": "/system/appliance/version",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "6.7"
+        },
+        {
+            "id": "/system/interfaces",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/system/interfaces/ems"
+                }
+            ]
+        },
+        {
+            "id": "/system/interfaces/ems",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/system/interfaces/ems/brandbit"
+                }
+            ]
+        },
+        {
+            "id": "/system/interfaces/ems/brandbit",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "Buderus"
+        },
+        {
+            "id": "/system/brand",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "Bosch"
+        },
+        {
+            "id": "/system/location",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/system/location/latitude"
+                },
+                {
+                    "id": "/system/location/localization"
+                },
+                {
+                    "id": "/system/location/longitude"
+                }
+            ]
+        },
+        {
+            "id": "/system/location/latitude",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "55.690052"
+        },
+        {
+            "id": "/system/location/localization",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "de"
+        },
+        {
+            "id": "/system/location/longitude",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "21.232043"
+        },
+        {
+            "id": "/system/sensors",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/system/sensors/flow"
+                },
+                {
+                    "id": "/system/sensors/temperatures"
+                }
+            ]
+        },
+        {
+            "id": "/system/sensors/flow",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/system/sensors/flow/dhwA"
+                }
+            ]
+        },
+        {
+            "id": "/system/sensors/flow/dhwA",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/system/sensors/flow/dhwA/status"
+                }
+            ]
+        },
+        {
+            "id": "/system/sensors/flow/dhwA/status",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "not present"
+        },
+        {
+            "id": "/system/sensors/temperatures",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/system/sensors/temperatures/outdoor_t1"
+                }
+            ]
+        },
+        {
+            "id": "/system/sensors/temperatures/outdoor_t1",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": 2.0,
+            "unitOfMeasure": "C",
+            "minValue": -40.0,
+            "maxValue": 50.0,
+            "status": "ok",
+            "srcType": "virtual",
+            "timestamp": "2021-03-01T19:26:52"
+        }
+    ],
+    [],
+    [],
+    [
+        {
+            "id": "/ecus",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/dayassunday"
+                },
+                {
+                    "id": "/ecus/rrc/energysaving"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection"
+                },
+                {
+                    "id": "/ecus/rrc/installerdetails"
+                },
+                {
+                    "id": "/ecus/rrc/installerstatus"
+                },
+                {
+                    "id": "/ecus/rrc/lightingperiod"
+                },
+                {
+                    "id": "/ecus/rrc/lockuserinterface"
+                },
+                {
+                    "id": "/ecus/rrc/personaldetails"
+                },
+                {
+                    "id": "/ecus/rrc/pirSensitivity"
+                },
+                {
+                    "id": "/ecus/rrc/pm"
+                },
+                {
+                    "id": "/ecus/rrc/recordings"
+                },
+                {
+                    "id": "/ecus/rrc/registrationdetails"
+                },
+                {
+                    "id": "/ecus/rrc/selflearning"
+                },
+                {
+                    "id": "/ecus/rrc/settings"
+                },
+                {
+                    "id": "/ecus/rrc/temperaturestep"
+                },
+                {
+                    "id": "/ecus/rrc/uiStatus"
+                },
+                {
+                    "id": "/ecus/rrc/userprogram"
+                },
+                {
+                    "id": "/ecus/rrc/visualInterface"
+                },
+                {
+                    "id": "/ecus/rrc/warrantyflag"
+                },
+                {
+                    "id": "/ecus/rrc/weatherDependent"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/dayassunday",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/dayassunday/day0"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day1"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day10"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day11"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day12"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day2"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day3"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day4"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day5"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day6"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day7"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day8"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day9"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/option"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day0",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/dayassunday/day0/active"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day0/date"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day0/mode"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day0/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day0/date",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "04-02"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day0/mode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "recurrent"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day1",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/dayassunday/day1/active"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day1/date"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day1/mode"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day1/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day1/date",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "04-05"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day1/mode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "recurrent"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day10",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/dayassunday/day10/active"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day10/date"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day10/mode"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day10/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day10/date",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "01-01"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day10/mode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "once"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day11",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/dayassunday/day11/active"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day11/date"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day11/mode"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day11/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day11/date",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "01-01"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day11/mode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "once"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day12",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/dayassunday/day12/active"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day12/date"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day12/mode"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day12/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day12/date",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "01-01"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day12/mode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "recurrent"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day2",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/dayassunday/day2/active"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day2/date"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day2/mode"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day2/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day2/date",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "04-27"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day2/mode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "recurrent"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day3",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/dayassunday/day3/active"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day3/date"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day3/mode"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day3/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day3/date",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "05-13"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day3/mode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "recurrent"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day4",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/dayassunday/day4/active"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day4/date"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day4/mode"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day4/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day4/date",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "05-24"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day4/mode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "recurrent"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day5",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/dayassunday/day5/active"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day5/date"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day5/mode"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day5/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day5/date",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "12-25"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day5/mode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "recurrent"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day6",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/dayassunday/day6/active"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day6/date"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day6/mode"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day6/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day6/date",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "12-26"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day6/mode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "recurrent"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day7",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/dayassunday/day7/active"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day7/date"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day7/mode"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day7/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day7/date",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "01-01"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day7/mode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "once"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day8",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/dayassunday/day8/active"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day8/date"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day8/mode"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day8/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day8/date",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "01-01"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day8/mode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "once"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day9",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/dayassunday/day9/active"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day9/date"
+                },
+                {
+                    "id": "/ecus/rrc/dayassunday/day9/mode"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day9/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day9/date",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "01-01"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/day9/mode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "once"
+        },
+        {
+            "id": "/ecus/rrc/dayassunday/option",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/energysaving",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/energysaving/history"
+                },
+                {
+                    "id": "/ecus/rrc/energysaving/indication"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/energysaving/indication",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "on"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/option"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile0"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile1"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile2"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile3"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile4"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile5"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile6"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile7"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile8"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile9"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/option",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile0",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile0/active"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile0/detected"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile0/name"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile0/temperature"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile0/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile0/detected",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile0/name",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": ""
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile0/temperature",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 17.0,
+            "unitOfMeasure": "C",
+            "minValue": 5.0,
+            "maxValue": 30.0
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile1",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile1/active"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile1/detected"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile1/name"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile1/temperature"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile1/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile1/detected",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile1/name",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": ""
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile1/temperature",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 17.0,
+            "unitOfMeasure": "C",
+            "minValue": 5.0,
+            "maxValue": 30.0
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile2",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile2/active"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile2/detected"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile2/name"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile2/temperature"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile2/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile2/detected",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile2/name",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": ""
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile2/temperature",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 17.0,
+            "unitOfMeasure": "C",
+            "minValue": 5.0,
+            "maxValue": 30.0
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile3",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile3/active"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile3/detected"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile3/name"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile3/temperature"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile3/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile3/detected",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile3/name",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": ""
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile3/temperature",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 17.0,
+            "unitOfMeasure": "C",
+            "minValue": 5.0,
+            "maxValue": 30.0
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile4",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile4/active"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile4/detected"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile4/name"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile4/temperature"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile4/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile4/detected",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile4/name",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": ""
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile4/temperature",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 17.0,
+            "unitOfMeasure": "C",
+            "minValue": 5.0,
+            "maxValue": 30.0
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile5",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile5/active"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile5/detected"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile5/name"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile5/temperature"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile5/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile5/detected",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile5/name",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": ""
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile5/temperature",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 17.0,
+            "unitOfMeasure": "C",
+            "minValue": 5.0,
+            "maxValue": 30.0
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile6",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile6/active"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile6/detected"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile6/name"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile6/temperature"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile6/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile6/detected",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile6/name",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": ""
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile6/temperature",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 17.0,
+            "unitOfMeasure": "C",
+            "minValue": 5.0,
+            "maxValue": 30.0
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile7",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile7/active"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile7/detected"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile7/name"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile7/temperature"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile7/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile7/detected",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile7/name",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": ""
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile7/temperature",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 17.0,
+            "unitOfMeasure": "C",
+            "minValue": 5.0,
+            "maxValue": 30.0
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile8",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile8/active"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile8/detected"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile8/name"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile8/temperature"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile8/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile8/detected",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile8/name",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": ""
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile8/temperature",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 17.0,
+            "unitOfMeasure": "C",
+            "minValue": 5.0,
+            "maxValue": 30.0
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile9",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile9/active"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile9/detected"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile9/name"
+                },
+                {
+                    "id": "/ecus/rrc/homeentrancedetection/userprofile9/temperature"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile9/active",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile9/detected",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile9/name",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": ""
+        },
+        {
+            "id": "/ecus/rrc/homeentrancedetection/userprofile9/temperature",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 17.0,
+            "unitOfMeasure": "C",
+            "minValue": 5.0,
+            "maxValue": 30.0
+        },
+        {
+            "id": "/ecus/rrc/installerdetails",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": ""
+        },
+        {
+            "id": "/ecus/rrc/installerstatus",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "false"
+        },
+        {
+            "id": "/ecus/rrc/lightingperiod",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 20,
+            "unitOfMeasure": "Sec",
+            "minValue": 5,
+            "maxValue": 180
+        },
+        {
+            "id": "/ecus/rrc/lockuserinterface",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "false"
+        },
+        {
+            "id": "/ecus/rrc/personaldetails",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "Raimondas Gavrilovas;+37062987440;raimondas.gavrilovas@gmail.com"
+        },
+        {
+            "id": "/ecus/rrc/pirSensitivity",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "high"
+        },
+        {
+            "id": "/ecus/rrc/pm",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/pm/closingvalve"
+                },
+                {
+                    "id": "/ecus/rrc/pm/ignition"
+                },
+                {
+                    "id": "/ecus/rrc/pm/refillneeded"
+                },
+                {
+                    "id": "/ecus/rrc/pm/shorttapping"
+                },
+                {
+                    "id": "/ecus/rrc/pm/systemleaking"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/pm/closingvalve",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/pm/closingvalve/status"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/pm/closingvalve/status",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "false",
+            "timestamp": "2000-01-01T00:00:00"
+        },
+        {
+            "id": "/ecus/rrc/pm/ignition",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/pm/ignition/status"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/pm/ignition/status",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "false",
+            "timestamp": "2000-01-01T00:00:00"
+        },
+        {
+            "id": "/ecus/rrc/pm/refillneeded",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/pm/refillneeded/status"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/pm/refillneeded/status",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "false",
+            "timestamp": "1970-01-01T00:00:00"
+        },
+        {
+            "id": "/ecus/rrc/pm/shorttapping",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/pm/shorttapping/status"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/pm/shorttapping/status",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "false",
+            "timestamp": "2000-01-01T00:00:00"
+        },
+        {
+            "id": "/ecus/rrc/pm/systemleaking",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/pm/systemleaking/status"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/pm/systemleaking/status",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "false",
+            "timestamp": "2000-01-01T00:00:00"
+        },
+        {
+            "id": "/ecus/rrc/recordings",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/recordings/gasusage"
+                },
+                {
+                    "id": "/ecus/rrc/recordings/gasusagePointer"
+                },
+                {
+                    "id": "/ecus/rrc/recordings/yearTotal"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/recordings/gasusagePointer",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": 1595,
+            "unitOfMeasure": "",
+            "minValue": 1,
+            "maxValue": 6400
+        },
+        {
+            "id": "/ecus/rrc/recordings/yearTotal",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": 8015.9,
+            "unitOfMeasure": "kWh",
+            "minValue": 0,
+            "maxValue": 429496729.5
+        },
+        {
+            "id": "/ecus/rrc/registrationdetails",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": ""
+        },
+        {
+            "id": "/ecus/rrc/selflearning",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/selflearning/administration"
+                },
+                {
+                    "id": "/ecus/rrc/selflearning/copyUserProgram"
+                },
+                {
+                    "id": "/ecus/rrc/selflearning/filtered"
+                },
+                {
+                    "id": "/ecus/rrc/selflearning/learnedprogram"
+                },
+                {
+                    "id": "/ecus/rrc/selflearning/learnedweek"
+                },
+                {
+                    "id": "/ecus/rrc/selflearning/mode"
+                },
+                {
+                    "id": "/ecus/rrc/selflearning/nextSwitchpoint"
+                },
+                {
+                    "id": "/ecus/rrc/selflearning/nextSwitchpointEndtime"
+                },
+                {
+                    "id": "/ecus/rrc/selflearning/recorded"
+                },
+                {
+                    "id": "/ecus/rrc/selflearning/reset"
+                },
+                {
+                    "id": "/ecus/rrc/selflearning/state"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/selflearning/administration",
+            "type": "sl_params",
+            "recordable": 0,
+            "writeable": 0,
+            "value": [
+                {
+                    "state": "On",
+                    "mode": "Basic",
+                    "startday": "Mo",
+                    "lastlearnedday": "Su",
+                    "pNew": 0,
+                    "pOld": 1,
+                    "#days": 1596,
+                    "active_pattern": 0
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/selflearning/learnedprogram",
+            "type": "LearnedProgram",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4"
+        },
+        {
+            "id": "/ecus/rrc/selflearning/mode",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "Basic"
+        },
+        {
+            "id": "/ecus/rrc/selflearning/nextSwitchpoint",
+            "type": "switchpoint",
+            "recordable": 0,
+            "writeable": 1,
+            "value": {
+                "d": "Su",
+                "t": 0,
+                "T": 5.0
+            }
+        },
+        {
+            "id": "/ecus/rrc/selflearning/nextSwitchpointEndtime",
+            "type": "switchpoint",
+            "recordable": 0,
+            "writeable": 0,
+            "value": {
+                "d": "Su",
+                "t": 0,
+                "T": 5.0
+            }
+        },
+        {
+            "id": "/ecus/rrc/selflearning/state",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 0,
+            "value": "On"
+        },
+        {
+            "id": "/ecus/rrc/settings",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/settings/status"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/settings/status",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "not configured"
+        },
+        {
+            "id": "/ecus/rrc/temperaturestep",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "0.5"
+        },
+        {
+            "id": "/ecus/rrc/uiStatus",
+            "type": "uiUpdate",
+            "recordable": 0,
+            "writeable": 0,
+            "value": {
+                "CTD": "2021-03-01T19:41:40+00:00 Mo",
+                "CTR": "weather",
+                "UMD": "manual",
+                "MMT": "25.5",
+                "CPM": "auto",
+                "CSP": "8",
+                "TOR": "off",
+                "TOD": "0",
+                "TOT": "17.0",
+                "TSP": "25.5",
+                "IHT": "26.70",
+                "IHS": "ok",
+                "DAS": "off",
+                "TAS": "off",
+                "HMD": "off",
+                "ARS": "init",
+                "FPA": "off",
+                "ESI": "on",
+                "BAI": "CH",
+                "BLE": "false",
+                "BBE": "false",
+                "BMR": "false",
+                "PMR": "false",
+                "RS": "off",
+                "DHW": "on",
+                "HED_EN": "false",
+                "HED_DEV": "false",
+                "FAH": "false",
+                "DOT": "true",
+                "HED_DB": ""
+            }
+        },
+        {
+            "id": "/ecus/rrc/userprogram",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/userprogram/activeprogram"
+                },
+                {
+                    "id": "/ecus/rrc/userprogram/fireplacefunction"
+                },
+                {
+                    "id": "/ecus/rrc/userprogram/preheating"
+                },
+                {
+                    "id": "/ecus/rrc/userprogram/program0"
+                },
+                {
+                    "id": "/ecus/rrc/userprogram/program0name"
+                },
+                {
+                    "id": "/ecus/rrc/userprogram/program1"
+                },
+                {
+                    "id": "/ecus/rrc/userprogram/program1name"
+                },
+                {
+                    "id": "/ecus/rrc/userprogram/program2"
+                },
+                {
+                    "id": "/ecus/rrc/userprogram/userswitchpointname1"
+                },
+                {
+                    "id": "/ecus/rrc/userprogram/userswitchpointname2"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/userprogram/activeprogram",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 0,
+            "unitOfMeasure": "",
+            "minValue": 0,
+            "maxValue": 2
+        },
+        {
+            "id": "/ecus/rrc/userprogram/fireplacefunction",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/userprogram/preheating",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "on"
+        },
+        {
+            "id": "/ecus/rrc/userprogram/program0",
+            "type": "UserProgram",
+            "recordable": 0,
+            "writeable": 1,
+            "value": [
+                {
+                    "d": "Su",
+                    "t": 420,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "Su",
+                    "t": 540,
+                    "T": 22.0,
+                    "active": "on",
+                    "name": 2
+                },
+                {
+                    "d": "Su",
+                    "t": 1020,
+                    "T": 23.0,
+                    "active": "on",
+                    "name": 3
+                },
+                {
+                    "d": "Su",
+                    "t": 1380,
+                    "T": 18.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Mo",
+                    "t": 420,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "Mo",
+                    "t": 540,
+                    "T": 22.0,
+                    "active": "on",
+                    "name": 2
+                },
+                {
+                    "d": "Mo",
+                    "t": 1020,
+                    "T": 23.0,
+                    "active": "on",
+                    "name": 3
+                },
+                {
+                    "d": "Mo",
+                    "t": 1380,
+                    "T": 18.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "Mo",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Mo",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Tu",
+                    "t": 420,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "Tu",
+                    "t": 540,
+                    "T": 22.0,
+                    "active": "on",
+                    "name": 2
+                },
+                {
+                    "d": "Tu",
+                    "t": 1020,
+                    "T": 23.0,
+                    "active": "on",
+                    "name": 3
+                },
+                {
+                    "d": "Tu",
+                    "t": 1380,
+                    "T": 18.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "Tu",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Tu",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "We",
+                    "t": 420,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "We",
+                    "t": 540,
+                    "T": 22.0,
+                    "active": "on",
+                    "name": 2
+                },
+                {
+                    "d": "We",
+                    "t": 1020,
+                    "T": 23.0,
+                    "active": "on",
+                    "name": 3
+                },
+                {
+                    "d": "We",
+                    "t": 1380,
+                    "T": 18.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "We",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "We",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Th",
+                    "t": 420,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "Th",
+                    "t": 540,
+                    "T": 22.0,
+                    "active": "on",
+                    "name": 2
+                },
+                {
+                    "d": "Th",
+                    "t": 1020,
+                    "T": 23.0,
+                    "active": "on",
+                    "name": 3
+                },
+                {
+                    "d": "Th",
+                    "t": 1380,
+                    "T": 18.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "Th",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Th",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Fr",
+                    "t": 420,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "Fr",
+                    "t": 540,
+                    "T": 22.0,
+                    "active": "on",
+                    "name": 2
+                },
+                {
+                    "d": "Fr",
+                    "t": 1020,
+                    "T": 23.0,
+                    "active": "on",
+                    "name": 3
+                },
+                {
+                    "d": "Fr",
+                    "t": 1380,
+                    "T": 18.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "Fr",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Fr",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Sa",
+                    "t": 420,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "Sa",
+                    "t": 540,
+                    "T": 22.0,
+                    "active": "on",
+                    "name": 2
+                },
+                {
+                    "d": "Sa",
+                    "t": 1020,
+                    "T": 23.0,
+                    "active": "on",
+                    "name": 3
+                },
+                {
+                    "d": "Sa",
+                    "t": 1380,
+                    "T": 18.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/userprogram/program0name",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "Prog 1"
+        },
+        {
+            "id": "/ecus/rrc/userprogram/program1",
+            "type": "UserProgram",
+            "recordable": 0,
+            "writeable": 1,
+            "value": [
+                {
+                    "d": "Su",
+                    "t": 480,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Su",
+                    "t": 1380,
+                    "T": 15.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Mo",
+                    "t": 420,
+                    "T": 19.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "Mo",
+                    "t": 540,
+                    "T": 17.0,
+                    "active": "on",
+                    "name": 2
+                },
+                {
+                    "d": "Mo",
+                    "t": 1020,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 3
+                },
+                {
+                    "d": "Mo",
+                    "t": 1380,
+                    "T": 15.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "Mo",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Mo",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Tu",
+                    "t": 420,
+                    "T": 19.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "Tu",
+                    "t": 540,
+                    "T": 17.0,
+                    "active": "on",
+                    "name": 2
+                },
+                {
+                    "d": "Tu",
+                    "t": 1020,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 3
+                },
+                {
+                    "d": "Tu",
+                    "t": 1380,
+                    "T": 15.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "Tu",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Tu",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "We",
+                    "t": 420,
+                    "T": 19.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "We",
+                    "t": 540,
+                    "T": 17.0,
+                    "active": "on",
+                    "name": 2
+                },
+                {
+                    "d": "We",
+                    "t": 1020,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 3
+                },
+                {
+                    "d": "We",
+                    "t": 1380,
+                    "T": 15.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "We",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "We",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Th",
+                    "t": 420,
+                    "T": 19.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "Th",
+                    "t": 540,
+                    "T": 17.0,
+                    "active": "on",
+                    "name": 2
+                },
+                {
+                    "d": "Th",
+                    "t": 1020,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 3
+                },
+                {
+                    "d": "Th",
+                    "t": 1380,
+                    "T": 15.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "Th",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Th",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Fr",
+                    "t": 420,
+                    "T": 19.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "Fr",
+                    "t": 540,
+                    "T": 17.0,
+                    "active": "on",
+                    "name": 2
+                },
+                {
+                    "d": "Fr",
+                    "t": 1020,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 3
+                },
+                {
+                    "d": "Fr",
+                    "t": 1380,
+                    "T": 15.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "Fr",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Fr",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Sa",
+                    "t": 480,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Sa",
+                    "t": 1380,
+                    "T": 15.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/userprogram/program1name",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "Prog 2"
+        },
+        {
+            "id": "/ecus/rrc/userprogram/program2",
+            "type": "UserProgram",
+            "recordable": 0,
+            "writeable": 1,
+            "value": [
+                {
+                    "d": "Su",
+                    "t": 480,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Su",
+                    "t": 1380,
+                    "T": 15.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Su",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Mo",
+                    "t": 420,
+                    "T": 19.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "Mo",
+                    "t": 540,
+                    "T": 17.0,
+                    "active": "on",
+                    "name": 2
+                },
+                {
+                    "d": "Mo",
+                    "t": 1020,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 3
+                },
+                {
+                    "d": "Mo",
+                    "t": 1380,
+                    "T": 15.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "Mo",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Mo",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Tu",
+                    "t": 420,
+                    "T": 19.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "Tu",
+                    "t": 540,
+                    "T": 17.0,
+                    "active": "on",
+                    "name": 2
+                },
+                {
+                    "d": "Tu",
+                    "t": 1020,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 3
+                },
+                {
+                    "d": "Tu",
+                    "t": 1380,
+                    "T": 15.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "Tu",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Tu",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "We",
+                    "t": 420,
+                    "T": 19.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "We",
+                    "t": 540,
+                    "T": 17.0,
+                    "active": "on",
+                    "name": 2
+                },
+                {
+                    "d": "We",
+                    "t": 1020,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 3
+                },
+                {
+                    "d": "We",
+                    "t": 1380,
+                    "T": 15.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "We",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "We",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Th",
+                    "t": 420,
+                    "T": 19.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "Th",
+                    "t": 540,
+                    "T": 17.0,
+                    "active": "on",
+                    "name": 2
+                },
+                {
+                    "d": "Th",
+                    "t": 1020,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 3
+                },
+                {
+                    "d": "Th",
+                    "t": 1380,
+                    "T": 15.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "Th",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Th",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Fr",
+                    "t": 420,
+                    "T": 19.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "Fr",
+                    "t": 540,
+                    "T": 17.0,
+                    "active": "on",
+                    "name": 2
+                },
+                {
+                    "d": "Fr",
+                    "t": 1020,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 3
+                },
+                {
+                    "d": "Fr",
+                    "t": 1380,
+                    "T": 15.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "Fr",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Fr",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Sa",
+                    "t": 480,
+                    "T": 20.0,
+                    "active": "on",
+                    "name": 1
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Sa",
+                    "t": 1380,
+                    "T": 15.0,
+                    "active": "on",
+                    "name": 0
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                },
+                {
+                    "d": "Sa",
+                    "t": 0,
+                    "T": 5.0,
+                    "active": "off",
+                    "name": 0
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/userprogram/userswitchpointname1",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "Andere periode 1"
+        },
+        {
+            "id": "/ecus/rrc/userprogram/userswitchpointname2",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "Andere periode 2"
+        },
+        {
+            "id": "/ecus/rrc/visualInterface",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/visualInterface/isFahrenheit"
+                },
+                {
+                    "id": "/ecus/rrc/visualInterface/isSeparatorDot"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/visualInterface/isFahrenheit",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "false"
+        },
+        {
+            "id": "/ecus/rrc/visualInterface/isSeparatorDot",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "true"
+        },
+        {
+            "id": "/ecus/rrc/warrantyflag",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "false"
+        },
+        {
+            "id": "/ecus/rrc/weatherDependent",
+            "type": "refEnum",
+            "references": [
+                {
+                    "id": "/ecus/rrc/weatherDependent/basePointSupply"
+                },
+                {
+                    "id": "/ecus/rrc/weatherDependent/endPointSupply"
+                },
+                {
+                    "id": "/ecus/rrc/weatherDependent/forcedSwitchedOff"
+                },
+                {
+                    "id": "/ecus/rrc/weatherDependent/maxSupply"
+                },
+                {
+                    "id": "/ecus/rrc/weatherDependent/minSupply"
+                },
+                {
+                    "id": "/ecus/rrc/weatherDependent/nightSwitchOff"
+                },
+                {
+                    "id": "/ecus/rrc/weatherDependent/roomInfluence"
+                },
+                {
+                    "id": "/ecus/rrc/weatherDependent/summerSwitchOff"
+                }
+            ]
+        },
+        {
+            "id": "/ecus/rrc/weatherDependent/basePointSupply",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 20,
+            "unitOfMeasure": "C",
+            "minValue": 20,
+            "maxValue": 90
+        },
+        {
+            "id": "/ecus/rrc/weatherDependent/endPointSupply",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 45,
+            "unitOfMeasure": "C",
+            "minValue": 25,
+            "maxValue": 90
+        },
+        {
+            "id": "/ecus/rrc/weatherDependent/forcedSwitchedOff",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off"
+        },
+        {
+            "id": "/ecus/rrc/weatherDependent/maxSupply",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 45,
+            "unitOfMeasure": "C",
+            "minValue": 25,
+            "maxValue": 90
+        },
+        {
+            "id": "/ecus/rrc/weatherDependent/minSupply",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 20,
+            "unitOfMeasure": "C",
+            "minValue": 10,
+            "maxValue": 90
+        },
+        {
+            "id": "/ecus/rrc/weatherDependent/nightSwitchOff",
+            "type": "stringValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": "off till low"
+        },
+        {
+            "id": "/ecus/rrc/weatherDependent/roomInfluence",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 0,
+            "unitOfMeasure": "",
+            "minValue": 0,
+            "maxValue": 3
+        },
+        {
+            "id": "/ecus/rrc/weatherDependent/summerSwitchOff",
+            "type": "floatValue",
+            "recordable": 0,
+            "writeable": 1,
+            "value": 20,
+            "unitOfMeasure": "C",
+            "minValue": 10,
+            "maxValue": 30
+        }
+    ]
+]
