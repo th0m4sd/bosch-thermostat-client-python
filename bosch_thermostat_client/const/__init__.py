@@ -93,6 +93,7 @@ ON = "on"
 
 FIRMWARE_VERSION = "versionFirmware"
 BASE_FIRMWARE_VERSION = "versionFirmwarePath"
+RECORDINGS_SENSORS = "recordingsSensors"
 
 ROOT_PATHS = [
     "/dhwCircuits",
@@ -110,3 +111,7 @@ VALUES = "values"
 
 SYSTEM_BUS = "systemBus"
 WRITABLE = "writeable"
+
+RECORDERDRES = "recordedResource"
+RECORDING = "recording"
+INTERVAL = "interval"

@@ -4,6 +4,7 @@ NotificationSensor uses error codes prepared by Hans Liss in his repo at
 https://github.com/hansliss/regofetcher
 """
 
+import logging
 from bosch_thermostat_client.const import (
     ID,
     NAME,
@@ -14,28 +15,37 @@ from bosch_thermostat_client.const import (
     SENSOR,
     VALUE,
     VALUES,
+    INTERVAL,
+    RECORDINGS,
+    RECORDING,
+    RECORDERDRES,
 )
+from datetime import datetime
 from bosch_thermostat_client.const.ivt import INVALID
+from bosch_thermostat_client.exceptions import DeviceException
 from bosch_thermostat_client.db import get_ivt_errors
 from .helper import BoschSingleEntity, BoschEntities
+
+_LOGGER = logging.getLogger(__name__)
+NOTIFICATIONS = "notifications"
 
 
 class Sensors(BoschEntities):
     """Sensors object containing multiple Sensor objects."""
 
-    def __init__(self, connector, sensors=None, sensors_db=None, uri_prefix=None):
+    def __init__(self, connector, sensors_db=None, uri_prefix=None):
         """
         Initialize sensors.
 
         :param dict requests: { GET: get function, SUBMIT: submit function}
         """
         self._index = 0
+        self._connector = connector
         super().__init__(connector.get)
         self._items = {}
-        for sensor_id in sensors:
-            sensor = sensors_db.get(sensor_id)
-            if sensor and sensor_id not in self._items:
-                if sensor_id == "notifications":
+        for sensor_id, sensor in sensors_db.items():
+            if sensor_id not in self._items:
+                if sensor_id == NOTIFICATIONS:
                     self._items[sensor_id] = NotificationSensor(
                         connector,
                         sensor_id,
@@ -50,6 +60,22 @@ class Sensors(BoschEntities):
                         f"{uri_prefix}/{sensor[ID]}" if uri_prefix else sensor[ID],
                     )
 
+    async def initialize(self, recordings):
+        """Initialize recording sensors."""
+        found_recordings = []
+        for record in recordings:
+            found_recordings.extend(await self.retrieve_from_module(4, record))
+        for rec in found_recordings:
+            sensor_id = f'{RECORDINGS}{rec[RECORDERDRES][ID].split("/")[-1]}'
+            if sensor_id not in self._items:
+                print("dupa!")
+                self._items[sensor_id] = RecordingSensor(
+                    connector=self._connector,
+                    attr_id=sensor_id,
+                    name=sensor_id,
+                    path=rec[ID],
+                )
+
     def __iter__(self):
         return iter(self._items.values())
 
@@ -62,6 +88,10 @@ class Sensors(BoschEntities):
 class Sensor(BoschSingleEntity):
     """Single sensor object."""
 
+    @property
+    def kind(self):
+        return REGULAR
+
     def __init__(self, connector, attr_id, name, path):
         """
         Single sensor init.
@@ -70,8 +100,8 @@ class Sensor(BoschSingleEntity):
         :param str name: name of the sensors
         :param str path: path to retrieve data from sensor.
         """
-        super().__init__(name, connector, attr_id, SENSOR, path)
-        self._data = {attr_id: {RESULT: {}, URI: path, TYPE: REGULAR}}
+        super().__init__(name, connector, attr_id, path)
+        self._data = {attr_id: {RESULT: {}, URI: path, TYPE: self.kind}}
 
     @property
     def state(self):
@@ -80,6 +110,44 @@ class Sensor(BoschSingleEntity):
         if result:
             return result.get(VALUE, INVALID)
         return -1
+
+
+class RecordingSensor(Sensor):
+    @property
+    def kind(self):
+        return RECORDINGS
+
+    def process_results(self, result):
+        """Convert multi-level json object to one level object."""
+        self._data[self.attr_id]
+        if result:
+            for recording in reversed(result[RECORDING]):
+                if recording["c"] == 0:
+                    continue
+                self._data[self.attr_id][RESULT][VALUE] = (
+                    recording["y"] / recording["c"]
+                )
+                return True
+
+    @property
+    def state(self):
+        """Retrieve state of the record sensor."""
+        return self._data[self.attr_id].get(RESULT, {}).get(VALUE)
+
+    def build_uri(self):
+        today = datetime.today().strftime("%Y-%m-%d")
+        return f"{self._data[self.attr_id][URI]}?{INTERVAL}={today}"
+
+    async def update(self):
+        """Update info about Recording Sensor asynchronously."""
+        try:
+            result = await self._connector.get(self.build_uri())
+            self.process_results(result)
+        except DeviceException as err:
+            _LOGGER.error(
+                f"Can't update data for {self.name}. Trying uri: {self._data[URI]}. Error message: {err}"
+            )
+            self._extra_message = f"Can't update data. Error: {err}"
 
 
 class NotificationSensor(Sensor):

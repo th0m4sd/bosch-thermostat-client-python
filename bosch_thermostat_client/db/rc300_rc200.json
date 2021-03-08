@@ -31,7 +31,7 @@
                     "setpoint": "setpoint1",
                     "type": "manual"
                 },
-                "auto":{
+                "auto": {
                     "setpoint": "setpoint2",
                     "type": "auto"
                 }
@@ -74,7 +74,7 @@
                     "name": "Active Switch Program",
                     "type": "activeProgram"
                 },
-                "switchProgramMode":{
+                "switchProgramMode": {
                     "id": "switchProgramMode",
                     "name": "switchProgramMode",
                     "type": "switchProgramMode"
@@ -114,7 +114,8 @@
                 {
                     "haname": "on",
                     "boschname": [
-                        "on", "low"
+                        "on",
+                        "low"
                     ]
                 },
                 {
@@ -135,7 +136,9 @@
                 },
                 {
                     "haname": "heat_pump",
-                    "boschname": ["HCprogram"]
+                    "boschname": [
+                        "HCprogram"
+                    ]
                 },
                 {
                     "haname": "high_demand",
@@ -375,7 +378,7 @@
                     "setpoint": "setpoint1",
                     "type": "manual"
                 },
-                "auto":{
+                "auto": {
                     "setpoint": "setpoint2",
                     "type": "auto"
                 }
@@ -413,7 +416,7 @@
                     "name": "Heating circuit status",
                     "type": "regular"
                 },
-                "switchProgramMode":{
+                "switchProgramMode": {
                     "id": "switchProgramMode",
                     "name": "switchProgramMode",
                     "type": "switchProgramMode"
@@ -433,7 +436,6 @@
                     "id": "suWiThreshold",
                     "name": "Summer Winter Threshold"
                 },
-                
                 "pumpModulation": {
                     "id": "pumpModulation",
                     "name": "Pump Modulation"
@@ -459,7 +461,8 @@
                 {
                     "haname": "on",
                     "boschname": [
-                        "on", "low"
+                        "on",
+                        "low"
                     ]
                 },
                 {
@@ -716,7 +719,7 @@
                     "setpoint": "setpoint1",
                     "type": "manual"
                 },
-                "auto":{
+                "auto": {
                     "setpoint": "setpoint2",
                     "type": "auto"
                 }
@@ -754,7 +757,7 @@
                     "name": "Heating circuit status",
                     "type": "regular"
                 },
-                "switchProgramMode":{
+                "switchProgramMode": {
                     "id": "switchProgramMode",
                     "name": "switchProgramMode",
                     "type": "switchProgramMode"
@@ -803,7 +806,8 @@
                 {
                     "haname": "on",
                     "boschname": [
-                        "on", "low"
+                        "on",
+                        "low"
                     ]
                 },
                 {
@@ -1043,6 +1047,9 @@
                 "name": "Notifications"
             }
         },
+        "recordingsSensors": [
+            "/recordings"
+        ],
         "versionFirmware": "04.07.05"
     }
 }

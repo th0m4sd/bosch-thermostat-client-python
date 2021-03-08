@@ -25,6 +25,7 @@ from bosch_thermostat_client.const import (
     VALUE,
     BASE_FIRMWARE_VERSION,
     RECORDINGS,
+    RECORDINGS_SENSORS,
 )
 from bosch_thermostat_client.db import get_custom_db, get_db_of_firmware, get_initial_db
 from bosch_thermostat_client.exceptions import (
@@ -71,7 +72,9 @@ class BaseGateway:
             _LOGGER.debug("Found device %s", json.dumps(self._device))
             self._db = get_db_of_firmware(self._device[TYPE], self._firmware_version)
             if self._db:
-                _LOGGER.debug(f"Loading database: {self._device[TYPE]}")
+                _LOGGER.debug(
+                    f"Loading database: {self._device[TYPE]} for firmware {self._firmware_version}"
+                )
                 initial_db.pop(MODELS, None)
                 self._db.update(initial_db)
                 self._initialized = True
@@ -203,7 +206,7 @@ class BaseGateway:
             except DeviceException as err:
                 _LOGGER.debug("Circuit %s not found. Skipping it. %s", circuit, err)
                 pass
-        self.initialize_sensors()
+        await self.initialize_sensors()
         supported.append(SENSOR)
         return supported
 
@@ -215,13 +218,16 @@ class BaseGateway:
         await self._data[circ_type].initialize(self._db, self.current_date)
         return self.get_circuits(circ_type)
 
-    def initialize_sensors(self, choosed_sensors=None):
+    async def initialize_sensors(self):
         """Initialize sensors objects."""
-        if not choosed_sensors:
-            choosed_sensors = self._db.get(SENSORS)
         self._data[SENSORS] = Sensors(
-            self._connector, choosed_sensors, self._db[SENSORS]
+            connector=self._connector, sensors_db=self._db[SENSORS]
         )
+        if RECORDINGS_SENSORS in self._db:
+            _LOGGER.info("Initializing RECORDING Sensors.")
+            await self._data[SENSORS].initialize(
+                recordings=self._db[RECORDINGS_SENSORS]
+            )
         return self.sensors
 
     async def rawscan(self):
