@@ -137,8 +137,8 @@ class RecordingSensor(Sensor):
             for recording in reversed(result[RECORDING]):
                 if recording["c"] == 0:
                     continue
-                self._data[self.attr_id][RESULT][VALUE] = (
-                    recording["y"] / recording["c"]
+                self._data[self.attr_id][RESULT][VALUE] = round(
+                    (recording["y"] / recording["c"]), 1
                 )
                 return True
 
