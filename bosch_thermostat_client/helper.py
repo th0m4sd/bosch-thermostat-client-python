@@ -20,6 +20,7 @@ from bosch_thermostat_client.const import (
     REFERENCES,
     RECORDINGS,
     WRITABLE,
+    INTERVAL,
 )
 from bosch_thermostat_client.const.ivt import ALLOWED_VALUES, STATE
 
@@ -45,12 +46,12 @@ async def crawl(url, _list, deep, get, exclude=()):
     """Crawl for Bosch API correct values."""
     try:
         resp = await get(url)
-        if ("references" not in resp or deep == 0) and ID in resp:
+        if (REFERENCES not in resp or deep == 0) and ID in resp:
             if not resp[ID] in exclude:
                 _list.append(resp)
         else:
-            if "references" in resp:
-                for uri in resp["references"]:
+            if REFERENCES in resp:
+                for uri in resp[REFERENCES]:
                     if ID in uri and deep > 0:
                         await crawl(uri[ID], _list, deep - 1, get, exclude)
         return _list
@@ -69,7 +70,7 @@ async def deep_into(url, _list, get):
             intervals = get_all_intervals()
             for ivs in intervals:
                 try:
-                    ivs_resp = await get(f"{url}?interval={ivs}")
+                    ivs_resp = await get(f"{url}?{INTERVAL}={ivs}")
                     _list.append(ivs_resp)
                 except (DeviceException, EncryptionException):
                     pass
@@ -83,7 +84,7 @@ async def deep_into(url, _list, get):
             )
         _list.append(resp)
         if REFERENCES in resp:
-            for idx, val in enumerate(resp["references"]):
+            for idx, val in enumerate(resp[REFERENCES]):
                 val2 = val
                 if URI in val2:
                     val2[URI] = remove_all_ip_occurs(val2[URI])
@@ -123,12 +124,11 @@ class BoschEntities:
 class BoschSingleEntity:
     """Object for single sensor/circuit. Don't use it directly."""
 
-    def __init__(self, name, connector, attr_id, _type, path=None):
+    def __init__(self, name, connector, attr_id, path=None):
         """Initialize single entity."""
         self._connector = connector
         self._main_data = {NAME: name, ID: attr_id, PATH: path}
         self._data = {}
-        self._type = _type
         self._update_initialized = False
         self._state = False
         # self._interrupt = False
