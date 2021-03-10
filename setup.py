@@ -6,7 +6,7 @@ with open("bosch_thermostat_client/version.py") as f:
     exec(f.read())
 
 
-REQUIRES = ["pyaes>=1.6.1", "aiohttp", "aioxmpp>=0.12.0", "click>=7", "colorlog"]
+REQUIRES = ["pyaes>=1.6.1", "aiohttp", "aioxmpp>=0.12.1", "click>=7", "colorlog"]
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
