@@ -1,7 +1,6 @@
 """
 Sensors of Bosch thermostat.
-NotificationSensor uses error codes prepared by Hans Liss in his repo at
-https://github.com/hansliss/regofetcher
+NotificationSensor uses error codes prepared by Hans Liss in his repo at https://github.com/hansliss/regofetcher
 """
 
 import logging
@@ -65,7 +64,7 @@ class Sensors(BoschEntities):
         for record in recordings:
             found_recordings.extend(await self.retrieve_from_module(4, record))
         for rec in found_recordings:
-            sensor_id = f'{RECORDINGS}{rec[RECORDERDRES][ID].split("/")[-1]}'
+            sensor_id = f'r{rec[RECORDERDRES][ID].split("/")[-1]}'
             if sensor_id not in self._items:
                 self._items[sensor_id] = RecordingSensor(
                     connector=self._connector,
@@ -111,9 +110,25 @@ class Sensor(BoschSingleEntity):
 
 
 class RecordingSensor(Sensor):
+    def __init__(self, connector, attr_id, name, path):
+        super().__init__(connector=connector, attr_id=attr_id, name=name, path=path)
+
+        def unit_chooser(uri):
+            if "energy" in uri:
+                return "kWh"
+            if "temp" in uri:
+                return "C"
+            return None
+
+        self._unit_of_measurement = unit_chooser(uri=path)
+
     @property
     def kind(self):
         return RECORDINGS
+
+    @property
+    def unit_of_measurement(self):
+        return self._unit_of_measurement
 
     def process_results(self, result):
         """Convert multi-level json object to one level object."""
