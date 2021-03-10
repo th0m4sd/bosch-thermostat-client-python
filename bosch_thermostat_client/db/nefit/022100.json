@@ -1,0 +1,84 @@
+{
+    "versionFirmware": "02.21.00",
+    "heatingCircuits": {
+        "hastates": [
+            {
+                "haname": "off",
+                "boschname": [
+                    "off"
+                ]
+            },
+            {
+                "haname": "heat",
+                "boschname": [
+                    "manual"
+                ]
+            },
+            {
+                "haname": "auto",
+                "boschname": [
+                    "clock"
+                ]
+            }
+        ],
+        "min_ref": "setpoint1",
+        "max_ref": "setpoint1",
+        "switchprogram": "/heatingCircuits/{}/switchPrograms/{}",
+        "mode_to_setpoint": {
+            "manual": {
+                "setpoint": "setpoint1",
+                "type": "manual"
+            },
+            "clock": {
+                "setpoint": "setpoint1",
+                "type": "auto"
+            }
+        },
+        "refs": {
+            "current_temp": {
+                "id": "roomtemperature",
+                "name": "Room temperature",
+                "type": "regular"
+            },
+            "operation_mode": {
+                "id": "usermode",
+                "name": "Operation mode",
+                "type": "operation_mode"
+            },
+            "setpoint1": {
+                "id": "temperatureRoomManual",
+                "name": "Manual room setpoint",
+                "type": "setpoint"
+            },
+            "activeProgram": {
+                "id": "activeSwitchProgram",
+                "name": "Active Switch Program",
+                "type": "activeProgram"
+            },
+            "status": {
+                "id": "control",
+                "name": "Heating circuit status",
+                "type": "regular"
+            }
+        },
+        "sensors": {}
+    },
+    "sensors": {
+        "outdoor_t1": {
+            "id": "/system/sensors/temperatures/outdoor_t1",
+            "name": "Outdoor temperature"
+        },
+        "dhwa_flow": {
+            "id": "/system/sensors/flow/dhwA/status",
+            "name": "Flow control"
+        },
+        "system_pressure": {
+            "id": "/system/appliance/systemPressure",
+            "name": "System pressure"
+        },
+        "actualPower": {
+            "id": "/system/appliance/actualPower",
+            "name": "Actual power"
+        }
+    }
+}

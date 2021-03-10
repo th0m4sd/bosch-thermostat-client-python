@@ -12,7 +12,6 @@ from bosch_thermostat_client.const import (
     URI,
     TYPE,
     REGULAR,
-    SENSOR,
     VALUE,
     VALUES,
     INTERVAL,
@@ -68,7 +67,6 @@ class Sensors(BoschEntities):
         for rec in found_recordings:
             sensor_id = f'{RECORDINGS}{rec[RECORDERDRES][ID].split("/")[-1]}'
             if sensor_id not in self._items:
-                print("dupa!")
                 self._items[sensor_id] = RecordingSensor(
                     connector=self._connector,
                     attr_id=sensor_id,
