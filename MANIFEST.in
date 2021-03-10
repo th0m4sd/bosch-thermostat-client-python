@@ -1,3 +1,4 @@
 include LICENSE.txt
 include README.md
 include bosch_thermostat_client/db/*.json
+include bosch_thermostat_client/db/*/*.json
