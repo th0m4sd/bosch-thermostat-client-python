@@ -286,5 +286,8 @@
             "id": "/notifications",
             "name": "Notifications"
         }
-    }
+    },
+    "recordingsSensors": [
+        "/recordings"
+    ]
 }
