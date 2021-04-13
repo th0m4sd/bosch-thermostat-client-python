@@ -68,21 +68,13 @@
             "id": "/system/sensors/temperatures/outdoor_t1",
             "name": "Outdoor temperature"
         },
-        "indoorAirDigital": {
-            "id": "/system/sensors/temperatures/indoorAirDigital",
+        "temperatureActual": {
+            "id": "/zones/zn1/temperatureActual",
             "name": "Indoor temperature"
-        },
-        "offset": {
-            "id": "/system/sensors/temperatures/offset",
-            "name": "Indoor temperature"
-        },
-        "indoorAirDigitalCompensatedTemperature": {
-            "id": "/gateway/test/indoorAirDigitalCompensatedTemperature",
-            "name": "Indoor compensated temperature"
         },
         "indoor_h1": {
             "id": "/system/sensors/humidity/indoor_h1",
-            "name": "Indoor umidity"
+            "name": "Indoor humidity"
         },
         "system_pressure": {
             "id": "/system/appliance/systemPressure",
