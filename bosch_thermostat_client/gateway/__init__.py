@@ -1,5 +1,6 @@
 from .ivt_gateway import IVTGateway
 from .nefit_gateway import NefitGateway
+from .easycontrol_gateway import EasycontrolGateway
 from bosch_thermostat_client.const.ivt import IVT
 
 

@@ -6,6 +6,7 @@ import bosch_thermostat_client as bosch
 from bosch_thermostat_client.const import XMPP
 from bosch_thermostat_client.const.ivt import HTTP, IVT
 from bosch_thermostat_client.const.nefit import NEFIT
+from bosch_thermostat_client.const.easycontrol import EASYCONTROL
 import json
 import asyncio
 from functools import wraps
@@ -104,9 +105,9 @@ async def cli(ctx):
 @click.option(
     "--device",
     envvar="BOSCH_DEVICE",
-    type=click.Choice([NEFIT, IVT], case_sensitive=False),
+    type=click.Choice([NEFIT, IVT, EASYCONTROL], case_sensitive=False),
     required=True,
-    help="Bosch device type. NEFIT or IVT.",
+    help="Bosch device type. NEFIT, IVT or EASYCONTROL.",
 )
 @click.option(
     "-o",
@@ -154,7 +155,7 @@ async def scan(
     logging.getLogger("aioopenssl").setLevel(logging.WARN)
     logging.getLogger("aiosasl").setLevel(logging.WARN)
     logging.getLogger("asyncio").setLevel(logging.WARN)
-    if device.upper() == NEFIT or device.upper() == IVT:
+    if device.upper() in (NEFIT, IVT, EASYCONTROL):
         BoschGateway = bosch.gateway_chooser(device_type=device)
     else:
         _LOGGER.error("Wrong device type.")
@@ -219,9 +220,9 @@ async def scan(
 @click.option(
     "--device",
     envvar="BOSCH_DEVICE",
-    type=click.Choice([NEFIT, IVT], case_sensitive=False),
+    type=click.Choice([NEFIT, IVT, EASYCONTROL], case_sensitive=False),
     required=True,
-    help="Bosch device type. NEFIT or IVT.",
+    help="Bosch device type. NEFIT, IVT or EASYCONTROL.",
 )
 @click.option(
     "-d",
@@ -265,7 +266,7 @@ async def query(
         logging.getLogger("aioopenssl").setLevel(logging.WARN)
         logging.getLogger("aiosasl").setLevel(logging.WARN)
         logging.getLogger("asyncio").setLevel(logging.WARN)
-    if device.upper() == NEFIT or device.upper() == IVT:
+    if device.upper() in (NEFIT, IVT, EASYCONTROL):
         BoschGateway = bosch.gateway_chooser(device_type=device)
     else:
         _LOGGER.error("Wrong device type.")
