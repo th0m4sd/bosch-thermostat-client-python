@@ -43,7 +43,7 @@ class EasycontrolGateway(BaseGateway):
         :param access_token:
         :param password:
         :param host:
-        :param device_type -> IVT or NEFIT
+        :param device_type -> IVT or NEFIT or EASYCONTROL
         """
         self._access_token = access_token.replace("-", "")
         if password:

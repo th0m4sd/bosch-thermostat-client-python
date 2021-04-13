@@ -139,9 +139,11 @@ async def scan(
     smallscan: str,
 ):
     """Create rawscan of Bosch thermostat."""
-    if debug:
+    if debug == 0:
+        logging.basicConfig(level=logging.INFO)
+    if debug > 0:
         logging.basicConfig(
-            colorfmt,
+            # colorfmt,
             datefmt=datefmt,
             level=logging.DEBUG,
             filename="out.log",
@@ -149,12 +151,17 @@ async def scan(
         )
         _LOGGER.info("Debug mode active")
         _LOGGER.debug(f"Lib version is {bosch.version}")
+    if debug > 1:
+        logging.getLogger("aioxmpp").setLevel(logging.DEBUG)
+        logging.getLogger("aioopenssl").setLevel(logging.DEBUG)
+        logging.getLogger("aiosasl").setLevel(logging.DEBUG)
+        logging.getLogger("asyncio").setLevel(logging.DEBUG)
     else:
-        logging.basicConfig(level=logging.INFO)
-    logging.getLogger("aioxmpp").setLevel(logging.WARN)
-    logging.getLogger("aioopenssl").setLevel(logging.WARN)
-    logging.getLogger("aiosasl").setLevel(logging.WARN)
-    logging.getLogger("asyncio").setLevel(logging.WARN)
+        logging.getLogger("aioxmpp").setLevel(logging.WARN)
+        logging.getLogger("aioopenssl").setLevel(logging.WARN)
+        logging.getLogger("aiosasl").setLevel(logging.WARN)
+        logging.getLogger("asyncio").setLevel(logging.WARN)
+
     if device.upper() in (NEFIT, IVT, EASYCONTROL):
         BoschGateway = bosch.gateway_chooser(device_type=device)
     else:

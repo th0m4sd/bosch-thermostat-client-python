@@ -1,0 +1,17 @@
+{
+  "versionFirmwarePath": "/gateway/versionFirmware",
+  "gateway": {
+    "uuid": "/gateway/uuid",
+    "systemBus": "/system/interfaces",
+    "versionFirmware": "/gateway/versionFirmware",
+    "productID": "/gateway/productID",
+    "dateTime": "/gateway/DateTime"
+  },
+  "models": {
+    "8737906739": {
+      "value": "CT200",
+      "name": "Bosch CT200",
+      "type": "EASYCONTROL"
+    }
+  }
+}
