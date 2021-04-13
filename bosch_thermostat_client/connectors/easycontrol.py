@@ -21,7 +21,6 @@ class EasycontrolConnector(XMPPBaseConnector):
         super().__init__(host, loop, access_key, encryption)
 
     def _build_message(self, method, path, data=None):
-        print("BUILDING")
         msg = aioxmpp.stanza.Message(
             to=self._to,
             type_=aioxmpp.MessageType.CHAT,
@@ -44,6 +43,5 @@ class EasycontrolConnector(XMPPBaseConnector):
                 '\r\r'
             ])
         msg.body[None] = body
-        print(msg)
         self._seqno += 1
         return msg
