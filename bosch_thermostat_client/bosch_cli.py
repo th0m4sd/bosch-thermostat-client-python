@@ -257,7 +257,7 @@ async def query(
     path: str,
     debug: int,
 ):
-    """Create rawscan of Bosch thermostat."""
+    """Query values of Bosch thermostat."""
     if debug == 0:
         logging.basicConfig(level=logging.INFO)
     if debug > 0:

@@ -17,7 +17,7 @@ Options:
   --help  Show this message and exit.
 
 Commands:
-  query  Create rawscan of Bosch thermostat.
+  query  Query values of Bosch thermostat.
   scan   Create rawscan of Bosch thermostat.
 
 bosch_cli scan --help
