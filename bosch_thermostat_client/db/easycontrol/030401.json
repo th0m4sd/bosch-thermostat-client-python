@@ -68,17 +68,33 @@
             "id": "/system/sensors/temperatures/outdoor_t1",
             "name": "Outdoor temperature"
         },
-        "dhwa_flow": {
-            "id": "/system/sensors/flow/dhwA/status",
-            "name": "Flow control"
+        "indoorAirDigital": {
+            "id": "/system/sensors/temperatures/indoorAirDigital",
+            "name": "Indoor temperature"
+        },
+        "offset": {
+            "id": "/system/sensors/temperatures/offset",
+            "name": "Indoor temperature"
+        },
+        "indoorAirDigitalCompensatedTemperature": {
+            "id": "/gateway/test/indoorAirDigitalCompensatedTemperature",
+            "name": "Indoor compoensated temperature"
+        },
+        "indoor_h1": {
+            "id": "/system/sensors/humidity/indoor_h1",
+            "name": "Indoor umidity"
         },
         "system_pressure": {
             "id": "/system/appliance/systemPressure",
             "name": "System pressure"
         },
-        "actualPower": {
-            "id": "/system/appliance/actualPower",
-            "name": "Actual power"
+        "actualModulation": {
+            "id": "/heatSources/actualModulation",
+            "name": "Actual modulation"
+        },
+        "CHpumpModulation": {
+            "id": "/heatSources/CHpumpModulation",
+            "name": "Actual heating pump modulation"
         }
     }
 }
