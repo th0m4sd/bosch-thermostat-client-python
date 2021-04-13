@@ -1,9 +1,10 @@
 """Gateway module connecting to Bosch thermostat."""
 
+from bosch_thermostat_client.const.ivt import HTTP
 import logging
 from .base_gateway import BaseGateway
 
-from bosch_thermostat_client.connectors import NefitConnector
+from bosch_thermostat_client.connectors import NefitConnector, HttpConnector
 from bosch_thermostat_client.encryption import NefitEncryption as Encryption
 from bosch_thermostat_client.const import (
     XMPP,
@@ -30,12 +31,11 @@ class NefitGateway(BaseGateway):
     def __init__(
         self,
         session,
-        session_type,
         host,
         access_token,
+        session_type=XMPP,
         access_key=None,
         password=None,
-        nefit_connector=None,
     ):
         """
         Initialize gateway.
@@ -46,9 +46,13 @@ class NefitGateway(BaseGateway):
         :param device_type -> IVT or NEFIT
         """
         self._access_token = access_token.replace("-", "")
+
         if password:
             access_key = self._access_token
-        if not nefit_connector:
+        if session_type == HTTP:
+            _LOGGER.warn("I'm using HTTP connector. It's probably debug session!")
+            nefit_connector = HttpConnector
+        else:
             nefit_connector = NefitConnector
         self._connector = nefit_connector(
             host=host,
@@ -56,7 +60,7 @@ class NefitGateway(BaseGateway):
             access_key=self._access_token,
             encryption=Encryption(access_key, password),
         )
-        self._session_type = XMPP
+        self._session_type = session_type
         super().__init__(host)
 
     async def _update_info(self, initial_db):
