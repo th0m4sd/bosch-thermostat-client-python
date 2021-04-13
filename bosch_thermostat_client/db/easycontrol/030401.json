@@ -78,7 +78,7 @@
         },
         "indoorAirDigitalCompensatedTemperature": {
             "id": "/gateway/test/indoorAirDigitalCompensatedTemperature",
-            "name": "Indoor compoensated temperature"
+            "name": "Indoor compensated temperature"
         },
         "indoor_h1": {
             "id": "/system/sensors/humidity/indoor_h1",
