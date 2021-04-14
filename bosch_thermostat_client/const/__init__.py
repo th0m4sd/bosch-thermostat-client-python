@@ -1,5 +1,6 @@
 BS = 16
 XMPP = "XMPP"
+HTTP = "HTTP"
 UUID = "uuid"
 
 """ METHODS """
@@ -105,9 +106,8 @@ ROOT_PATHS = [
     "/solarCircuits",
     "/recordings",
     "/devices",
-    "/energy",     
-    "/events"
-    "/programs",
+    "/energy",
+    "/events" "/programs",
     "/zones",
 ]
 SENSORS = "sensors"

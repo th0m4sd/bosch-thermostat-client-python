@@ -1,12 +1,12 @@
 """Gateway module connecting to Bosch thermostat."""
 
-from bosch_thermostat_client.const.ivt import HTTP
 import logging
 from .base_gateway import BaseGateway
 
 from bosch_thermostat_client.connectors import NefitConnector, HttpConnector
 from bosch_thermostat_client.encryption import NefitEncryption as Encryption
 from bosch_thermostat_client.const import (
+    HTTP,
     XMPP,
     GATEWAY,
     MODELS,
@@ -43,7 +43,7 @@ class NefitGateway(BaseGateway):
         :param access_token:
         :param password:
         :param host:
-        :param device_type -> IVT or NEFIT
+        :param device_type -> NEFIT
         """
         self._access_token = access_token.replace("-", "")
 

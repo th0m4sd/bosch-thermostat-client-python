@@ -3,9 +3,10 @@
 import logging
 from .base_gateway import BaseGateway
 
-from bosch_thermostat_client.connectors import EasycontrolConnector
+from bosch_thermostat_client.connectors import EasycontrolConnector, HttpConnector
 from bosch_thermostat_client.encryption import EasycontrolEncryption as Encryption
 from bosch_thermostat_client.const import (
+    HTTP,
     XMPP,
     GATEWAY,
     MODELS,
@@ -30,9 +31,9 @@ class EasycontrolGateway(BaseGateway):
     def __init__(
         self,
         session,
-        session_type,
         host,
         access_token,
+        session_type=XMPP,
         access_key=None,
         password=None,
         easycontrol_connector=None,
@@ -48,7 +49,10 @@ class EasycontrolGateway(BaseGateway):
         self._access_token = access_token.replace("-", "")
         if password:
             access_key = self._access_token
-        if not easycontrol_connector:
+        if session_type == HTTP:
+            _LOGGER.warn("I'm using HTTP connector. It's probably debug session!")
+            easycontrol_connector = HttpConnector
+        else:
             easycontrol_connector = EasycontrolConnector
         self._connector = easycontrol_connector(
             host=host,
@@ -56,7 +60,7 @@ class EasycontrolGateway(BaseGateway):
             access_key=self._access_token,
             encryption=Encryption(access_key, password),
         )
-        self._session_type = XMPP
+        self._session_type = session_type
         super().__init__(host)
 
     async def _update_info(self, initial_db):

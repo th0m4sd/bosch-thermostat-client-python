@@ -3,8 +3,8 @@ import logging
 from colorlog import ColoredFormatter
 import aiohttp
 import bosch_thermostat_client as bosch
-from bosch_thermostat_client.const import XMPP
-from bosch_thermostat_client.const.ivt import HTTP, IVT
+from bosch_thermostat_client.const import XMPP, HTTP
+from bosch_thermostat_client.const.ivt import IVT
 from bosch_thermostat_client.const.nefit import NEFIT
 from bosch_thermostat_client.const.easycontrol import EASYCONTROL
 import json
