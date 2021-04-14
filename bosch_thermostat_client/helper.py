@@ -26,7 +26,6 @@ from bosch_thermostat_client.const.ivt import ALLOWED_VALUES, STATE
 
 from .exceptions import DeviceException, EncryptionException
 import base64
-import binascii
 
 _LOGGER = logging.getLogger(__name__)
 

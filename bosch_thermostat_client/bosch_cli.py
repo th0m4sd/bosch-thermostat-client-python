@@ -119,6 +119,13 @@ async def cli(ctx):
 @click.option("--stdout", default=False, count=True, help="Print scan to stdout")
 @click.option("-d", "--debug", default=False, count=True)
 @click.option(
+    "-i",
+    "--ignore-unknown",
+    count=True,
+    default=False,
+    help="Ignore unknown device type. Try to scan anyway. Useful for discovering new devices.",
+)
+@click.option(
     "-s",
     "--smallscan",
     type=click.Choice(["HC", "DHW", "SENSORS", "RECORDINGS"], case_sensitive=False),
@@ -136,6 +143,7 @@ async def scan(
     output: str,
     stdout: int,
     debug: int,
+    ignore_unknown: int,
     smallscan: str,
 ):
     """Create rawscan of Bosch thermostat."""
@@ -185,7 +193,8 @@ async def scan(
         )
 
         _LOGGER.debug("Trying to connect to gateway.")
-        if await gateway.check_connection():
+        connected = True if ignore_unknown else await gateway.check_connection()
+        if connected:
             _LOGGER.info("Running scan")
             await _scan(gateway, smallscan, output, stdout)
         else:

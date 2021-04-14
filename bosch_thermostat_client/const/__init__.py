@@ -107,7 +107,8 @@ ROOT_PATHS = [
     "/recordings",
     "/devices",
     "/energy",
-    "/events" "/programs",
+    "/events",
+    "/programs",
     "/zones",
 ]
 SENSORS = "sensors"
