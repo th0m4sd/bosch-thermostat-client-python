@@ -282,7 +282,7 @@ async def query(
     _LOGGER.info("Connecting to %s with '%s'", host, session_type)
     if session_type == XMPP:
         session = asyncio.get_event_loop()
-    elif session_type == HTTP and device.upper() == IVT:
+    elif session_type == HTTP and (device.upper() == IVT or "127.0.0.1" in host):
         session = aiohttp.ClientSession()
     else:
         _LOGGER.error("Wrong protocol for this device")
