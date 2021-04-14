@@ -17,6 +17,11 @@
       "value": "TC100.2",
       "name": "Buderus TC100.2",
       "type": "EASYCONTROL"
+    },
+    "8737906738":{
+      "value": "CT200",
+      "name": "Bosch EasyControl CT200",
+      "type": "EASYCONTROL"
     }
   }
 }

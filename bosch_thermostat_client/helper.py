@@ -39,6 +39,9 @@ CONFIDENTIAL_URI = (
     "/gateway/user/phone",
     "/system/location/coordinates",
     "/system/location/localization",
+    "/gateway/serialnumber",
+    "/gateway/remoteServicesPassword",
+    "/gateway/identificationKey",
 )
 
 
@@ -99,7 +102,7 @@ async def deep_into(url, _list, get):
                     _list.append(ivs_resp)
                 except (DeviceException, EncryptionException):
                     pass
-        if ID in new_resp and new_resp[ID] == "/gateway/uuid":
+        if ID in new_resp and new_resp[ID] in CONFIDENTIAL_URI:
             new_resp[VALUE] = "-1"
             if ALLOWED_VALUES in new_resp:
                 new_resp[ALLOWED_VALUES] = ["-1"]
