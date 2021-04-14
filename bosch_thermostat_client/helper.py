@@ -25,10 +25,36 @@ from bosch_thermostat_client.const import (
 from bosch_thermostat_client.const.ivt import ALLOWED_VALUES, STATE
 
 from .exceptions import DeviceException, EncryptionException
+import base64
+import binascii
 
 _LOGGER = logging.getLogger(__name__)
 
 HTTP_REGEX = re.compile("http://\\d+\\.\\d+\\.\\d+\\.\\d+/", re.IGNORECASE)
+
+CONFIDENTIAL_URI = (
+    "/gateway/uuid",
+    "/gateway/user/address",
+    "/gateway/user/email",
+    "/gateway/user/name",
+    "/gateway/user/phone",
+    "/system/location/coordinates",
+    "/system/location/localization",
+)
+
+
+def isBase64(s):
+    try:
+        return base64.b64encode(base64.b64decode(s)) == s
+    except Exception:
+        return False
+
+
+def check_base64(s):
+    try:
+        return base64.b64decode(s).decode("utf-8")
+    except Exception:
+        return s
 
 
 def get_all_intervals():
@@ -82,6 +108,8 @@ async def deep_into(url, _list, get):
             new_resp["setpointProperty"][URI] = remove_all_ip_occurs(
                 new_resp["setpointProperty"][URI]
             )
+        if TYPE in resp and resp[TYPE] == "stringValue":
+            new_resp[VALUE] = check_base64(new_resp[VALUE])
         _list.append(resp)
         if REFERENCES in resp:
             for idx, val in enumerate(resp[REFERENCES]):

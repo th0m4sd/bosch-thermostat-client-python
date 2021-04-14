@@ -80,10 +80,13 @@ class EasycontrolGateway(BaseGateway):
         """Find device model."""
         product_id = self._data[GATEWAY].get(PRODUCT_ID)
         model_scheme = _db[MODELS]
+        model = None
         for bus in self._data[GATEWAY].get(SYSTEM_BUS, []):
             if EMS in bus.get(ID, "").upper():
                 self._bus_type = EMS
                 break
         if self._bus_type == EMS:
-            return model_scheme.get(product_id)
-        _LOGGER.error(f"Couldn't find device model. Got product ID: {product_id}")
+            model = model_scheme.get(product_id)
+        if not model:
+            _LOGGER.error(f"Couldn't find device model. Got product ID: {product_id}")
+        return model
