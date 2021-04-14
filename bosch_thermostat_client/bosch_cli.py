@@ -6,6 +6,7 @@ import bosch_thermostat_client as bosch
 from bosch_thermostat_client.const import XMPP
 from bosch_thermostat_client.const.ivt import HTTP, IVT
 from bosch_thermostat_client.const.nefit import NEFIT
+from bosch_thermostat_client.const.easycontrol import EASYCONTROL
 import json
 import asyncio
 from functools import wraps
@@ -104,9 +105,9 @@ async def cli(ctx):
 @click.option(
     "--device",
     envvar="BOSCH_DEVICE",
-    type=click.Choice([NEFIT, IVT], case_sensitive=False),
+    type=click.Choice([NEFIT, IVT, EASYCONTROL], case_sensitive=False),
     required=True,
-    help="Bosch device type. NEFIT or IVT.",
+    help="Bosch device type. NEFIT, IVT or EASYCONTROL.",
 )
 @click.option(
     "-o",
@@ -138,9 +139,11 @@ async def scan(
     smallscan: str,
 ):
     """Create rawscan of Bosch thermostat."""
-    if debug:
+    if debug == 0:
+        logging.basicConfig(level=logging.INFO)
+    if debug > 0:
         logging.basicConfig(
-            colorfmt,
+            # colorfmt,
             datefmt=datefmt,
             level=logging.DEBUG,
             filename="out.log",
@@ -148,13 +151,18 @@ async def scan(
         )
         _LOGGER.info("Debug mode active")
         _LOGGER.debug(f"Lib version is {bosch.version}")
+    if debug > 1:
+        logging.getLogger("aioxmpp").setLevel(logging.DEBUG)
+        logging.getLogger("aioopenssl").setLevel(logging.DEBUG)
+        logging.getLogger("aiosasl").setLevel(logging.DEBUG)
+        logging.getLogger("asyncio").setLevel(logging.DEBUG)
     else:
-        logging.basicConfig(level=logging.INFO)
-    logging.getLogger("aioxmpp").setLevel(logging.WARN)
-    logging.getLogger("aioopenssl").setLevel(logging.WARN)
-    logging.getLogger("aiosasl").setLevel(logging.WARN)
-    logging.getLogger("asyncio").setLevel(logging.WARN)
-    if device.upper() == NEFIT or device.upper() == IVT:
+        logging.getLogger("aioxmpp").setLevel(logging.WARN)
+        logging.getLogger("aioopenssl").setLevel(logging.WARN)
+        logging.getLogger("aiosasl").setLevel(logging.WARN)
+        logging.getLogger("asyncio").setLevel(logging.WARN)
+
+    if device.upper() in (NEFIT, IVT, EASYCONTROL):
         BoschGateway = bosch.gateway_chooser(device_type=device)
     else:
         _LOGGER.error("Wrong device type.")
@@ -219,9 +227,9 @@ async def scan(
 @click.option(
     "--device",
     envvar="BOSCH_DEVICE",
-    type=click.Choice([NEFIT, IVT], case_sensitive=False),
+    type=click.Choice([NEFIT, IVT, EASYCONTROL], case_sensitive=False),
     required=True,
-    help="Bosch device type. NEFIT or IVT.",
+    help="Bosch device type. NEFIT, IVT or EASYCONTROL.",
 )
 @click.option(
     "-d",
@@ -249,7 +257,7 @@ async def query(
     path: str,
     debug: int,
 ):
-    """Create rawscan of Bosch thermostat."""
+    """Query values of Bosch thermostat."""
     if debug == 0:
         logging.basicConfig(level=logging.INFO)
     if debug > 0:
@@ -265,7 +273,7 @@ async def query(
         logging.getLogger("aioopenssl").setLevel(logging.WARN)
         logging.getLogger("aiosasl").setLevel(logging.WARN)
         logging.getLogger("asyncio").setLevel(logging.WARN)
-    if device.upper() == NEFIT or device.upper() == IVT:
+    if device.upper() in (NEFIT, IVT, EASYCONTROL):
         BoschGateway = bosch.gateway_chooser(device_type=device)
     else:
         _LOGGER.error("Wrong device type.")

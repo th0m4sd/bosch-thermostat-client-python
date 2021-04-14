@@ -5,13 +5,19 @@ from bosch_thermostat_client.helper import BoschEntities
 from .circuit import BasicCircuit
 from .ivt_circuit import IVTCircuit
 from .nefit_circuit import NefitCircuit
+from .easycontrol_circuit import EasycontrolCircuit
 from bosch_thermostat_client.const.ivt import IVT
+from bosch_thermostat_client.const.nefit import NEFIT
+from bosch_thermostat_client.const.easycontrol import EASYCONTROL
 
 _LOGGER = logging.getLogger(__name__)
 
 
 def choose_circuit_type(device_type):
-    return IVTCircuit if device_type == IVT else NefitCircuit
+    return {IVT: IVTCircuit,
+            NEFIT: NefitCircuit,
+            EASYCONTROL: EasycontrolCircuit
+            }[device_type]
 
 
 class Circuits(BoschEntities):

@@ -1,6 +1,7 @@
 from .http import HttpConnector
 from .ivt import IVTXMPPConnector
 from .nefit import NefitConnector
+from .easycontrol import EasycontrolConnector
 
 from bosch_thermostat_client.const.ivt import HTTP
 

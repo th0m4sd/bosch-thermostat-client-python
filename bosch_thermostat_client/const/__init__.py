@@ -104,6 +104,11 @@ ROOT_PATHS = [
     "/system",
     "/solarCircuits",
     "/recordings",
+    "/devices",
+    "/energy",     
+    "/events"
+    "/programs",
+    "/zones",
 ]
 SENSORS = "sensors"
 SENSOR = "sensor"

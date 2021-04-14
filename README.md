@@ -17,7 +17,7 @@ Options:
   --help  Show this message and exit.
 
 Commands:
-  query  Create rawscan of Bosch thermostat.
+  query  Query values of Bosch thermostat.
   scan   Create rawscan of Bosch thermostat.
 
 bosch_cli scan --help
@@ -37,7 +37,8 @@ Options:
   --protocol [XMPP|HTTP]          Bosch protocol. Either XMPP or HTTP.
                                   [required]
 
-  --device [NEFIT|IVT]            Bosch device type. NEFIT or IVT.  [required]
+  --device [NEFIT|IVT|EASYCONTROL
+                     ]            Bosch device type. NEFIT, IVT or EASYCONTROL.  [required]
   -o, --output TEXT               Path to output file of scan. Default to
                                   [raw/small]scan_uuid.json
 

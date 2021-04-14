@@ -1,0 +1,5 @@
+MAGIC_EASYCONTROL = bytearray.fromhex(
+    "1d86b2631b02f2c7978b41e8a3ae609b0b2afbfd30ff386da60c586a827408e4"
+)
+EASYCONTROL = "EASYCONTROL"
+PRODUCT_ID = "productID"
