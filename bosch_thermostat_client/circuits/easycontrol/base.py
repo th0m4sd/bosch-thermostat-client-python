@@ -22,7 +22,7 @@ from bosch_thermostat_client.const.easycontrol import CIRCUIT_TYPES
 
 
 class EasycontrolCircuit(Circuit):
-    def __init__(self, connector, attr_id, db, _type, bus_type, current_date):
+    def __init__(self, connector, attr_id, db, _type, bus_type, current_date, **kwargs):
         super().__init__(connector, attr_id, db, CIRCUIT_TYPES[_type], bus_type)
 
     @property
@@ -101,3 +101,8 @@ class EasycontrolCircuit(Circuit):
             return OFF
         if self._op_mode.is_manual:
             return self._op_mode.current_mode
+
+    @property
+    def support_charge(self):
+        """Is DHW support charge."""
+        return True

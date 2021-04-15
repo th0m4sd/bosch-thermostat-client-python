@@ -185,9 +185,10 @@ class BoschSingleEntity:
                 WRITABLE,
             ]:
                 if res_key in result:
-                    if res_key in data and result[res_key] == data[res_key]:
+                    unbased64 = check_base64(result[res_key])
+                    if res_key in data and unbased64 == data[res_key]:
                         continue
-                    data[res_key] = result[res_key]
+                    data[res_key] = unbased64
                     self._update_initialized = True
                     updated = True
         if STATE in result:

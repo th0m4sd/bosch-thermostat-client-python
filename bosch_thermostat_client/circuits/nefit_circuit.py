@@ -23,7 +23,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class NefitCircuit(Circuit):
-    def __init__(self, connector, attr_id, db, _type, bus_type, current_date):
+    def __init__(self, connector, attr_id, db, _type, bus_type, current_date, **kwargs):
         super().__init__(connector, attr_id, db, CIRCUIT_TYPES[_type], bus_type)
 
     @property

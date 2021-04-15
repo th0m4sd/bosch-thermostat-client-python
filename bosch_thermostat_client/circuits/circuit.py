@@ -251,3 +251,8 @@ class Circuit(BasicCircuit):
             active_program = self.get_activeswitchprogram()
             if active_program:
                 await self.schedule.update_schedule(active_program)
+
+    @property
+    def support_charge(self):
+        """Is DHW support charge."""
+        return True

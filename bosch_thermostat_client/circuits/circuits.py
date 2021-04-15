@@ -13,9 +13,10 @@ from .circuit import BasicCircuit
 from .ivt_circuit import IVTCircuit
 from .nefit_circuit import NefitCircuit
 from .easycontrol import EasycontrolCircuit, EasyZoneCircuit
-from bosch_thermostat_client.const.ivt import IVT
+from bosch_thermostat_client.const.ivt import IVT, CIRCUIT_TYPES
 from bosch_thermostat_client.const.nefit import NEFIT
-from bosch_thermostat_client.const.easycontrol import EASYCONTROL
+from bosch_thermostat_client.const.easycontrol import EASYCONTROL, PROGRAM_LIST
+from bosch_thermostat_client.schedule import ZonePrograms
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -45,6 +46,7 @@ class Circuits(BoschEntities):
         self._connector = connector
         self._bus_type = bus_type
         self._device_type = device_type
+        self._zone_programs = None
         super().__init__(connector.get)
 
     @property
@@ -60,6 +62,11 @@ class Circuits(BoschEntities):
             _LOGGER.debug("Circuit not exist in database %s", db_prefix)
             return None
         circuits = await self.retrieve_from_module(1, f"/{db_prefix}")
+        if self._device_type == EASYCONTROL and PROGRAM_LIST in database:
+            self._zone_programs = ZonePrograms(
+                program_uri=database[PROGRAM_LIST], connector=self._connector
+            )
+
         for circuit in circuits:
             if REFERENCES in circuit:
                 circuit_object = self.create_circuit(circuit, database, current_date)
@@ -73,19 +80,20 @@ class Circuits(BoschEntities):
         if self._circuit_type in (HC, DHW, ZN):
             Circuit = choose_circuit_type(self._device_type, self._circuit_type)
             return Circuit(
-                self._connector,
-                circuit[ID],
-                database,
-                self._circuit_type,
-                self._bus_type,
-                current_date,
+                connector=self._connector,
+                attr_id=circuit[ID],
+                db=database,
+                _type=self._circuit_type,
+                bus_type=self._bus_type,
+                current_date=current_date,
+                zone_program=self._zone_programs,
             )
         elif self._circuit_type == SC:
             return BasicCircuit(
-                self._connector,
-                circuit[ID],
-                database,
-                self._circuit_type,
-                self._bus_type,
+                connector=self._connector,
+                attr_id=circuit[ID],
+                db=database,
+                _type=CIRCUIT_TYPES[self._circuit_type],
+                bus_type=self._bus_type,
             )
         return None

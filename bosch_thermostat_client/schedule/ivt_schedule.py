@@ -32,7 +32,7 @@ from bosch_thermostat_client.const.ivt import (
     SWITCH_POINTS,
     CAN,
 )
-from .exceptions import DeviceException
+from bosch_thermostat_client.exceptions import DeviceException
 
 _LOGGER = logging.getLogger(__name__)
 

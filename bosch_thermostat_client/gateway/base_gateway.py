@@ -1,5 +1,7 @@
 """Gateway module connecting to Bosch thermostat."""
 
+from bosch_thermostat_client.const.nefit import NEFIT
+from bosch_thermostat_client.const.ivt import IVT
 import logging
 
 from bosch_thermostat_client.circuits import Circuits
@@ -19,6 +21,7 @@ from bosch_thermostat_client.const import (
     SC,
     SENSORS,
     SENSOR,
+    SWITCH,
     TYPE,
     UUID,
     VALUE,
@@ -201,6 +204,8 @@ class BaseGateway:
                 circuit_object = await self.initialize_circuits(circuit)
                 if circuit_object:
                     supported.append(circuit)
+                if circuit == DHW and self.device_type in (IVT, NEFIT):
+                    supported.append(SWITCH)
             except DeviceException as err:
                 _LOGGER.debug("Circuit %s not found. Skipping it. %s", circuit, err)
                 pass

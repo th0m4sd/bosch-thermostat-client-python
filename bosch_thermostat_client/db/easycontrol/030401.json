@@ -1,13 +1,8 @@
 {
     "versionFirmware": "03.04.01",
+    "programList": "/programs/list",
     "zones": {
         "hastates": [
-            {
-                "haname": "off",
-                "boschname": [
-                    "off"
-                ]
-            },
             {
                 "haname": "heat",
                 "boschname": [
@@ -68,7 +63,12 @@
                 "id": "name",
                 "name": "Name of zone",
                 "type": "regular"
-            }
+            },
+            "activeProgram":{
+                "id": "clockProgram",
+                "name": "Active Switch Program",
+                "type": "activeProgram"
+            }            
         },
         "sensors": {
             "actualValvePosition": {
@@ -107,10 +107,6 @@
         "min_ref": "setpoint1",
         "max_ref": "setpoint1",
         "mode_to_setpoint": {
-            "low": {
-                "setpoint": "setpoint2",
-                "type": "manual"
-            },
             "Off": {
                 "setpoint": null,
                 "type": "off"
@@ -134,11 +130,6 @@
             "setpoint1": {
                 "id": "temperatureLevels/high",
                 "name": "DHW High level",
-                "type": "setpoint"
-            },
-            "setpoint2": {
-                "id": "temperatureLevels/low",
-                "name": "DHW Low level",
                 "type": "setpoint"
             },
             "status": {
