@@ -1,11 +1,18 @@
 """Circuits module of Bosch thermostat."""
 import logging
-from bosch_thermostat_client.const import ID, CIRCUIT_TYPES, HC, DHW, SC, REFERENCES
+from bosch_thermostat_client.const import (
+    ID,
+    HC,
+    DHW,
+    ZN,
+    SC,
+    REFERENCES,
+)
 from bosch_thermostat_client.helper import BoschEntities
 from .circuit import BasicCircuit
 from .ivt_circuit import IVTCircuit
 from .nefit_circuit import NefitCircuit
-from .easycontrol_circuit import EasycontrolCircuit
+from .easycontrol import EasycontrolCircuit, EasyZoneCircuit
 from bosch_thermostat_client.const.ivt import IVT
 from bosch_thermostat_client.const.nefit import NEFIT
 from bosch_thermostat_client.const.easycontrol import EASYCONTROL
@@ -13,11 +20,14 @@ from bosch_thermostat_client.const.easycontrol import EASYCONTROL
 _LOGGER = logging.getLogger(__name__)
 
 
-def choose_circuit_type(device_type):
-    return {IVT: IVTCircuit,
-            NEFIT: NefitCircuit,
-            EASYCONTROL: EasycontrolCircuit
-            }[device_type]
+def choose_circuit_type(device_type, circuit_type):
+    suffix = ZN if circuit_type == ZN else ""
+    return {
+        IVT: IVTCircuit,
+        NEFIT: NefitCircuit,
+        EASYCONTROL: EasycontrolCircuit,
+        EASYCONTROL + ZN: EasyZoneCircuit,
+    }[device_type + suffix]
 
 
 class Circuits(BoschEntities):
@@ -31,9 +41,7 @@ class Circuits(BoschEntities):
         :param obj put -> put http function
         :param str circuit_type: is it HC or DHW
         """
-        self._circuit_type = (
-            circuit_type if circuit_type in CIRCUIT_TYPES.keys() else None
-        )
+        self._circuit_type = circuit_type
         self._connector = connector
         self._bus_type = bus_type
         self._device_type = device_type
@@ -44,11 +52,10 @@ class Circuits(BoschEntities):
         """Get circuits."""
         return self.get_items()
 
-    async def initialize(self, database, current_date):
+    async def initialize(self, database, current_date, db_prefix):
         """Initialize HeatingCircuits asynchronously."""
         if not self._circuit_type:
             return None
-        db_prefix = CIRCUIT_TYPES[self._circuit_type]
         if db_prefix not in database:
             _LOGGER.debug("Circuit not exist in database %s", db_prefix)
             return None
@@ -63,8 +70,8 @@ class Circuits(BoschEntities):
 
     def create_circuit(self, circuit, database, current_date):
         """Create single circuit of given type."""
-        if self._circuit_type in (HC, DHW):
-            Circuit = choose_circuit_type(self._device_type)
+        if self._circuit_type in (HC, DHW, ZN):
+            Circuit = choose_circuit_type(self._device_type, self._circuit_type)
             return Circuit(
                 self._connector,
                 circuit[ID],

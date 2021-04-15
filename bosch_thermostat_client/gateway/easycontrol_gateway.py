@@ -15,8 +15,15 @@ from bosch_thermostat_client.const import (
     VALUE,
     REFERENCES,
     ID,
+    SENSORS,
+    ZN,
+    DHW,
 )
-from bosch_thermostat_client.const.easycontrol import EASYCONTROL, PRODUCT_ID
+from bosch_thermostat_client.const.easycontrol import (
+    EASYCONTROL,
+    PRODUCT_ID,
+    CIRCUIT_TYPES,
+)
 from bosch_thermostat_client.exceptions import DeviceException
 
 
@@ -27,6 +34,7 @@ class EasycontrolGateway(BaseGateway):
     """Gateway to Bosch thermostat."""
 
     device_type = EASYCONTROL
+    circuit_types = CIRCUIT_TYPES
 
     def __init__(
         self,
@@ -61,6 +69,7 @@ class EasycontrolGateway(BaseGateway):
             encryption=Encryption(access_key, password),
         )
         self._session_type = session_type
+        self._data = {GATEWAY: {}, ZN: None, DHW: None, SENSORS: None}
         super().__init__(host)
 
     async def _update_info(self, initial_db):
@@ -90,3 +99,8 @@ class EasycontrolGateway(BaseGateway):
         if not model:
             _LOGGER.error(f"Couldn't find device model. Got product ID: {product_id}")
         return model
+
+    @property
+    def heating_circuits(self):
+        """Get circuit list."""
+        return self._data[ZN].circuits

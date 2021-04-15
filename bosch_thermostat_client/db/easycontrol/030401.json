@@ -1,6 +1,6 @@
 {
     "versionFirmware": "03.04.01",
-    "heatingCircuits": {
+    "zones": {
         "hastates": [
             {
                 "haname": "off",
@@ -23,54 +23,159 @@
         ],
         "min_ref": "setpoint1",
         "max_ref": "setpoint1",
-        "switchprogram": "/heatingCircuits/{}/switchPrograms/{}",
         "mode_to_setpoint": {
             "manual": {
                 "setpoint": "setpoint1",
                 "type": "manual"
             },
             "clock": {
-                "setpoint": "setpoint1",
+                "setpoint": "setpoint2",
                 "type": "auto"
             }
         },
         "refs": {
             "current_temp": {
-                "id": "roomtemperature",
+                "id": "temperatureActual",
                 "name": "Room temperature",
                 "type": "regular"
             },
             "operation_mode": {
-                "id": "usermode",
+                "id": "userMode",
                 "name": "Operation mode",
                 "type": "operation_mode"
             },
             "setpoint1": {
-                "id": "temperatureRoomManual",
+                "id": "manualTemperatureHeating",
                 "name": "Manual room setpoint",
                 "type": "setpoint"
             },
-            "activeProgram": {
-                "id": "activeSwitchProgram",
-                "name": "Active Switch Program",
-                "type": "activeProgram"
+            "setpoint2": {
+                "id": "clockOverride/temperatureHeating",
+                "name": "Clockoverride setpoint",
+                "type": "setpoint"
+            },
+            "targettemp": {
+                "id": "temperatureHeatingSetpoint",
+                "name": "Active Target temp",
+                "type": "regular"
             },
             "status": {
-                "id": "control",
+                "id": "status",
                 "name": "Heating circuit status",
+                "type": "regular"
+            },
+            "name": {
+                "id": "name",
+                "name": "Name of zone",
                 "type": "regular"
             }
         },
-        "sensors": {}
+        "sensors": {
+            "actualValvePosition": {
+                "id": "actualValvePosition",
+                "name": "Valve position"
+            },
+            "nextSetpoint": {
+                "id": "nextSetpoint",
+                "name": "Next setpoint"
+            },
+            "optimumStartHeatupRate": {
+                "id": "optimumStartHeatupRate",
+                "name": "optimumStartHeatupRate"
+            },
+            "timeToNextSetpoint": {
+                "id": "timeToNextSetpoint",
+                "name": "timeToNextSetpoint"
+            }
+        }
+    },
+    "dhwCircuits": {
+        "hastates": [
+            {
+                "haname": "off",
+                "boschname": [
+                    "Off"
+                ]
+            },
+            {
+                "haname": "high_demand",
+                "boschname": [
+                    "high"
+                ]
+            }
+        ],
+        "min_ref": "setpoint1",
+        "max_ref": "setpoint1",
+        "mode_to_setpoint": {
+            "low": {
+                "setpoint": "setpoint2",
+                "type": "manual"
+            },
+            "Off": {
+                "setpoint": null,
+                "type": "off"
+            },
+            "high": {
+                "setpoint": "setpoint1",
+                "type": "manual"
+            }
+        },
+        "refs": {
+            "current_temp": {
+                "id": "actualTemp",
+                "name": "Room temperature",
+                "type": "regular"
+            },
+            "operation_mode": {
+                "id": "operationMode",
+                "name": "Operation mode",
+                "type": "operation_mode"
+            },
+            "setpoint1": {
+                "id": "temperatureLevels/high",
+                "name": "DHW High level",
+                "type": "setpoint"
+            },
+            "setpoint2": {
+                "id": "temperatureLevels/low",
+                "name": "DHW Low level",
+                "type": "setpoint"
+            },
+            "status": {
+                "id": "state",
+                "name": "DHW status",
+                "type": "regular"
+            },
+            "activeProgram": {
+                "id": "switchPrograms",
+                "name": "Active Switch Program",
+                "type": "activeProgram"
+            }
+        },
+        "sensors": {
+            "thermalDisinfectlastResult": {
+                "id": "thermalDisinfect/lastResult",
+                "name": "thermalDisinfect lastResult"
+            },
+            "thermalDisinfectstate": {
+                "id": "thermalDisinfect/state",
+                "name": "thermalDisinfect state"
+            },
+            "thermalDisinfectlasttime": {
+                "id": "thermalDisinfect/time",
+                "name": "thermalDisinfect time"
+            },
+            "thermalDisinfectlastweekDay": {
+                "id": "thermalDisinfect/weekDay",
+                "name": "thermalDisinfect weekDay"
+            }
+
+        }
     },
     "sensors": {
         "outdoor_t1": {
             "id": "/system/sensors/temperatures/outdoor_t1",
             "name": "Outdoor temperature"
-        },
-        "temperatureActual": {
-            "id": "/zones/zn1/temperatureActual",
-            "name": "Indoor temperature"
         },
         "indoor_h1": {
             "id": "/system/sensors/humidity/indoor_h1",

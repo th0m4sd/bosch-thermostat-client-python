@@ -15,8 +15,11 @@ from bosch_thermostat_client.const import (
     VALUE,
     REFERENCES,
     ID,
+    HC,
+    DHW,
+    SENSORS,
 )
-from bosch_thermostat_client.const.nefit import NEFIT, PRODUCT_ID
+from bosch_thermostat_client.const.nefit import NEFIT, PRODUCT_ID, CIRCUIT_TYPES
 from bosch_thermostat_client.exceptions import DeviceException
 
 
@@ -27,6 +30,7 @@ class NefitGateway(BaseGateway):
     """Gateway to Bosch thermostat."""
 
     device_type = NEFIT
+    circuit_types = CIRCUIT_TYPES
 
     def __init__(
         self,
@@ -61,6 +65,7 @@ class NefitGateway(BaseGateway):
             encryption=Encryption(access_key, password),
         )
         self._session_type = session_type
+        self._data = {GATEWAY: {}, HC: None, DHW: None, SENSORS: None}
         super().__init__(host)
 
     async def _update_info(self, initial_db):

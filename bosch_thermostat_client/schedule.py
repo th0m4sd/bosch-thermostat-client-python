@@ -8,7 +8,6 @@ from bosch_thermostat_client.const import (
     VALUE,
     SWITCHPROGRAM,
     DAYS_INT,
-    CIRCUIT_TYPES,
     ID,
     MAX,
     MIN,
@@ -59,7 +58,7 @@ class Schedule:
         """Initialize schedule handling of Bosch gateway."""
         self._connector = connector
         self._active_program = None
-        self._circuit_type = CIRCUIT_TYPES[circuit_type]
+        self._circuit_type = circuit_type
         self._circuit_name = circuit_name
         self._setpoints_temp = {}
         self._switch_points = None

@@ -14,10 +14,18 @@ from bosch_thermostat_client.const import (
     MAX_VALUE,
 )
 
+
+from bosch_thermostat_client.const.nefit import (
+    CIRCUIT_TYPES,
+)
+
 _LOGGER = logging.getLogger(__name__)
 
 
 class NefitCircuit(Circuit):
+    def __init__(self, connector, attr_id, db, _type, bus_type, current_date):
+        super().__init__(connector, attr_id, db, CIRCUIT_TYPES[_type], bus_type)
+
     @property
     def state(self):
         """Retrieve state of the circuit."""
@@ -76,7 +84,7 @@ class NefitCircuit(Circuit):
 
     @property
     def schedule(self):
-        """Nefit doesn't use schedule."""
+        """Nefit doesn't use schedule or/and don't need it."""
         return None
 
     @property

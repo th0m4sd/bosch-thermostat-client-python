@@ -26,6 +26,7 @@ from bosch_thermostat_client.const.ivt import (
     CURRENT_SETPOINT,
     CAN,
     ALLOWED_VALUES,
+    CIRCUIT_TYPES,
 )
 from bosch_thermostat_client.schedule import Schedule
 
@@ -34,10 +35,10 @@ _LOGGER = logging.getLogger(__name__)
 
 class IVTCircuit(Circuit):
     def __init__(self, connector, attr_id, db, _type, bus_type, current_date):
-        super().__init__(connector, attr_id, db, _type, bus_type)
+        super().__init__(connector, attr_id, db, CIRCUIT_TYPES[_type], bus_type)
         self._schedule = Schedule(
             connector,
-            _type,
+            CIRCUIT_TYPES[_type],
             self.name,
             current_date,
             bus_type,

@@ -10,8 +10,11 @@ from bosch_thermostat_client.const import (
     SYSTEM_BUS,
     VALUE,
     VALUES,
+    HC,
+    DHW,
+    SENSORS,
 )
-from bosch_thermostat_client.const.ivt import IVT, SYSTEM_INFO, CAN
+from bosch_thermostat_client.const.ivt import IVT, SYSTEM_INFO, CAN, CIRCUIT_TYPES
 from bosch_thermostat_client.connectors import connector_ivt_chooser
 from bosch_thermostat_client.encryption import IVTEncryption as Encryption
 from bosch_thermostat_client.exceptions import DeviceException
@@ -24,6 +27,7 @@ class IVTGateway(BaseGateway):
     """IVT Gateway"""
 
     device_type = IVT
+    circuit_types = CIRCUIT_TYPES
 
     def __init__(
         self, session, session_type, host, access_token, access_key=None, password=None
@@ -47,6 +51,7 @@ class IVTGateway(BaseGateway):
             access_key=self._access_token,
             encryption=Encryption(access_key, password),
         )
+        self._data = {GATEWAY: {}, HC: None, DHW: None, SENSORS: None}
         super().__init__(host)
 
     async def _update_info(self, initial_db):

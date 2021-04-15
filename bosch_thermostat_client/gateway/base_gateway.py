@@ -4,7 +4,6 @@ import logging
 
 from bosch_thermostat_client.circuits import Circuits
 from bosch_thermostat_client.const import (
-    CIRCUIT_TYPES,
     DATE,
     DHW,
     DHW_CIRCUITS,
@@ -50,7 +49,6 @@ class BaseGateway:
             host (str): hostname or serial or IP Address
         """
         self._host = host
-        self._data = {GATEWAY: {}, HC: None, DHW: None, SENSORS: None}
         self._firmware_version = None
         self._supported_firmware = False
         self._device = None
@@ -160,7 +158,7 @@ class BaseGateway:
 
     def get_circuits(self, ctype):
         """Get circuit list."""
-        return self._data[ctype].circuits if ctype in self._data else None
+        return self._data[ctype].circuits if ctype in self._data else []
 
     @property
     def dhw_circuits(self):
@@ -198,7 +196,7 @@ class BaseGateway:
 
     async def get_capabilities(self):
         supported = []
-        for circuit in CIRCUIT_TYPES.keys():
+        for circuit in self.circuit_types.keys():
             try:
                 circuit_object = await self.initialize_circuits(circuit)
                 if circuit_object:
@@ -215,7 +213,12 @@ class BaseGateway:
         self._data[circ_type] = Circuits(
             self._connector, circ_type, self._bus_type, self.device_type
         )
-        await self._data[circ_type].initialize(self._db, self.current_date)
+
+        await self._data[circ_type].initialize(
+            database=self._db,
+            current_date=self.current_date,
+            db_prefix=self.circuit_types[circ_type],
+        )
         return self.get_circuits(circ_type)
 
     async def initialize_sensors(self):
@@ -239,19 +242,16 @@ class BaseGateway:
 
     async def smallscan(self, _type=HC, circuit_number=None):
         """Print out all info from gateway from HC1 or DHW1 only for now."""
+        """TODO: add zones support."""
         rawlist = []
         if _type == HC:
             _LOGGER.info("Scanning HC1")
             refs = self._db.get(HEATING_CIRCUITS).get(REFS)
-            _main_uri = (
-                f"/{CIRCUIT_TYPES[_type]}/hc{circuit_number if circuit_number else 1}/"
-            )
+            _main_uri = f"/{self.circuit_types[_type]}/hc{circuit_number if circuit_number else 1}/"
         elif _type == DHW:
             _LOGGER.info("Scanning DHW1")
             refs = self._db.get(DHW_CIRCUITS).get(REFS)
-            _main_uri = (
-                f"/{CIRCUIT_TYPES[_type]}/dhw{circuit_number if circuit_number else 1}/"
-            )
+            _main_uri = f"/{self.circuit_types[_type]}/dhw{circuit_number if circuit_number else 1}/"
         elif _type == RECORDINGS:
             _LOGGER.info("Scanning recordings.")
             _main_uri = f"/{RECORDINGS}"

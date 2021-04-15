@@ -12,7 +12,6 @@ from bosch_thermostat_client.const import (
     URI,
     RESULT,
     OFF,
-    CIRCUIT_TYPES,
     ACTIVE_PROGRAM,
     MODE_TO_SETPOINT,
     UNITS,
@@ -25,7 +24,7 @@ from bosch_thermostat_client.helper import BoschSingleEntity
 from bosch_thermostat_client.exceptions import DeviceException
 from bosch_thermostat_client.sensors import Sensors
 
-from .operation_mode import OperationModeHelper
+from bosch_thermostat_client.operation_mode import OperationModeHelper
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -34,10 +33,10 @@ class BasicCircuit(BoschSingleEntity):
     def __init__(self, connector, attr_id, db, _type, bus_type):
         """Basic circuit init."""
         name = attr_id.split("/").pop()
-        self._db = db[CIRCUIT_TYPES[_type]]
+        self._db = db[_type]
         self._bus_type = bus_type
         super().__init__(name, connector, attr_id)
-        self._main_uri = f"/{CIRCUIT_TYPES[_type]}/{self.name}"
+        self._main_uri = f"/{_type}/{self.name}"
         self._operation_mode = {}
         for key, value in self._db[REFS].items():
             uri = f"{self._main_uri}/{value[ID]}"
@@ -82,7 +81,10 @@ class Circuit(BasicCircuit):
     def __init__(self, connector, attr_id, db, _type, bus_type, current_date=None):
         """Initialize circuit with get, put and id from gateway."""
         super().__init__(connector, attr_id, db, _type, bus_type)
-        self._op_mode = OperationModeHelper(self.name, self._db.get(MODE_TO_SETPOINT))
+        if not hasattr(self, "_op_mode"):
+            self._op_mode = OperationModeHelper(
+                self.name, self._db.get(MODE_TO_SETPOINT)
+            )
         self._target_temp = 0
 
     @property

@@ -1,5 +1,5 @@
 import logging
-from .circuit import Circuit
+from ..circuit import Circuit
 from bosch_thermostat_client.const import (
     STATUS,
     DEFAULT_MIN_TEMP,
@@ -12,17 +12,24 @@ from bosch_thermostat_client.const import (
     URI,
     MIN_VALUE,
     MAX_VALUE,
+    OFF,
 )
 
 _LOGGER = logging.getLogger(__name__)
 
 
+from bosch_thermostat_client.const.easycontrol import CIRCUIT_TYPES
+
+
 class EasycontrolCircuit(Circuit):
+    def __init__(self, connector, attr_id, db, _type, bus_type, current_date):
+        super().__init__(connector, attr_id, db, CIRCUIT_TYPES[_type], bus_type)
+
     @property
     def state(self):
         """Retrieve state of the circuit."""
         if self._state:
-            return True if self.get_value(STATUS) else False
+            return self.get_value(STATUS, False)
 
     @property
     def min_temp(self):
@@ -76,10 +83,21 @@ class EasycontrolCircuit(Circuit):
 
     @property
     def schedule(self):
-        """Nefit doesn't use schedule."""
+        """Easycontrol doesn't need schedule."""
         return None
 
     @property
     def ha_modes(self):
         """Retrieve HA modes."""
         return [v[HA_NAME] for v in self._hastates]
+
+    @property
+    def setpoint(self):
+        """
+        Retrieve setpoint in which is currently Circuit.
+        Might be equal to operation_mode, might me taken from schedule.
+        """
+        if self._op_mode.is_off:
+            return OFF
+        if self._op_mode.is_manual:
+            return self._op_mode.current_mode

@@ -161,11 +161,7 @@ class BoschSingleEntity:
         self._data = {}
         self._update_initialized = False
         self._state = False
-        # self._interrupt = False
         self._extra_message = "Waiting to fetch data"
-
-    # def interrupt(self):
-    #     self._interrupt = True
 
     @property
     def connector(self):
