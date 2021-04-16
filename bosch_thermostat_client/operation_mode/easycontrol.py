@@ -1,5 +1,6 @@
 from .base import OperationModeHelper
 from bosch_thermostat_client.const import SETPOINT
+from bosch_thermostat_client.const.easycontrol import TARGET_TEMP
 
 
 class EasyControlOperationModeHelper(OperationModeHelper):
@@ -10,5 +11,7 @@ class EasyControlOperationModeHelper(OperationModeHelper):
 
     def temp_setpoint_read(self, mode=None):
         """Check which temp property to use. Key READ or WRITE"""
+        if self.is_auto:
+            return TARGET_TEMP
         mode = self.current_mode if not mode else mode
         return self._mode_to_setpoint.get(mode, {}).get(SETPOINT)

@@ -7,7 +7,6 @@ from bosch_thermostat_client.const import (
     ACTIVE_PROGRAM,
     URI,
 )
-from bosch_thermostat_client.const.easycontrol import TARGET_TEMP
 from bosch_thermostat_client.operation_mode import EasyControlOperationModeHelper
 
 
@@ -47,7 +46,7 @@ class EasyZoneCircuit(EasycontrolCircuit):
         if self._op_mode.is_off:
             self._target_temp = 0
             return self._target_temp
-        target_temp = self.get_value(TARGET_TEMP, 0)
+        target_temp = self.get_value(self._op_mode.temp_setpoint_read(), 0)
         if target_temp > 0:
             self._target_temp = target_temp
             return self._target_temp
