@@ -95,7 +95,7 @@ ON = "on"
 
 FIRMWARE_VERSION = "versionFirmware"
 BASE_FIRMWARE_VERSION = "versionFirmwarePath"
-RECORDINGS_SENSORS = "recordingsSensors"
+CRAWL_SENSORS = "crawlSensors"
 
 ROOT_PATHS = [
     "/dhwCircuits",
@@ -115,7 +115,7 @@ ROOT_PATHS = [
 SENSORS = "sensors"
 SENSOR = "sensor"
 VALUES = "values"
-
+SENSOR_TYPE = "sensorType"
 SYSTEM_BUS = "systemBus"
 WRITABLE = "writeable"
 
@@ -123,3 +123,4 @@ RECORDERDRES = "recordedResource"
 RECORDING = "recording"
 INTERVAL = "interval"
 SWITCH = "switch"
+DEEP = "deep"

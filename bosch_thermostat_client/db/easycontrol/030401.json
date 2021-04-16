@@ -1,6 +1,42 @@
 {
     "versionFirmware": "03.04.01",
     "programList": "/programs/list",
+    "devices": {
+        "refs": {
+            "status": {
+                "id": "list",
+                "name": "list",
+                "type": "regular"
+            }
+        },
+        "sensors": {
+            "collectorTemperature": {
+                "id": "collectorTemperature",
+                "name": "collectorTemperature",
+                "type": "regular"
+            },
+            "dhwTankTemperature": {
+                "id": "dhwTankTemperature",
+                "name": "dhwTankTemperature",
+                "type": "regular"
+            },
+            "solarYield": {
+                "id": "solarYield",
+                "name": "solarYield",
+                "type": "regular"
+            },
+            "pumpModulation": {
+                "id": "pumpModulation",
+                "name": "pumpModulation",
+                "type": "regular"
+            },
+            "actuatorStatus": {
+                "id": "actuatorStatus",
+                "name": "actuatorStatus",
+                "type": "regular"
+            }
+        }
+    },
     "zones": {
         "hastates": [
             {
@@ -184,5 +220,14 @@
             "id": "/heatSources/CHpumpModulation",
             "name": "Actual heating pump modulation"
         }
-    }
+    },
+    "crawlSensors": [
+        {
+            "uri": "/devices",
+            "deep": 1,
+            "exclude": "^.*(device\\d|list|productLookup)$",
+            "sensorType": "array",
+            "state": "battery"
+        }
+    ]
 }

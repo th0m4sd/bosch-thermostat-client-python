@@ -27,7 +27,7 @@ from bosch_thermostat_client.const import (
     VALUE,
     BASE_FIRMWARE_VERSION,
     RECORDINGS,
-    RECORDINGS_SENSORS,
+    CRAWL_SENSORS,
 )
 from bosch_thermostat_client.db import get_custom_db, get_db_of_firmware, get_initial_db
 from bosch_thermostat_client.exceptions import (
@@ -231,11 +231,9 @@ class BaseGateway:
         self._data[SENSORS] = Sensors(
             connector=self._connector, sensors_db=self._db[SENSORS]
         )
-        if RECORDINGS_SENSORS in self._db:
+        if CRAWL_SENSORS in self._db:
             _LOGGER.info("Initializing RECORDING Sensors.")
-            await self._data[SENSORS].initialize(
-                recordings=self._db[RECORDINGS_SENSORS]
-            )
+            await self._data[SENSORS].initialize(crawl_sensors=self._db[CRAWL_SENSORS])
         return self.sensors
 
     async def rawscan(self):

@@ -70,12 +70,12 @@ def get_all_intervals():
     ]
 
 
-async def crawl(url, _list, deep, get, exclude=()):
+async def crawl(url, _list, deep, get, exclude):
     """Crawl for Bosch API correct values."""
     try:
         resp = await get(url)
         if (REFERENCES not in resp or deep == 0) and ID in resp:
-            if not resp[ID] in exclude:
+            if not exclude or not re.match(exclude, resp[ID]):
                 _list.append(resp)
         else:
             if REFERENCES in resp:
@@ -142,7 +142,7 @@ class BoschEntities:
         self._items = []
         self._get = get
 
-    async def retrieve_from_module(self, deep, path, exclude=()):
+    async def retrieve_from_module(self, deep, path, exclude=None):
         """Retrieve all json objects with simple values."""
         return await crawl(path, [], deep, self._get, exclude)
 

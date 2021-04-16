@@ -359,7 +359,11 @@
             "name": "Notifications"
         }
     },
-    "recordingsSensors": [
-        "/recordings"
+    "crawlSensors": [
+        {
+            "uri": "/recordings",
+            "deep": 4,
+            "sensorType": "recording"
+        }
     ]
 }

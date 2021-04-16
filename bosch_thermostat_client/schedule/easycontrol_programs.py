@@ -22,8 +22,10 @@ class ZonePrograms:
         program_list = res.get(VALUE, [])
         for item in program_list:
             name = check_base64(item[NAME])
-            self._program_list.append({ID: item[ID], NAME: name})
-            self._short_program_list.append(name)
+            program_exists = self.get_preset_index_by_name(name)
+            if not program_exists:
+                self._program_list.append({ID: item[ID], NAME: name})
+                self._short_program_list.append(name)
         self._last_updated = datetime.now()
 
     @property

@@ -17,15 +17,22 @@ from bosch_thermostat_client.const import (
     RECORDINGS,
     RECORDING,
     RECORDERDRES,
+    DEEP,
+    SENSOR_TYPE,
 )
 from datetime import datetime
 from bosch_thermostat_client.const.ivt import INVALID
 from bosch_thermostat_client.exceptions import DeviceException
 from bosch_thermostat_client.db import get_ivt_errors
-from .helper import BoschSingleEntity, BoschEntities
+from bosch_thermostat_client.helper import (
+    BoschSingleEntity,
+    BoschEntities,
+    check_base64,
+)
 
 _LOGGER = logging.getLogger(__name__)
 NOTIFICATIONS = "notifications"
+STATE = "state"
 
 
 class Sensors(BoschEntities):
@@ -58,11 +65,33 @@ class Sensors(BoschEntities):
                         f"{uri_prefix}/{sensor[ID]}" if uri_prefix else sensor[ID],
                     )
 
-    async def initialize(self, recordings):
+    async def initialize(self, crawl_sensors):
         """Initialize recording sensors."""
         found_recordings = []
-        for record in recordings:
-            found_recordings.extend(await self.retrieve_from_module(4, record))
+        found_crawl = []
+        for record in crawl_sensors:
+            if record.get(SENSOR_TYPE, "regular") == RECORDING:
+                found_recordings.extend(
+                    await self.retrieve_from_module(
+                        deep=record[DEEP],
+                        path=record[URI],
+                        exclude=record.get("exclude", "_"),
+                    )
+                )
+            else:
+                retrieved = await self.retrieve_from_module(
+                    deep=record[DEEP],
+                    path=record[URI],
+                    exclude=record.get("exclude"),
+                )
+                found_crawl.append(
+                    {
+                        VALUE: retrieved,
+                        TYPE: record.get(SENSOR_TYPE),
+                        STATE: record.get(STATE),
+                    }
+                )
+
         for rec in found_recordings:
             sensor_id = f'r{rec[RECORDERDRES][ID].split("/")[-1]}'
             if sensor_id not in self._items:
@@ -72,6 +101,18 @@ class Sensors(BoschEntities):
                     name=sensor_id,
                     path=rec[ID],
                 )
+        for item in found_crawl:
+            for sens in item[VALUE]:
+                sensor_id = f'r{sens[ID].split("/")[-1]}'
+                if sensor_id not in self._items:
+                    self._items[sensor_id] = CrawlSensor(
+                        connector=self._connector,
+                        attr_id=sensor_id,
+                        name=sensor_id,
+                        path=sens[ID],
+                        kind=item[TYPE],
+                        state=item[STATE],
+                    )
 
     def __iter__(self):
         return iter(self._items.values())
@@ -107,6 +148,53 @@ class Sensor(BoschSingleEntity):
         if result:
             return result.get(VALUE, INVALID)
         return -1
+
+
+class CrawlSensor(Sensor):
+    def __init__(self, connector, attr_id, name, path, state=None, kind=REGULAR):
+        self._kind = kind
+        super().__init__(connector=connector, attr_id=attr_id, name=name, path=path)
+        self._state_key = state
+
+    @property
+    def kind(self):
+        return self._kind
+
+    @property
+    def name(self):
+        return self._data[self.attr_id].get(RESULT, {}).get(NAME, self._main_data[NAME])
+
+    async def update(self):
+        """Update info about Circuit asynchronously."""
+
+        def process_result(result):
+            if len(result) == 1:
+                for key, value in result[0].items():
+                    result[0][key] = check_base64(value)
+                if self._state_key:
+                    result[0][VALUE] = result[0].get(self._state_key)
+                return result[0]
+            return result
+
+        try:
+            for key, item in self._data.items():
+                result = await self._connector.get(item[URI])
+                self._data[key][RESULT] = process_result(result.get(VALUE))
+            self._state = True
+        except DeviceException as err:
+            _LOGGER.error(
+                f"Can't update data for {self.name}. Trying uri: {item[URI]}. Error message: {err}"
+            )
+            self._state = False
+            self._extra_message = f"Can't update data. Error: {err}"
+
+    @property
+    def state(self):
+        """Retrieve state of the circuit."""
+        if self._kind == "array" and self._state_key:
+            return self._data[self.attr_id].get(RESULT).get(self._state_key)
+        else:
+            return super().state
 
 
 class RecordingSensor(Sensor):
