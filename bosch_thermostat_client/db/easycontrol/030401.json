@@ -54,6 +54,7 @@
         ],
         "min_ref": "setpoint1",
         "max_ref": "setpoint1",
+        "hvacAction": "status",
         "mode_to_setpoint": {
             "manual": {
                 "setpoint": "setpoint1",

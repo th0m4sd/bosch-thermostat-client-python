@@ -3,6 +3,9 @@ import logging
 
 from .circuit import Circuit
 from bosch_thermostat_client.const import (
+    HVAC_ACTION,
+    HVAC_HEAT,
+    HVAC_OFF,
     STATUS,
     MIN_VALUE,
     MAX_VALUE,
@@ -82,6 +85,17 @@ class IVTCircuit(Circuit):
             if self._bus_type == CAN:
                 if self.get_value(CURRENT_SETPOINT):
                     return True
+
+    @property
+    def hvac_action(self):
+        """For IVT is probably the best to check pumpModulation."""
+        hvac_uri = self._db.get(HVAC_ACTION)
+        if hvac_uri:
+            hv_value = int(self.get_value(hvac_uri, -1))
+            if hv_value == 0:
+                return HVAC_OFF
+            elif hv_value > 0:
+                return HVAC_HEAT
 
     @property
     def min_temp(self):

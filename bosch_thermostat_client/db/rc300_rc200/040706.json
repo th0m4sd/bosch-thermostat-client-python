@@ -26,6 +26,7 @@
             }
         ],
         "switchprogram": "/heatingCircuits/{}/switchPrograms/{}",
+        "hvacAction": "pumpModulation",
         "mode_to_setpoint": {
             "manual": {
                 "setpoint": "setpoint1",
@@ -78,6 +79,11 @@
                 "id": "activeSwitchProgram",
                 "name": "Active Switch Program",
                 "type": "activeProgram"
+            },
+            "pumpModulation": {
+                "id": "pumpModulation",
+                "name": "Pump Modulation",
+                "type": "regular"
             }
         },
         "sensors": {

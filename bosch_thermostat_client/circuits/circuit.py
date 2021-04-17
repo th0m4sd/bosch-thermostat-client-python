@@ -136,6 +136,10 @@ class Circuit(BasicCircuit):
     def support_presets(self):
         return False
 
+    @property
+    def hvac_action(self):
+        return None
+
     async def set_ha_mode(self, ha_mode):
         """Helper to set operation mode."""
         old_setpoint = self._temp_setpoint

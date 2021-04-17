@@ -1,5 +1,8 @@
 from .base import EasycontrolCircuit
 from bosch_thermostat_client.const import (
+    HVAC_ACTION,
+    HVAC_HEAT,
+    HVAC_OFF,
     NAME,
     STATUS,
     MODE_TO_SETPOINT,
@@ -8,6 +11,7 @@ from bosch_thermostat_client.const import (
     URI,
 )
 from bosch_thermostat_client.operation_mode import EasyControlOperationModeHelper
+from bosch_thermostat_client.const.easycontrol import IDLE
 
 
 class EasyZoneCircuit(EasycontrolCircuit):
@@ -39,6 +43,16 @@ class EasyZoneCircuit(EasycontrolCircuit):
     async def update(self):
         await self._zone_program.update()
         await super().update()
+
+    @property
+    def hvac_action(self):
+        hvac_uri = self._db.get(HVAC_ACTION)
+        if hvac_uri:
+            hv_value = self.get_value(hvac_uri)
+            if hv_value == IDLE:
+                return HVAC_OFF
+            else:
+                return HVAC_HEAT
 
     @property
     def target_temperature(self):
