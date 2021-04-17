@@ -76,9 +76,12 @@ class EasycontrolCircuit(Circuit):
                 if self._temp_setpoint:
                     self._data[self._temp_setpoint][RESULT][VALUE] = temperature
                 return True
-        _LOGGER.error(
-            "Setting temperature not allowed in this mode. Temperature is probably out of range MIN-MAX!"
-        )
+            else:
+                _LOGGER.error("Don't get proper response from setting temperature.")
+        else:
+            _LOGGER.error(
+                "Setting temperature not allowed in this mode. Temperature is probably out of range MIN-MAX!"
+            )
         return False
 
     @property
