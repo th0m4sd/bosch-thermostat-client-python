@@ -123,7 +123,7 @@ class XMPPBaseConnector:
                 self.listeners.add(listener)
                 await self._xmppstream.send(msg_to_send)
                 data = await asyncio.wait_for(future, timeout)
-            except (asyncio.TimeoutError, MsgException):
+            except (asyncio.TimeoutError, MsgException, asyncio.InvalidStateError):
                 _LOGGER.info("Msg exception for %s", path)
                 pass
             finally:
