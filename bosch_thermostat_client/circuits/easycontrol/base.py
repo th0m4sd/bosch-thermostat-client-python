@@ -13,6 +13,7 @@ from bosch_thermostat_client.const import (
     MIN_VALUE,
     MAX_VALUE,
     OFF,
+    USED,
 )
 
 _LOGGER = logging.getLogger(__name__)

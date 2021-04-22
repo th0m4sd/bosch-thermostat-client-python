@@ -67,7 +67,7 @@ class EasyZoneCircuit(EasycontrolCircuit):
 
     @property
     def support_presets(self):
-        return True
+        return True if self._zone_program.preset_names else False
 
     @property
     def preset_modes(self):

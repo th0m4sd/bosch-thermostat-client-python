@@ -175,7 +175,7 @@
                 "type": "regular"
             },
             "activeProgram": {
-                "id": "switchPrograms",
+                "id": "programs",
                 "name": "Active Switch Program",
                 "type": "activeProgram"
             }

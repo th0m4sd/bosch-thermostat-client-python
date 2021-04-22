@@ -88,6 +88,10 @@ class Circuit(BasicCircuit):
         self._target_temp = 0
 
     @property
+    def support_target_temp(self):
+        return True
+
+    @property
     def schedule(self):
         """Retrieve schedule of HC/DHW."""
         raise NotImplementedError

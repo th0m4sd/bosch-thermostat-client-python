@@ -295,9 +295,7 @@ class BaseGateway:
 
     async def check_firmware_validity(self):
         """Run query against firmware version."""
-        fw = (await self._connector.get(self._db.get(BASE_FIRMWARE_VERSION))).get(VALUE)
-        if not fw:
-            _LOGGER.error("Can't fetch firmware version.")
+        fw = await self._connector.get(self._db.get(BASE_FIRMWARE_VERSION))
         self._db = get_db_of_firmware(self._device[TYPE], fw)
         if self._db:
             return True
