@@ -13,6 +13,7 @@ from bosch_thermostat_client.const import (
     GATEWAY,
     HC,
     HEATING_CIRCUITS,
+    HTTP,
     ID,
     MODELS,
     NAME,
@@ -291,7 +292,8 @@ class BaseGateway:
             _LOGGER.error(err)
 
     async def close(self):
-        await self._connector.close()
+        if self._session_type != HTTP:
+            await self._connector.close()
 
     async def check_firmware_validity(self):
         """Run query against firmware version."""
