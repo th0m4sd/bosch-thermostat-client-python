@@ -60,6 +60,11 @@ class EasycontrolCircuit(Circuit):
                 self._target_temp = target_temp
                 return self._target_temp
 
+    @property
+    def support_target_temp(self):
+        temp_setpoint = self.get_property(self._temp_setpoint)
+        return temp_setpoint.get(USED, True) != "false"
+
     async def set_temperature(self, temperature):
         """Set temperature of Circuit."""
         target_temp = self.target_temperature

@@ -1,12 +1,11 @@
 """ Test script of bosch_thermostat_client. """
 import asyncio
 import logging
-import json
 import aiohttp
 import time
 import bosch_thermostat_client as bosch
-from bosch_thermostat_client.const.ivt import IVT, HTTP
-from bosch_thermostat_client.const import HC, DHW, TYPE, RECORDINGS
+from bosch_thermostat_client.const.ivt import IVT
+from bosch_thermostat_client.const import HC, RECORDINGS, HTTP
 
 logging.basicConfig()
 logging.getLogger().setLevel(logging.DEBUG)
@@ -53,7 +52,8 @@ async def main():
             password=data[2],
         )
         await gateway.check_connection()
-        await record_sensor_test(gateway)
+        await gateway.check_firmware_validity()
+        # await record_sensor_test(gateway)
         return
         # await gateway.test_connection()
         # small = await gateway.smallscan(DHW_CIRCUITS)

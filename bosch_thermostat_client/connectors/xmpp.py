@@ -117,7 +117,17 @@ class XMPPBaseConnector:
                 elif recv_body is None and http_response == WRONG_ENCRYPTION:
                     future.set_exception(MsgException("Can't decrypt for %s" % path))
                 elif method == GET and recv_body.get("id") == path:
-                    future.set_result(recv_body)
+                    try:
+                        future.set_result(recv_body)
+                    except (asyncio.InvalidStateError) as err:
+                        _LOGGER.error(
+                            "If you see this log please attach it to your issue/send it on Discord. Err message: %s. Recv body: %s, Path: %s",
+                            err,
+                            json.dumps(recv_body),
+                            path,
+                        )
+                        self._xmppstream = None
+                        pass
 
             try:
                 self.listeners.add(listener)
