@@ -19,7 +19,7 @@ async def hc_circuits_test(gateway):
     print("target temp ->", hc2.target_temperature)
     print("ACTIVE PROGRAM", hc2.preset_modes)
     print("ACTIVE PROGRAM", hc2.preset_mode)
-    await hc2.set_preset_mode("A")
+    await hc2.set_preset_mode("B")
 
 
 async def main():

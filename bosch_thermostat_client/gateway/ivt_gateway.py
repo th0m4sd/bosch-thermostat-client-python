@@ -30,7 +30,13 @@ class IVTGateway(BaseGateway):
     circuit_types = CIRCUIT_TYPES
 
     def __init__(
-        self, session, session_type, host, access_token, access_key=None, password=None
+        self,
+        session_type,
+        host,
+        access_token,
+        access_key=None,
+        password=None,
+        session=None,
     ):
         """IVT Gateway constructor
 

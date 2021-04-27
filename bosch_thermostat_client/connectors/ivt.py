@@ -21,7 +21,7 @@ class IVTXMPPConnector(XMPPBaseConnector):
             encryption (obj): Encryption object
         """
         self._seqno = 1
-        super().__init__(host, loop, access_key, encryption)
+        super().__init__(host, access_key, encryption)
 
     def _build_message(self, method, path, data=None):
         if not path:
