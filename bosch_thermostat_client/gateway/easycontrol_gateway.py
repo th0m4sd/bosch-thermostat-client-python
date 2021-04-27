@@ -38,12 +38,12 @@ class EasycontrolGateway(BaseGateway):
 
     def __init__(
         self,
-        session,
         host,
         access_token,
         session_type=XMPP,
         access_key=None,
         password=None,
+        session=None,
         easycontrol_connector=None,
     ):
         """

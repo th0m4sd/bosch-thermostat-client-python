@@ -43,7 +43,7 @@ async def main():
     #        myjson = json.loads(small)
     # print(small)
     # return
-    sensors = gateway.initialize_sensors()
+    sensors = await gateway.initialize_sensors()
     for sensor in sensors:
         await sensor.update()
     for sensor in sensors:

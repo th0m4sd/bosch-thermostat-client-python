@@ -16,7 +16,7 @@ class EasycontrolConnector(XMPPBaseConnector):
     _rrc_contact_prefix = "rrc2contact_"
     _rrc_gateway_prefix = "rrc2gateway_"
 
-    def __init__(self, host, access_key, encryption):
+    def __init__(self, host, loop, access_key, encryption):
         self._seqno = 0
         super().__init__(host, access_key, encryption)
 
