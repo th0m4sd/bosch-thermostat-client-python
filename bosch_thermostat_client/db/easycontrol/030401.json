@@ -154,11 +154,6 @@
             }
         },
         "refs": {
-            "current_temp": {
-                "id": "actualTemp",
-                "name": "Room temperature",
-                "type": "regular"
-            },
             "operation_mode": {
                 "id": "operationMode",
                 "name": "Operation mode",

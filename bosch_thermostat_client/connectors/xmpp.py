@@ -24,7 +24,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class XMPPBaseConnector:
-    def __init__(self, host, loop, access_key, encryption):
+    def __init__(self, host, access_key, encryption):
         """
         :param host: aka serial number
         :param access_key:
@@ -33,7 +33,6 @@ class XMPPBaseConnector:
         :param sasl_mech:
         """
         self.serial_number = host
-        self.loop = loop
         self._encryption = encryption
         self._lock = asyncio.Lock()
 
