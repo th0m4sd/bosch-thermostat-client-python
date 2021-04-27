@@ -173,13 +173,13 @@ class Circuit(BasicCircuit):
     @property
     def current_temp(self):
         """Give current temperature of circuit."""
-        _LOGGER.debug(
-            "Current temp of %s is %s",
-            self.name.upper(),
-            self.get_property(CURRENT_TEMP),
-        )
         temp = self.get_value(CURRENT_TEMP)
         if temp:
+            _LOGGER.debug(
+                "Current temp of %s is %s",
+                self.name.upper(),
+                self.get_property(CURRENT_TEMP),
+            )
             temp = float(temp)
             if temp > 0 and temp < 120:
                 return temp
