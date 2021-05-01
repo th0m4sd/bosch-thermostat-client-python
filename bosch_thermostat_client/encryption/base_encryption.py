@@ -6,10 +6,28 @@ import binascii
 import json
 from pyaes import PADDING_NONE, AESModeOfOperationECB, Decrypter, Encrypter
 
-from bosch_thermostat_client.const import BS
+from bosch_thermostat_client.const import BS, TYPE, VALUE
+from bosch_thermostat_client.helper import check_base64
 from bosch_thermostat_client.exceptions import EncryptionException, DeviceException
 
 _LOGGER = logging.getLogger(__name__)
+
+STRING_VALUE = "stringValue"
+FLOAT_VALUE = "floatValue"
+
+
+class EdgeDecoder(json.JSONDecoder):
+    def __init__(self, *args, **kwargs):
+        json.JSONDecoder.__init__(self, object_hook=self.object_hook, *args, **kwargs)
+
+    def object_hook(self, dct):
+        object_type = dct.get(TYPE, None)
+        if object_type and VALUE in dct:
+            if object_type == STRING_VALUE:
+                dct[VALUE] = check_base64(dct[VALUE])
+            elif object_type == FLOAT_VALUE:
+                dct[VALUE] = float(dct[VALUE])
+        return dct
 
 
 class BaseEncryption:
@@ -41,7 +59,7 @@ class BaseEncryption:
     def json_encrypt(self, raw):
         try:
             if raw:
-                return json.loads(self.decrypt(raw))
+                return json.loads(self.decrypt(raw), cls=EdgeDecoder)
             return None
         except json.JSONDecodeError:
             raise DeviceException("Unable to decode Json response.")

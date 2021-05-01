@@ -11,17 +11,16 @@ class IVTXMPPConnector(XMPPBaseConnector):
     _rrc_gateway_prefix = "gateway_"
     xmpp_host = "wa2-mz36-qrmzh6.bosch.de"
 
-    def __init__(self, host, loop, access_key, encryption):
+    def __init__(self, host, access_key, encryption, **kwargs):
         """IVTConnector constructor
 
         Args:
             host (str): serialnumber of target
-            loop (loop): asyncio loop
             access_key (str): access key to bosch
             encryption (obj): Encryption object
         """
         self._seqno = 1
-        super().__init__(host, access_key, encryption)
+        super().__init__(host=host, access_key=access_key, encryption=encryption)
 
     def _build_message(self, method, path, data=None):
         if not path:

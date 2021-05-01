@@ -50,11 +50,6 @@
                 "name": "Manual room setpoint",
                 "type": "setpoint"
             },
-            "activeProgram": {
-                "id": "activeSwitchProgram",
-                "name": "Active Switch Program",
-                "type": "activeProgram"
-            },
             "status": {
                 "id": "control",
                 "name": "Heating circuit status",
@@ -74,6 +69,79 @@
                 "id": "powerSetpoint",
                 "name": "powerSetpoint"
             }
+        }
+    },
+    "dhwCircuits": {
+        "hastates": [
+            {
+                "haname": "off",
+                "boschname": [
+                    "Off"
+                ]
+            },
+            {
+                "haname": "high_demand",
+                "boschname": [
+                    "high"
+                ]
+            }
+        ],
+        "min_ref": "setpoint1",
+        "max_ref": "setpoint1",
+        "mode_to_setpoint": {
+            "Off": {
+                "setpoint": null,
+                "type": "off"
+            },
+            "manual": {
+                "setpoint": "setpoint1",
+                "type": "manual"
+            },
+            "auto": {
+                "setpoint": "setpoint1",
+                "type": "auto"
+            }
+        },
+        "refs": {
+            "operation_mode": {
+                "id": "dhwOperationManualMode",
+                "name": "Operation mode",
+                "type": "operation_mode"
+            },
+            "setpoint1": {
+                "id": "temperatureLevels/high",
+                "name": "DHW High level",
+                "type": "setpoint"
+            },
+            "status": {
+                "id": "dhwOperationState",
+                "name": "DHW status",
+                "type": "regular"
+            },
+            "activeProgram": {
+                "id": "programs",
+                "name": "Active Switch Program",
+                "type": "activeProgram"
+            }
+        },
+        "sensors": {
+            "thermalDisinfectlastResult": {
+                "id": "thermalDisinfect/lastResult",
+                "name": "thermalDisinfect lastResult"
+            },
+            "thermalDisinfectstate": {
+                "id": "thermalDisinfect/state",
+                "name": "thermalDisinfect state"
+            },
+            "thermalDisinfectlasttime": {
+                "id": "thermalDisinfect/time",
+                "name": "thermalDisinfect time"
+            },
+            "thermalDisinfectlastweekDay": {
+                "id": "thermalDisinfect/weekDay",
+                "name": "thermalDisinfect weekDay"
+            }
+
         }
     },
     "sensors": {

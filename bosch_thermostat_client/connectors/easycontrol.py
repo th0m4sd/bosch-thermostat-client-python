@@ -16,9 +16,13 @@ class EasycontrolConnector(XMPPBaseConnector):
     _rrc_contact_prefix = "rrc2contact_"
     _rrc_gateway_prefix = "rrc2gateway_"
 
-    def __init__(self, host, loop, access_key, encryption):
+    def __init__(self, host, encryption, **kwargs):
         self._seqno = 0
-        super().__init__(host, access_key, encryption)
+        super().__init__(
+            host=host,
+            encryption=encryption,
+            access_key=kwargs.get("access_key"),
+        )
 
     def _build_message(self, method, path, data=None):
         msg = aioxmpp.stanza.Message(

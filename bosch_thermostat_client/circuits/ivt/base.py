@@ -1,7 +1,7 @@
 """IVT Circuit."""
 import logging
 
-from .circuit import Circuit
+from ..circuit import Circuit
 from bosch_thermostat_client.const import (
     HVAC_ACTION,
     HVAC_HEAT,

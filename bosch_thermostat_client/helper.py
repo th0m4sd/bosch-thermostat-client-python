@@ -21,7 +21,7 @@ from bosch_thermostat_client.const import (
     RECORDINGS,
     WRITABLE,
     INTERVAL,
-    USED
+    USED,
 )
 from bosch_thermostat_client.const.ivt import ALLOWED_VALUES, STATE
 
@@ -184,13 +184,13 @@ class BoschSingleEntity:
                 TIMESTAMP,
                 REFERENCES,
                 WRITABLE,
-                USED
+                USED,
             ]:
                 if res_key in result:
-                    unbased64 = check_base64(result[res_key])
-                    if res_key in data and unbased64 == data[res_key]:
+                    value = result[res_key]
+                    if res_key in data and data[res_key] == value:
                         continue
-                    data[res_key] = unbased64
+                    data[res_key] = value
                     self._update_initialized = True
                     updated = True
         if STATE in result:

@@ -1,6 +1,7 @@
 import logging
-from .circuit import Circuit
+from ..circuit import Circuit
 from bosch_thermostat_client.const import (
+    DHW,
     STATUS,
     DEFAULT_MIN_TEMP,
     MIN_REF,
@@ -12,6 +13,8 @@ from bosch_thermostat_client.const import (
     URI,
     MIN_VALUE,
     MAX_VALUE,
+    OFF,
+    MODE_TO_SETPOINT,
 )
 
 
@@ -19,12 +22,18 @@ from bosch_thermostat_client.const.nefit import (
     CIRCUIT_TYPES,
 )
 
+from bosch_thermostat_client.operation_mode.nefit_dhw import NefitDhwOperationModeHelper
+
 _LOGGER = logging.getLogger(__name__)
 
 
 class NefitCircuit(Circuit):
     def __init__(self, connector, attr_id, db, _type, bus_type, current_date, **kwargs):
         super().__init__(connector, attr_id, db, CIRCUIT_TYPES[_type], bus_type)
+        if _type == DHW:
+            self._op_mode = NefitDhwOperationModeHelper(
+                self.name, self._db.get(MODE_TO_SETPOINT)
+            )
 
     @property
     def state(self):
@@ -91,3 +100,18 @@ class NefitCircuit(Circuit):
     def ha_modes(self):
         """Retrieve HA modes."""
         return [v[HA_NAME] for v in self._hastates]
+
+    @property
+    def setpoint(self):
+        """
+        Retrieve setpoint in which is currently Circuit.
+        Might be equal to operation_mode, might me taken from schedule.
+        """
+        if self._op_mode.is_off:
+            return OFF
+        if self._op_mode.is_manual:
+            return self._op_mode.current_mode
+
+    @property
+    def support_target_temp(self):
+        return False

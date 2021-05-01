@@ -10,8 +10,8 @@ from bosch_thermostat_client.const import (
 )
 from bosch_thermostat_client.helper import BoschEntities
 from .circuit import BasicCircuit
-from .ivt_circuit import IVTCircuit
-from .nefit_circuit import NefitCircuit
+from .nefit import NefitCircuit
+from .ivt import IVTCircuit
 from .easycontrol import EasycontrolCircuit, EasyZoneCircuit
 from bosch_thermostat_client.const.ivt import IVT, CIRCUIT_TYPES
 from bosch_thermostat_client.const.nefit import NEFIT

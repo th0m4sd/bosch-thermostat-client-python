@@ -24,13 +24,10 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class XMPPBaseConnector:
-    def __init__(self, host, access_key, encryption):
+    def __init__(self, host, encryption, **kwargs):
         """
         :param host: aka serial number
-        :param access_key:
         :param password:
-        :param host:
-        :param sasl_mech:
         """
         self.serial_number = host
         self._encryption = encryption
@@ -41,7 +38,10 @@ class XMPPBaseConnector:
         self._to = self.jid(self._rrc_gateway_prefix + identifier)
         self._jid = self.jid(self._from)
         self.xmppclient = aioxmpp.PresenceManagedClient(
-            self._jid, aioxmpp.make_security_layer(self._accesskey_prefix + access_key)
+            self._jid,
+            aioxmpp.make_security_layer(
+                self._accesskey_prefix + kwargs.get("access_key")
+            ),
         )
         self.message_dispatcher = self.xmppclient.summon(
             aioxmpp.dispatcher.SimpleMessageDispatcher

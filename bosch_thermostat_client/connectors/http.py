@@ -19,11 +19,11 @@ _LOGGER = logging.getLogger(__name__)
 class HttpConnector:
     """HTTP connector to Bosch thermostat."""
 
-    def __init__(self, host, loop, encryption, access_key=None):
+    def __init__(self, host, encryption, **kwargs):
         """Init of HTTP connector."""
         self._lock = asyncio.Lock()
         self._host = host
-        self._websession = loop
+        self._websession = kwargs.get("loop")
         self._request_timeout = 10
         self._encryption = encryption
 

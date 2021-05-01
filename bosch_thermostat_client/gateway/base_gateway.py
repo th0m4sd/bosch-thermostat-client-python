@@ -205,7 +205,7 @@ class BaseGateway:
                 circuit_object = await self.initialize_circuits(circuit)
                 if circuit_object:
                     supported.append(circuit)
-                if circuit == DHW and self.device_type in (IVT, NEFIT):
+                if circuit == DHW and self.device_type in (IVT):
                     supported.append(SWITCH)
             except DeviceException as err:
                 _LOGGER.debug("Circuit %s not found. Skipping it. %s", circuit, err)
