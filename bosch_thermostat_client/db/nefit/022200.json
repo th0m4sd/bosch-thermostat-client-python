@@ -24,7 +24,7 @@
                 "type": "manual"
             },
             "clock": {
-                "setpoint": "setpoint1",
+                "setpoint": "setpoint2",
                 "type": "auto"
             }
         },
@@ -43,6 +43,21 @@
                 "id": "temperatureRoomManual",
                 "name": "Manual room setpoint",
                 "type": "setpoint"
+            },
+            "setpoint2": {
+                "id": "temperatureRoomSetpoint",
+                "name": "Auto room setpoint",
+                "type": "setpoint"
+            },
+            "manual_override": {
+                "id": "manualTempOverride/temperature",
+                "name": "Auto room setpoint to write",
+                "type": "setpoint"
+            },
+            "manual_status": {
+                "id": "manualTempOverride/status",
+                "name": "Auto room setpoint to write",
+                "type": "regular"
             },
             "status": {
                 "id": "control",

@@ -23,7 +23,7 @@ from bosch_thermostat_client.const import (
     REFERENCES,
     SWITCH_PROGRAMS,
     ID,
-    WRITABLE,
+    WRITEABLE,
 )
 from bosch_thermostat_client.const.ivt import (
     CURRENT_SETPOINT,
@@ -217,7 +217,7 @@ class IVTCircuit(Circuit):
         allowed_presets = active_program.get(ALLOWED_VALUES, [])
         if (
             preset_mode in allowed_presets
-            and active_program.get(WRITABLE, False)
+            and active_program.get(WRITEABLE, False)
             and active_program.get(VALUE) != preset_mode
         ):
             result = await self._connector.put(active_program_uri, preset_mode)

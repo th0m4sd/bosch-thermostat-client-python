@@ -109,13 +109,14 @@ class XMPPBaseConnector:
             future = asyncio.Future()
 
             def listener(recv_body, http_response):
+                print("test", recv_body)
                 if method == PUT and http_response == "HTTP/1.0 204 No Content":
                     future.set_result(True)
                 if recv_body == BODY_400:
                     future.set_exception(MsgException("400 HTTP Error"))
                 elif recv_body is None and http_response == WRONG_ENCRYPTION:
                     future.set_exception(MsgException("Can't decrypt for %s" % path))
-                elif method == GET and recv_body.get("id") == path:
+                elif method == GET and recv_body.get("id") in path:
                     try:
                         future.set_result(recv_body)
                     except (asyncio.InvalidStateError) as err:

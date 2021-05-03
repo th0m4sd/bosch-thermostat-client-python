@@ -19,7 +19,7 @@ from bosch_thermostat_client.const import (
     TIMESTAMP,
     REFERENCES,
     RECORDINGS,
-    WRITABLE,
+    WRITEABLE,
     INTERVAL,
     USED,
 )
@@ -183,7 +183,7 @@ class BoschSingleEntity:
                 STATUS,
                 TIMESTAMP,
                 REFERENCES,
-                WRITABLE,
+                WRITEABLE,
                 USED,
             ]:
                 if res_key in result:
