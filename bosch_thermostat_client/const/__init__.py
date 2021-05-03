@@ -111,6 +111,7 @@ ROOT_PATHS = [
     "/events",
     "/programs",
     "/zones",
+    "/ecus",
 ]
 SENSORS = "sensors"
 SENSOR = "sensor"

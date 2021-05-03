@@ -3,12 +3,6 @@
     "heatingCircuits": {
         "hastates": [
             {
-                "haname": "off",
-                "boschname": [
-                    "off"
-                ]
-            },
-            {
                 "haname": "heat",
                 "boschname": [
                     "manual"
@@ -74,15 +68,15 @@
     "dhwCircuits": {
         "hastates": [
             {
-                "haname": "off",
+                "haname": "clock",
                 "boschname": [
-                    "Off"
+                    "clock"
                 ]
             },
             {
-                "haname": "high_demand",
+                "haname": "manual",
                 "boschname": [
-                    "high"
+                    "manual"
                 ]
             }
         ],
@@ -94,11 +88,11 @@
                 "type": "off"
             },
             "manual": {
-                "setpoint": "setpoint1",
+                "setpoint": null,
                 "type": "manual"
             },
             "auto": {
-                "setpoint": "setpoint1",
+                "setpoint": null,
                 "type": "auto"
             }
         },
@@ -107,11 +101,6 @@
                 "id": "dhwOperationManualMode",
                 "name": "Operation mode",
                 "type": "operation_mode"
-            },
-            "setpoint1": {
-                "id": "temperatureLevels/high",
-                "name": "DHW High level",
-                "type": "setpoint"
             },
             "status": {
                 "id": "dhwOperationState",

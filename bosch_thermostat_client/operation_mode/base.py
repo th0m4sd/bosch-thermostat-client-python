@@ -27,7 +27,10 @@ class OperationModeHelper:
     @property
     def available_modes(self):
         """Get Bosch operations modes."""
-        return self._operation_mode.get(ALLOWED_VALUES, {})
+        availables_modes = self._operation_mode.get(ALLOWED_VALUES, None)
+        if not availables_modes:
+            return self._mode_to_setpoint.keys()
+        return availables_modes
 
     def find_in_available_modes(self, modes):
         for mode in modes:

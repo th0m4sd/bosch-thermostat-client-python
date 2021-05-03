@@ -51,6 +51,7 @@ class IVTGateway(BaseGateway):
         if password:
             access_key = self._access_token
         Connector = connector_ivt_chooser(session_type)
+        self._session_type = session_type
         self._connector = Connector(
             host=host,
             loop=session,
