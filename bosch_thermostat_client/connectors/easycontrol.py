@@ -2,26 +2,32 @@
 import logging
 
 import aioxmpp
-from bosch_thermostat_client.const import PUT, GET, USER_AGENT, CONTENT_TYPE, APP_JSON
+from bosch_thermostat_client.const import (
+    PUT,
+    GET,
+    USER_AGENT,
+    CONTENT_TYPE,
+    APP_JSON,
+    ACCESS_KEY,
+)
 from .xmpp import XMPPBaseConnector
-
-_LOGGER = logging.getLogger(__name__)
 
 USERAGENT = "rrc2"
 
 
 class EasycontrolConnector(XMPPBaseConnector):
-    xmpp_host = "charlie.ticx.boschtt.net"
+    xmpp_host = "oscar.ticx.boschtt.net"
     _accesskey_prefix = "C42i9NNp_"
     _rrc_contact_prefix = "rrc2contact_"
     _rrc_gateway_prefix = "rrc2gateway_"
+    verify_ssl = False
 
     def __init__(self, host, encryption, **kwargs):
         self._seqno = 0
         super().__init__(
             host=host,
             encryption=encryption,
-            access_key=kwargs.get("access_key"),
+            access_key=kwargs.get(ACCESS_KEY),
         )
 
     def _build_message(self, method, path, data=None):

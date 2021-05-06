@@ -24,6 +24,8 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class XMPPBaseConnector:
+    verify_ssl = True
+
     def __init__(self, host, encryption, **kwargs):
         """
         :param host: aka serial number
@@ -40,7 +42,8 @@ class XMPPBaseConnector:
         self.xmppclient = aioxmpp.PresenceManagedClient(
             self._jid,
             aioxmpp.make_security_layer(
-                self._accesskey_prefix + kwargs.get("access_key")
+                self._accesskey_prefix + kwargs.get("access_key"),
+                no_verify=self.verify_ssl,
             ),
         )
         self.message_dispatcher = self.xmppclient.summon(
