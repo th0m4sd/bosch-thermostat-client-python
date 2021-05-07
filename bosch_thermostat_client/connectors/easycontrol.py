@@ -1,5 +1,4 @@
 """XMPP Connector to talk to bosch."""
-import logging
 
 import aioxmpp
 from bosch_thermostat_client.const import (
@@ -16,11 +15,11 @@ USERAGENT = "rrc2"
 
 
 class EasycontrolConnector(XMPPBaseConnector):
-    xmpp_host = "oscar.ticx.boschtt.net"
+    xmpp_host = "charlie.ticx.boschtt.net"
     _accesskey_prefix = "C42i9NNp_"
     _rrc_contact_prefix = "rrc2contact_"
     _rrc_gateway_prefix = "rrc2gateway_"
-    verify_ssl = False
+    no_verify = True
 
     def __init__(self, host, encryption, **kwargs):
         self._seqno = 0

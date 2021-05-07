@@ -24,7 +24,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class XMPPBaseConnector:
-    verify_ssl = True
+    no_verify = False
 
     def __init__(self, host, encryption, **kwargs):
         """
@@ -43,7 +43,7 @@ class XMPPBaseConnector:
             self._jid,
             aioxmpp.make_security_layer(
                 self._accesskey_prefix + kwargs.get("access_key"),
-                no_verify=self.verify_ssl,
+                no_verify=self.no_verify,
             ),
         )
         self.message_dispatcher = self.xmppclient.summon(
@@ -81,13 +81,14 @@ class XMPPBaseConnector:
         return data
 
     async def put(self, path, value):
-        _LOGGER.debug("Sending PUT request to %s", path)
+        _LOGGER.debug("Sending PUT request to %s with value %s", path, value)
         data = await self._request(
             method=PUT,
             encrypted_msg=self._encryption.encrypt(json.dumps({"value": value})),
             path=path,
             timeout=10,
         )
+        print("data", data)
         if data:
             return True
 
@@ -112,7 +113,7 @@ class XMPPBaseConnector:
             future = asyncio.Future()
 
             def listener(recv_body, http_response):
-                print("test", recv_body)
+                print("test", recv_body, http_response)
                 if method == PUT and http_response == "HTTP/1.0 204 No Content":
                     future.set_result(True)
                 if recv_body == BODY_400:

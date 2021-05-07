@@ -43,7 +43,7 @@ async def test_circ(gateway, circ_type=HC):
     await circuits_init(gateway, circ_type)
     await circuits_read_temp(gateway, 0, circ_type)
     await get_operation_mode(gateway, 0, circ_type)
-    # await set_operation_mode(gateway, 0, HC)
+    await set_operation_mode(gateway, 0, circ_type)
     print("=======================================")
 
 
