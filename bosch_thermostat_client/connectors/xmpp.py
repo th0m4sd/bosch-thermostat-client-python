@@ -88,7 +88,6 @@ class XMPPBaseConnector:
             path=path,
             timeout=10,
         )
-        print("data", data)
         if data:
             return True
 
@@ -113,7 +112,6 @@ class XMPPBaseConnector:
             future = asyncio.Future()
 
             def listener(recv_body, http_response):
-                print("test", recv_body, http_response)
                 if method == PUT and http_response == "HTTP/1.0 204 No Content":
                     future.set_result(True)
                 if recv_body == BODY_400:
