@@ -114,6 +114,11 @@ class XMPPBaseConnector:
             future = asyncio.Future()
 
             def listener(recv_body, http_response):
+                if future.done() or future.cancelled():
+                    _LOGGER.debug(
+                        "Future is already done. If it happens too often that it might be a bug. Report it."
+                    )
+                    return
                 if method == PUT and http_response == "HTTP/1.0 204 No Content":
                     future.set_result(True)
                 if recv_body == BODY_400:
