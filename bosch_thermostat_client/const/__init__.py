@@ -119,6 +119,7 @@ VALUES = "values"
 SENSOR_TYPE = "sensorType"
 SYSTEM_BUS = "systemBus"
 WRITEABLE = "writeable"
+WRITE = "write"
 
 RECORDERDRES = "recordedResource"
 RECORDING = "recording"

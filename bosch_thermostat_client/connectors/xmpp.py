@@ -18,6 +18,7 @@ from bosch_thermostat_client.const import (
     REQUEST_TIMEOUT,
     BODY_400,
     WRONG_ENCRYPTION,
+    ACCESS_KEY,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -42,7 +43,7 @@ class XMPPBaseConnector:
         self.xmppclient = aioxmpp.PresenceManagedClient(
             self._jid,
             aioxmpp.make_security_layer(
-                self._accesskey_prefix + kwargs.get("access_key"),
+                self._accesskey_prefix + kwargs.get(ACCESS_KEY),
                 no_verify=self.no_verify,
             ),
         )
@@ -76,6 +77,7 @@ class XMPPBaseConnector:
     async def get(self, path):
         _LOGGER.debug("Sending GET request to %s by %s", path, id(self))
         data = await self._request(method=GET, path=path)
+        _LOGGER.debug("Response to GET request %s: %s", path, json.dumps(data))
         if not data:
             raise DeviceException(f"Error requesting data from {path}")
         return data

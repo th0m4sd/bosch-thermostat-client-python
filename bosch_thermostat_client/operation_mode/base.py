@@ -1,4 +1,12 @@
-from bosch_thermostat_client.const import VALUE, SETPOINT, TYPE, AUTO, OFF, MANUAL
+from bosch_thermostat_client.const import (
+    VALUE,
+    SETPOINT,
+    TYPE,
+    AUTO,
+    OFF,
+    MANUAL,
+    WRITE,
+)
 from bosch_thermostat_client.const.ivt import ALLOWED_VALUES
 
 
@@ -42,10 +50,21 @@ class OperationModeHelper:
         """Retrieve current mode of Circuit."""
         return self._operation_mode.get(VALUE, None)
 
-    def temp_setpoint(self, mode=None):
+    def temp_setpoint(self, mode=None, setpoint_type=None):
         """Check which temp property to use. Key READ or WRITE"""
+
+        def get_setpoint():
+            if setpoint_type == WRITE:
+                return f"{SETPOINT}_WRITE"
+            return SETPOINT
+
         mode = self.current_mode if not mode else mode
-        return self._mode_to_setpoint.get(mode, {}).get(SETPOINT)
+        mode_to_setpoint = self._mode_to_setpoint.get(mode, {})
+        temp_setpoint = mode_to_setpoint.get(get_setpoint())
+        if not temp_setpoint:
+            """Fallback. Just in case."""
+            return mode_to_setpoint.get(SETPOINT)
+        return temp_setpoint
 
     @property
     def mode_type(self):
