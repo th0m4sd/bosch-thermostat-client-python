@@ -1,7 +1,7 @@
 """
 Operation mode helper for DHW.
 """
-from bosch_thermostat_client.const import AUTO, MANUAL, USED, VALUE
+from bosch_thermostat_client.const import AUTO, MANUAL, USED, VALUE, ON, OFF
 from .base import OperationModeHelper
 
 
@@ -21,6 +21,6 @@ class NefitDhwOperationModeHelper(OperationModeHelper):
     @property
     def current_mode(self):
         """Retrieve current mode of Circuit."""
-        if self._operation_mode.get(VALUE, "off") == "on":
+        if self._operation_mode.get(VALUE, OFF) == ON:
             return MANUAL
         return AUTO

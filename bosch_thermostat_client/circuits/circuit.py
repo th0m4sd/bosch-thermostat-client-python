@@ -19,6 +19,7 @@ from bosch_thermostat_client.const import (
     HA_NAME,
     SENSORS,
     SWITCH_PROGRAMS,
+    VALUE,
 )
 from bosch_thermostat_client.helper import BoschSingleEntity
 from bosch_thermostat_client.exceptions import DeviceException
@@ -144,12 +145,8 @@ class Circuit(BasicCircuit):
     def hvac_action(self):
         return None
 
-    async def set_ha_mode(self, ha_mode):
-        """Helper to set operation mode."""
-        old_setpoint = self._temp_setpoint
-        old_mode = self._op_mode.current_mode
-        bosch_mode = self._op_mode.find_in_available_modes(self._find_ha_mode(ha_mode))
-        new_mode = await self.set_operation_mode(bosch_mode)
+    async def update_temp_after_ha_mode(self, old_setpoint, new_mode, old_mode):
+        """Helper to fetch new temp. attribute if operation mode was changed."""
         different_mode = new_mode != old_mode
         try:
             if (
@@ -169,6 +166,14 @@ class Circuit(BasicCircuit):
         if different_mode:
             return 1
         return 0
+
+    async def set_ha_mode(self, ha_mode):
+        """Helper to set operation mode."""
+        old_setpoint = self._temp_setpoint
+        old_mode = self._op_mode.current_mode
+        bosch_mode = self._op_mode.find_in_available_modes(self._find_ha_mode(ha_mode))
+        new_mode = await self.set_operation_mode(bosch_mode)
+        return await self.update_temp_after_ha_mode(old_setpoint, new_mode, old_mode)
 
     @property
     def current_temp(self):
@@ -249,10 +254,13 @@ class Circuit(BasicCircuit):
                 self.process_results(result, key)
             except DeviceException:
                 continue
-            if not self._op_mode.is_set and is_operation_type and result:
-                self._op_mode.init_op_mode(
-                    self.process_results(result, key, True), item[URI]
-                )
+            if is_operation_type and result:
+                op_mode = self.process_results(result, key, True)
+                if not self._op_mode.is_set:
+                    self._op_mode.init_op_mode(op_mode, item[URI])
+                else:
+                    self._op_mode.set_new_operation_mode(op_mode[VALUE])
+
             if key == last_item:
                 self._state = True
         if self.schedule:

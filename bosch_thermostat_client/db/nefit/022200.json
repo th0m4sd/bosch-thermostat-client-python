@@ -20,7 +20,8 @@
         "switchprogram": "/heatingCircuits/{}/switchPrograms/{}",
         "mode_to_setpoint": {
             "manual": {
-                "setpoint": "setpoint1",
+                "setpoint": "setpoint2",
+                "setpoint_write": "setpoint1",
                 "type": "manual"
             },
             "clock": {
