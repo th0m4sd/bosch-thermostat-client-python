@@ -144,10 +144,9 @@ class XMPPBaseConnector:
                 data = await asyncio.wait_for(future, timeout)
             except (asyncio.TimeoutError, MsgException):
                 _LOGGER.info("Msg exception for %s", path)
-                pass
+                future.cancel()
             except (asyncio.InvalidStateError) as err:
                 _LOGGER.error("Unknown error occured. Please check logs. %s", err)
-                pass
             finally:
                 self.listeners.remove(listener)
         finally:
