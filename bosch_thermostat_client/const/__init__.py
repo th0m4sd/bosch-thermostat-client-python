@@ -11,7 +11,7 @@ GATEWAY = "gateway"
 MODELS = "models"
 
 TIMEOUT = 10
-REQUEST_TIMEOUT = 3
+REQUEST_TIMEOUT = 6
 BODY_400 = "400Error"
 WRONG_ENCRYPTION = "WrongEncryption"
 
