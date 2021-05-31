@@ -44,7 +44,6 @@ class NefitHeatingCircuit(NefitCircuit):
     async def update_temp_after_ha_mode(self, old_setpoint, new_mode, old_mode):
         """Helper to fetch new temp. attribute if operation mode was changed."""
         different_mode = new_mode != old_mode
-        print("check!")
         try:
             if (
                 different_mode
@@ -52,7 +51,6 @@ class NefitHeatingCircuit(NefitCircuit):
                 and self._op_mode.is_auto
             ):
                 result = await self._connector.get(self._data[self._temp_setpoint][URI])
-                print("result!!!", result)
                 self.process_results(result, self._temp_setpoint)
         except DeviceException as err:
             _LOGGER.debug(f"Can't update data for mode {new_mode}. Error: {err}")

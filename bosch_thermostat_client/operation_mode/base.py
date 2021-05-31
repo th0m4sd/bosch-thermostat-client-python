@@ -9,6 +9,8 @@ from bosch_thermostat_client.const import (
 )
 from bosch_thermostat_client.const.ivt import ALLOWED_VALUES
 
+WRITE_SETPOINT = f"{SETPOINT}_{WRITE}"
+
 
 class OperationModeHelper:
     def __init__(self, name, mode_to_setpoint):
@@ -55,7 +57,7 @@ class OperationModeHelper:
 
         def get_setpoint():
             if setpoint_type == WRITE:
-                return f"{SETPOINT}_WRITE"
+                return WRITE_SETPOINT
             return SETPOINT
 
         mode = self.current_mode if not mode else mode
