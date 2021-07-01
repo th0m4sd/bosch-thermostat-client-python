@@ -44,7 +44,6 @@ class Sensors(BoschEntities):
 
         :param dict requests: { GET: get function, SUBMIT: submit function}
         """
-        self._index = 0
         self._connector = connector
         super().__init__(connector.get)
         self._items = {}

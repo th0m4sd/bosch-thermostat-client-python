@@ -32,6 +32,6 @@ class ZonePrograms:
         return self._programs.get(active_program)
 
     def get_preset_index_by_name(self, name):
-        for program_name, id in self._programs.items():
+        for id, program_name in self._programs.items():
             if program_name == name:
                 return id

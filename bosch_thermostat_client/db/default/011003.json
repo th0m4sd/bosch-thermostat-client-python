@@ -264,5 +264,12 @@
             "id": "/heatSources/systemPressure",
             "name": "System pressure"
         }
-    }
+    },
+    "crawlSensors": [
+        {
+            "uri": "/recordings",
+            "deep": 4,
+            "sensorType": "recording"
+        }
+    ]
 }

@@ -240,10 +240,12 @@
             "workingTime": {
                 "id": "workingTime",
                 "name": "Working time"
-            },
+            }
+        },
+        "switches": {
             "charge": {
                 "id": "charge",
-                "name": "Charge"
+                "name": "charge"
             }
         }
     },
@@ -371,5 +373,11 @@
             "deep": 4,
             "sensorType": "recording"
         }
-    ]
+    ],
+    "switches": {
+        "poolStatus": {
+            "id": "/heatSources/poolStatus",
+            "name": "poolStatus"
+        }
+    }
 }

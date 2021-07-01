@@ -1,4 +1,5 @@
 """Main circuit object."""
+from bosch_thermostat_client.switches import Switches
 import logging
 from bosch_thermostat_client.const import (
     ID,
@@ -18,6 +19,8 @@ from bosch_thermostat_client.const import (
     BOSCH_NAME,
     HA_NAME,
     SENSORS,
+    SWITCH,
+    SWITCHES,
     SWITCH_PROGRAMS,
     VALUE,
 )
@@ -47,6 +50,10 @@ class BasicCircuit(BoschSingleEntity):
             sensors_db=self._db.get(SENSORS),
             uri_prefix=self._main_uri,
         )
+        self._switches = Switches(
+            connector=connector,
+            uri_prefix=self._main_uri,
+        )
 
     @property
     def db_json(self):
@@ -71,9 +78,14 @@ class BasicCircuit(BoschSingleEntity):
     def sensors(self):
         return self._sensors
 
+    @property
+    def switches(self):
+        return self._switches
+
     async def initialize(self):
         """Check each uri if return json with values."""
         await self.update_requested_key(STATUS)
+        await self._switches.initialize(switches=self._db.get(SWITCHES))
 
 
 class Circuit(BasicCircuit):

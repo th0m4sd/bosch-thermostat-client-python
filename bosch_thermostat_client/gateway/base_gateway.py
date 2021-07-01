@@ -29,6 +29,7 @@ from bosch_thermostat_client.const import (
     BASE_FIRMWARE_VERSION,
     RECORDINGS,
     CRAWL_SENSORS,
+    SWITCHES,
 )
 from bosch_thermostat_client.db import get_custom_db, get_db_of_firmware, get_initial_db
 from bosch_thermostat_client.exceptions import (
@@ -38,6 +39,7 @@ from bosch_thermostat_client.exceptions import (
 )
 from bosch_thermostat_client.helper import deep_into
 from bosch_thermostat_client.sensors import Sensors
+from bosch_thermostat_client.switches import Switches
 import json
 
 _LOGGER = logging.getLogger(__name__)
@@ -180,6 +182,13 @@ class BaseGateway:
         return self._data[SENSORS].sensors
 
     @property
+    def switches(self):
+        """Get switches list."""
+        if SWITCHES in self._data:
+            return self._data[SWITCHES].switches
+        return []
+
+    @property
     def firmware(self):
         """Get firmware."""
         return self._firmware_version
@@ -205,12 +214,12 @@ class BaseGateway:
                 circuit_object = await self.initialize_circuits(circuit)
                 if circuit_object:
                     supported.append(circuit)
-                if circuit == DHW and self.device_type in (IVT):
-                    supported.append(SWITCH)
             except DeviceException as err:
                 _LOGGER.debug("Circuit %s not found. Skipping it. %s", circuit, err)
                 pass
         await self.initialize_sensors()
+        await self.initialize_switches()
+        supported.append(SWITCH)
         supported.append(SENSOR)
         return supported
 
@@ -236,6 +245,15 @@ class BaseGateway:
             _LOGGER.info("Initializing RECORDING Sensors.")
             await self._data[SENSORS].initialize(crawl_sensors=self._db[CRAWL_SENSORS])
         return self.sensors
+
+    async def initialize_switches(self):
+        """Initialize switches objects."""
+        _LOGGER.info("Initializing Switches Sensors.")
+        if SWITCHES in self._db:
+            self._data[SWITCHES] = Switches(
+                connector=self._connector,
+            )
+            await self._data[SWITCHES].initialize(switches=self._db[SWITCHES])
 
     async def rawscan(self):
         """Print out all info from gateway."""

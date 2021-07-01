@@ -5,7 +5,7 @@ import aiohttp
 import time
 import bosch_thermostat_client as bosch
 from bosch_thermostat_client.const.ivt import IVT
-from bosch_thermostat_client.const import HC, HTTP
+from bosch_thermostat_client.const import HC, HTTP, DHW
 
 logging.basicConfig()
 logging.getLogger().setLevel(logging.WARN)
@@ -15,11 +15,20 @@ async def hc_circuits_init(gateway):
     await gateway.initialize_circuits(HC)
 
 
+async def dhw_circuits_init(gateway):
+    await gateway.initialize_circuits(DHW)
+
+
 async def get_circuit(gateway, c_index, circ_type=HC):
     circs = gateway.get_circuits(circ_type)
     circ = circs[c_index]
     await circ.update()
     return circ
+
+
+async def dhw_circuit_test(gateway):
+    dhw = await get_circuit(gateway, 0, DHW)
+    sws = dhw.switches
 
 
 async def hc_circuits_read_temp(gateway, c_index, circ_type=HC):
@@ -53,6 +62,10 @@ async def main():
         )
         await gateway.initialize()
         await hc_circuits_init(gateway)
+        await dhw_circuits_init(gateway)
+        await dhw_circuit_test(gateway)
+        return
+
         await hc_circuits_read_temp(gateway, 0, HC)
         await get_operation_mode(gateway, 0, HC)
         await set_operation_mode(gateway, 0, HC)

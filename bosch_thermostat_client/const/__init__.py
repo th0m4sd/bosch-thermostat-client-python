@@ -114,6 +114,8 @@ ROOT_PATHS = [
     "/ecus",
 ]
 SENSORS = "sensors"
+SWITCHES = "switches"
+SWITCH = "switch"
 SENSOR = "sensor"
 VALUES = "values"
 SENSOR_TYPE = "sensorType"

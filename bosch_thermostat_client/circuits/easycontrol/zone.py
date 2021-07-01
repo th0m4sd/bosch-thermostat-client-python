@@ -93,6 +93,8 @@ class EasyZoneCircuit(EasycontrolCircuit):
 
     async def set_preset_mode(self, preset_mode):
         preset_id = self._zone_program.get_preset_index_by_name(preset_mode)
+        if not preset_id:
+            return
         act_program = self._data.get(ACTIVE_PROGRAM, {})
         active_program_uri = act_program[URI]
         result = await self._connector.put(active_program_uri, preset_id)
