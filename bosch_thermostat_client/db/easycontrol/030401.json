@@ -215,6 +215,14 @@
         "CHpumpModulation": {
             "id": "/heatSources/CHpumpModulation",
             "name": "Actual heating pump modulation"
+        },
+        "actualSupplyTemperature": {
+            "id": "/heatSources/actualSupplyTemperature",
+            "name": "Actual supply temperature"
+        },
+        "refillNeeded": {
+            "id": "/heatSources/refillNeeded",
+            "name": "Refill needed11"
         }
     },
     "crawlSensors": [
