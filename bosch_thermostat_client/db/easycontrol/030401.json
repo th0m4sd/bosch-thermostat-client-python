@@ -225,5 +225,12 @@
             "sensorType": "array",
             "state": "battery"
         }
-    ]
+    ],
+    "switches": {
+        "awayMode": {
+            "id": "/system/awayMode/enabled",
+            "name": "Away mode",
+            "type": "boolean"
+        }
+    }
 }

@@ -11,3 +11,7 @@ CIRCUIT_TYPES = {DHW: DHW_CIRCUITS, ZN: ZONES, DV: DEVICES}
 TARGET_TEMP = "targettemp"
 PROGRAM_LIST = "programList"
 IDLE = "idle"
+TRUE = "true"
+FALSE = "false"
+USED = "used"
+BOOLEAN = "boolean"
