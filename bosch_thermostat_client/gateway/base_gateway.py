@@ -310,8 +310,7 @@ class BaseGateway:
             _LOGGER.error(err)
 
     async def close(self):
-        if self._session_type != HTTP:
-            await self._connector.close()
+        await self._connector.close()
 
     async def check_firmware_validity(self):
         """Run query against firmware version."""

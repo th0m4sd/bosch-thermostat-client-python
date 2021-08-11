@@ -19,6 +19,8 @@ from bosch_thermostat_client.const import (
     RECORDERDRES,
     DEEP,
     SENSOR_TYPE,
+    TEMP_CELSIUS,
+    ENERGY_KILO_WATT_HOUR,
 )
 from datetime import datetime
 from bosch_thermostat_client.const.ivt import INVALID
@@ -202,9 +204,9 @@ class RecordingSensor(Sensor):
 
         def unit_chooser(uri):
             if "energy" in uri:
-                return "kWh"
+                return ENERGY_KILO_WATT_HOUR
             if "temp" in uri:
-                return "C"
+                return TEMP_CELSIUS
             return None
 
         self._unit_of_measurement = unit_chooser(uri=path)

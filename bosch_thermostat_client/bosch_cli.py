@@ -296,15 +296,18 @@ async def query(
     else:
         _LOGGER.error("Wrong protocol for this device")
         return
-    gateway = BoschGateway(
-        session=session,
-        session_type=session_type,
-        host=host,
-        access_token=token,
-        password=password,
-    )
-    await _runquery(gateway, path)
-    await gateway.close()
+    try:
+        gateway = BoschGateway(
+            session=session,
+            session_type=session_type,
+            host=host,
+            access_token=token,
+            password=password,
+        )
+        await _runquery(gateway, path)
+    finally:
+        await gateway.close()
+        # session.close()
 
 
 if __name__ == "__main__":
