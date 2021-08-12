@@ -24,9 +24,12 @@ DEVICE_TYPES = {
 
 def open_json(file):
     """Open json file."""
-    with open(file, "r") as db_file:
-        datastore = json.load(db_file)
-        return datastore
+    try:
+        with open(file, "r") as db_file:
+            datastore = json.load(db_file)
+            return datastore
+    except FileNotFoundError:
+        pass
     return {}
 
 
