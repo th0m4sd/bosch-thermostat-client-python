@@ -23,6 +23,11 @@
       "name": "Bosch Remote room controller CT100",
       "type": "NEFIT"
     },
+    "7736701045": {
+      "value": "TC100",
+      "name": "Bosch TC100 Ru",
+      "type": "NEFIT"
+    },
     "7746901786": {
       "value": "CT100",
       "name": "Buderus CT100",

@@ -23,7 +23,7 @@ from bosch_thermostat_client.const import (
     INTERVAL,
     USED,
 )
-from bosch_thermostat_client.const.ivt import ALLOWED_VALUES, STATE
+from bosch_thermostat_client.const.ivt import ALLOWED_VALUES, STATE, INVALID
 
 from .exceptions import DeviceException, EncryptionException
 import base64
@@ -196,10 +196,8 @@ class BoschSingleEntity:
         if STATE in result:
             for state in result[STATE]:
                 for key, item in state.items():
-                    if key in data:
-                        _LOGGER.error(
-                            f"This key already exists! {key}, {data[key]}, {item}. Write to developer!"
-                        )
+                    if VALUE in data and key == INVALID and data[VALUE] == item:
+                        data[INVALID] = True
                     data[STATE + "_" + key] = item
         return data if return_data else updated
 
