@@ -1,7 +1,5 @@
 """Gateway module connecting to Bosch thermostat."""
 
-from bosch_thermostat_client.const.nefit import NEFIT
-from bosch_thermostat_client.const.ivt import IVT
 import logging
 
 from bosch_thermostat_client.circuits import Circuits
@@ -13,7 +11,6 @@ from bosch_thermostat_client.const import (
     GATEWAY,
     HC,
     HEATING_CIRCUITS,
-    HTTP,
     ID,
     MODELS,
     NAME,

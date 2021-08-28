@@ -95,4 +95,4 @@ class HttpConnector:
             )
 
     async def close(self):
-        await self._websession.close()
+        return True
