@@ -22,6 +22,8 @@ from bosch_thermostat_client.const import (
     WRITEABLE,
     INTERVAL,
     USED,
+    ENERGY_HISTORY_ENTRIES,
+    ENERGY_HISTORY,
 )
 from bosch_thermostat_client.const.ivt import ALLOWED_VALUES, STATE, INVALID
 
@@ -95,6 +97,13 @@ async def deep_into(url, _list, get):
         new_resp = resp
         if URI in new_resp:
             new_resp[URI] = remove_all_ip_occurs(resp[URI])
+        if ENERGY_HISTORY_ENTRIES in new_resp.get(ID, ""):
+            page = new_resp.get(VALUE, 1) - 1
+            print("go!", page)
+            page_uri = f"{ENERGY_HISTORY}?entry={page}"
+            en_resp = await get(page_uri)
+            en_resp[URI] = page_uri
+            _list.append(en_resp)
         if RECORDINGS in new_resp.get(ID, "") and REFERENCES not in new_resp:
             intervals = get_all_intervals()
             for ivs in intervals:

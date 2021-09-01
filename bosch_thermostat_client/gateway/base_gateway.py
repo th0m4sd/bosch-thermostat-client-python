@@ -306,8 +306,8 @@ class BaseGateway:
         except DeviceException as err:
             _LOGGER.error(err)
 
-    async def close(self):
-        await self._connector.close()
+    async def close(self, force=False):
+        await self._connector.close(force)
 
     async def check_firmware_validity(self):
         """Run query against firmware version."""

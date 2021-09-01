@@ -109,7 +109,9 @@
             },
             "actualSupplyTemperature": {
                 "id": "actualSupplyTemperature",
-                "name": "Actual supply temperature for HC"
+                "name": "Actual supply temperature for HC",
+                "state_class": "measurement",
+                "device_class": "temperature"
             }
         }
     },
@@ -261,12 +263,16 @@
             "collectorTemperature": {
                 "id": "collectorTemperature",
                 "name": "collectorTemperature",
-                "type": "regular"
+                "type": "regular",
+                "state_class": "measurement",
+                "device_class": "temperature"
             },
             "dhwTankTemperature": {
                 "id": "dhwTankTemperature",
                 "name": "dhwTankTemperature",
-                "type": "regular"
+                "type": "regular",
+                "state_class": "measurement",
+                "device_class": "temperature"
             },
             "solarYield": {
                 "id": "solarYield",
@@ -288,11 +294,15 @@
     "sensors": {
         "outdoor_t1": {
             "id": "/system/sensors/temperatures/outdoor_t1",
-            "name": "Outdoor temperature"
+            "name": "Outdoor temperature",
+            "state_class": "measurement",
+            "device_class": "temperature"
         },
         "hotWater_t2": {
             "id": "/system/sensors/temperatures/hotWater_t2",
-            "name": "Hotwater temp"
+            "name": "Hotwater temp",
+            "state_class": "measurement",
+            "device_class": "temperature"
         },
         "supply_t1_setpoint": {
             "id": "/system/sensors/temperatures/supply_t1_setpoint",
@@ -320,7 +330,9 @@
         },
         "actualPower": {
             "id": "/heatSources/actualPower",
-            "name": "Actual Power"
+            "name": "Actual Power",
+            "state_class": "measurement",
+            "device_class": "power"
         },
         "actualSupplyTemp": {
             "id": "/system/appliance/actualSupplyTemperature",

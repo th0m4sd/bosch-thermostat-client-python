@@ -94,5 +94,6 @@ class HttpConnector:
                 timeout=self._request_timeout,
             )
 
-    async def close(self):
-        return True
+    async def close(self, force=False):
+        if force:
+            await self._websession.close()

@@ -96,6 +96,8 @@ ON = "on"
 FIRMWARE_VERSION = "versionFirmware"
 BASE_FIRMWARE_VERSION = "versionFirmwarePath"
 CRAWL_SENSORS = "crawlSensors"
+ENERGY_HISTORY_ENTRIES = "/energy/historyEntries"
+ENERGY_HISTORY = "/energy/history"
 
 ROOT_PATHS = [
     "/dhwCircuits",

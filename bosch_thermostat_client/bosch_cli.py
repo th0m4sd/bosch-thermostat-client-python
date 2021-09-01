@@ -204,7 +204,7 @@ async def scan(
         else:
             _LOGGER.error("Couldn't connect to gateway!")
     finally:
-        await gateway.close()
+        await gateway.close(force=True)
 
 
 @cli.command()
@@ -314,7 +314,7 @@ async def query(
         )
         await _runquery(gateway, path)
     finally:
-        await gateway.close()
+        await gateway.close(force=True)
         # session.close()
 
 

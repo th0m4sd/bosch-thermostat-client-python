@@ -99,7 +99,7 @@ class XMPPBaseConnector:
                 self.xmppclient.connected()
             )
 
-    async def close(self):
+    async def close(self, force):
         await asyncio.wait_for(self._st.aclose(), 10)
 
     async def _request(self, method, path, encrypted_msg=None, timeout=REQUEST_TIMEOUT):
