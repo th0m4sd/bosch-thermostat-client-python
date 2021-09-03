@@ -352,7 +352,9 @@
         },
         "energyConsumption": {
             "id": "/heatSources/energyMonitoring/consumption",
-            "name": "Energy consumption"
+            "name": "Energy consumption",
+            "state_class": "total_increasing",
+            "device_class": "power"
         },
         "startDateTime": {
             "id": "/heatSources/energyMonitoring/startDateTime",

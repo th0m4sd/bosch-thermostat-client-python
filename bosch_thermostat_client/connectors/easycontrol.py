@@ -15,7 +15,7 @@ USERAGENT = "rrc2"
 
 
 class EasycontrolConnector(XMPPBaseConnector):
-    xmpp_host = "charlie.ticx.boschtt.net"
+    xmpp_host = "xmpp.rrcng.ticx.boschtt.net"
     _accesskey_prefix = "C42i9NNp_"
     _rrc_contact_prefix = "rrc2contact_"
     _rrc_gateway_prefix = "rrc2gateway_"

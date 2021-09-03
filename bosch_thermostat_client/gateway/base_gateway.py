@@ -239,7 +239,7 @@ class BaseGateway:
             connector=self._connector, sensors_db=self._db[SENSORS]
         )
         if CRAWL_SENSORS in self._db:
-            _LOGGER.info("Initializing RECORDING Sensors.")
+            _LOGGER.info("Initializing Crawl Sensors.")
             await self._data[SENSORS].initialize(crawl_sensors=self._db[CRAWL_SENSORS])
         return self.sensors
 

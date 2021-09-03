@@ -1,4 +1,10 @@
 {
+  "227": {
+    "level": "Installer",
+    "title": "No ionization message after ignition",
+    "description": "Unknown",
+    "alternatives": []
+  },
   "1001": {
     "level": "Customer",
     "title": "No communication betw. system controller and remote control",
