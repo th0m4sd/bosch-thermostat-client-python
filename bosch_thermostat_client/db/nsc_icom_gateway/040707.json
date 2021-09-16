@@ -94,6 +94,12 @@
     "dhwCircuits": {
         "hastates": [
             {
+                "haname": "off",
+                "boschname": [
+                    "Off"
+                ]
+            },
+            {
                 "haname": "on",
                 "boschname": [
                     "low"
@@ -119,6 +125,10 @@
             "low": {
                 "setpoint": "setpoint4",
                 "type": "manual"
+            },
+            "Off": {
+                "setpoint": null,
+                "type": "off"
             },
             "high": {
                 "setpoint": "setpoint3",

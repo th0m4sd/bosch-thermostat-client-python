@@ -8,7 +8,7 @@ from bosch_thermostat_client.const import XMPP
 
 logging.basicConfig()
 logging.getLogger().setLevel(logging.DEBUG)
-# logging.getLogger('aioxmpp').setLevel(logging.WARN)
+logging.getLogger("aioxmpp").setLevel(logging.WARN)
 logging.getLogger("aioopenssl").setLevel(logging.WARN)
 logging.getLogger("aiosasl").setLevel(logging.WARN)
 logging.getLogger("asyncio").setLevel(logging.WARN)
@@ -19,25 +19,19 @@ async def main():
     Provide data_file.txt with ip, access_key, password and check
     if you can retrieve data from your thermostat.
     """
-    data_file = open("data_file_nefit2.txt", "r")
+    data_file = open("data_file_easycontrol.txt", "r")
     data = data_file.read().splitlines()
-    loop = asyncio.get_event_loop()
     BoschGateway = bosch.gateway_chooser(device_type=EASYCONTROL)
     gateway = BoschGateway(
+        session=asyncio.get_event_loop(),
         session_type=XMPP,
         host=data[0],
         access_token=data[1],
         password=data[2],
     )
-    # gateway = BoschGateway(session=loop,
-    #                        session_type="xmpp",
-    #                        host=data[0],
-    #                        access_key=data[1],
-    #                        password=data[2])
-    # print(await gateway.custom_test())
     await gateway.initialize()
-    # return
-    # print(f"UUID {await gateway.check_connection()}")
+    print(f"UUID {await gateway.check_connection()}")
+    return
 
     # small = await gateway.smallscan(DHW_CIRCUITS)
     #        myjson = json.loads(small)
@@ -49,10 +43,10 @@ async def main():
     for sensor in sensors:
         print(f"{sensor.name} : {sensor.state}")
     await gateway.get_capabilities()
-    for hc in gateway.dhw_circtuis:
-        await hc.update()
-        print("hvac mode", hc.ha_mode)
-        print("target temp ->", hc.target_temperature)
+    # for hc in gateway.dhw_circtuis:
+    #     await hc.update()
+    #     print("hvac mode", hc.ha_mode)
+    #     print("target temp ->", hc.target_temperature)
     return
 
     #        await hc.set_ha_mode("auto") #MEANS AUTO

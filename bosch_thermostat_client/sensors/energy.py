@@ -1,3 +1,4 @@
+from curses.ascii import US
 import logging
 from bosch_thermostat_client.const import (
     RESULT,
@@ -6,7 +7,7 @@ from bosch_thermostat_client.const import (
     ID,
     NAME,
 )
-from bosch_thermostat_client.const.easycontrol import ENERGY, PAGINATION
+from bosch_thermostat_client.const.easycontrol import ENERGY, PAGINATION, USED
 from .sensor import Sensor
 from bosch_thermostat_client.exceptions import DeviceException
 
@@ -20,7 +21,7 @@ class EnergySensor(Sensor):
         name = data.get(NAME)
         path = data.get(ID)
         self._pagination_uri = data.get(PAGINATION)
-        self._page_number = 0
+        self._page_number = None
         super().__init__(connector=connector, attr_id=attr_id, name=name, path=path)
 
     @property
@@ -56,12 +57,15 @@ class EnergySensor(Sensor):
         """Update info about Recording Sensor asynchronously."""
         try:
             pagination = await self._connector.get(self._pagination_uri)
-            self._page_number = pagination.get(VALUE, self._page_number)
+            used = pagination.get(USED, False)
+            if used == "true":
+                self._page_number = pagination.get(VALUE, self._page_number)
         except DeviceException:
             pass
         try:
-            result = await self._connector.get(self.build_uri())
-            self.process_results(result, time)
+            if self._page_number:
+                result = await self._connector.get(self.build_uri())
+                self.process_results(result, time)
         except DeviceException as err:
             _LOGGER.error(
                 f"Can't update data for {self.name}. Trying uri: {self._data[URI]}. Error message: {err}"

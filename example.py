@@ -5,7 +5,7 @@ import aiohttp
 import time
 import bosch_thermostat_client as bosch
 from bosch_thermostat_client.const.ivt import IVT
-from bosch_thermostat_client.const import DHW, HC, RECORDINGS, HTTP
+from bosch_thermostat_client.const import HC, RECORDINGS, HTTP
 
 logging.basicConfig()
 logging.getLogger().setLevel(logging.DEBUG)
@@ -19,8 +19,6 @@ async def hc_circuits_test(gateway):
     print("hvac mode", hc2.current_temp)
     print("target temp ->", hc2.target_temperature)
     # await hc2.set_temperature(27.0)
-
-
 
 
 async def record_sensor_test(gateway):

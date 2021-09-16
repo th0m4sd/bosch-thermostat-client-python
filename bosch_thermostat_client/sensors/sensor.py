@@ -39,4 +39,4 @@ class Sensor(BoschSingleEntity):
         result = self._data[self.attr_id].get(RESULT)
         if result:
             return result.get(VALUE, INVALID)
-        return -1
+        return "unavailable"
