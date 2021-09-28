@@ -7,6 +7,8 @@ import re
 import asyncio
 from contextlib import AsyncExitStack
 import aioxmpp
+from aioxmpp.version.xso import Query
+
 from bosch_thermostat_client.exceptions import (
     DeviceException,
     MsgException,
@@ -64,6 +66,19 @@ class XMPPBaseConnector:
             self.main_listener,
         )
 
+        async def handler(iq):
+            result = Query()
+            result.name = "com.bosch.tt.buderus.controlng"
+            result.version = "3.6.0"
+            result.os = ""
+            return result
+
+        self.xmppclient.stream.register_iq_request_handler(
+            aioxmpp.IQType.GET,
+            Query,
+            handler,
+        )
+
     @property
     def encryption_key(self):
         return self._encryption.key
@@ -94,6 +109,7 @@ class XMPPBaseConnector:
             return True
 
     async def start(self):
+        print("startuje!")
         if not self._xmppstream:
             self._xmppstream = await self._st.enter_async_context(
                 self.xmppclient.connected()
