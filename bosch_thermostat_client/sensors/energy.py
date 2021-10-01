@@ -1,4 +1,3 @@
-from curses.ascii import US
 import logging
 from bosch_thermostat_client.const import (
     RESULT,

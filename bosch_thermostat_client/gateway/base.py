@@ -14,6 +14,7 @@ from bosch_thermostat_client.const import (
     ID,
     MODELS,
     NAME,
+    NUMBER,
     REFS,
     ROOT_PATHS,
     SC,
@@ -186,6 +187,13 @@ class BaseGateway:
         return []
 
     @property
+    def number_switches(self):
+        """Get number switches list."""
+        if SWITCHES in self._data:
+            return self._data[SWITCHES].number_switches
+        return []
+
+    @property
     def firmware(self):
         """Get firmware."""
         return self._firmware_version
@@ -211,13 +219,18 @@ class BaseGateway:
                 circuit_object = await self.initialize_circuits(circuit)
                 if circuit_object:
                     supported.append(circuit)
+                    if circuit_object[0].number_switches:
+                        supported.append(NUMBER)
             except DeviceException as err:
                 _LOGGER.debug("Circuit %s not found. Skipping it. %s", circuit, err)
                 pass
         await self.initialize_sensors()
         await self.initialize_switches()
         supported.append(SWITCH)
+        if self._data[SWITCHES].number_switches:
+            supported.append(NUMBER)
         supported.append(SENSOR)
+
         return supported
 
     async def initialize_circuits(self, circ_type):

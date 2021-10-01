@@ -10,6 +10,7 @@ from bosch_thermostat_client.const import (
     RESULT,
     TYPE,
     REGULAR,
+    BINARY,
     URI,
     VALUE,
     MAX_VALUE,
@@ -163,6 +164,8 @@ class BoschEntities:
 class BoschSingleEntity:
     """Object for single sensor/circuit. Don't use it directly."""
 
+    _allowed_types = (REGULAR, BINARY)
+
     def __init__(self, name, connector, attr_id, path=None):
         """Initialize single entity."""
         self._connector = connector
@@ -255,7 +258,7 @@ class BoschSingleEntity:
         """Update info about Circuit asynchronously."""
         try:
             for key, item in self._data.items():
-                if item[TYPE] == REGULAR:
+                if item[TYPE] in self._allowed_types:
                     result = await self._connector.get(item[URI])
                     self.process_results(result, key)
             self._state = True

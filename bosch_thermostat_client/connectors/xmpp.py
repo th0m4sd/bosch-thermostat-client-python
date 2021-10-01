@@ -109,7 +109,6 @@ class XMPPBaseConnector:
             return True
 
     async def start(self):
-        print("startuje!")
         if not self._xmppstream:
             self._xmppstream = await self._st.enter_async_context(
                 self.xmppclient.connected()

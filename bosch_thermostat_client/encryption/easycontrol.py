@@ -2,7 +2,7 @@
 from bosch_thermostat_client.const.easycontrol import MAGIC_EASYCONTROL
 from bosch_thermostat_client.helper import check_base64
 from bosch_thermostat_client.const import VALUE, TYPE
-from .base_encryption import BaseEncryption
+from .base import BaseEncryption
 import json
 
 STRING_VALUE = "stringValue"

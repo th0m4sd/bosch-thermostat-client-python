@@ -82,6 +82,10 @@ class BasicCircuit(BoschSingleEntity):
     def switches(self):
         return self._switches
 
+    @property
+    def number_switches(self):
+        return self._switches.number_switches
+
     async def initialize(self):
         """Check each uri if return json with values."""
         await self.update_requested_key(STATUS)

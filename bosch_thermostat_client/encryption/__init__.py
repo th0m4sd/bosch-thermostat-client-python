@@ -1,6 +1,6 @@
-from .ivt_encryption import IVTEncryption
-from .nefit_encryption import NefitEncryption
-from .easycontrol_encryption import EasycontrolEncryption
+from .ivt import IVTEncryption
+from .nefit import NefitEncryption
+from .easycontrol import EasycontrolEncryption
 
 
 __all__ = ["IVTEncryption", "NefitEncryption", "EasycontrolEncryption"]

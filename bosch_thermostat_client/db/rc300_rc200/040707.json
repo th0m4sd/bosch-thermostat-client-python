@@ -248,6 +248,16 @@
             "charge": {
                 "id": "charge",
                 "name": "charge"
+            },
+            "chargeDuration": {
+                "id": "chargeDuration",
+                "name": "Charge duration",
+                "type": "number"
+            },
+            "singleChargeSetpoint": {
+                "id": "singleChargeSetpoint",
+                "name": "Charge setpoint",
+                "type": "number"
             }
         }
     },
@@ -370,7 +380,13 @@
         },
         "flameStatus": {
             "id": "/heatSources/flameStatus",
-            "name": "flameStatus"
+            "name": "flameStatus",
+            "type": "binary"
+        },
+        "ChimneySweeper": {
+            "id": "/heatSources/ChimneySweeper",
+            "name": "ChimneySweeper",
+            "type": "binary"
         },
         "numberOfStarts": {
             "id": "/heatSources/numberOfStarts",
@@ -379,6 +395,10 @@
         "notifications": {
             "id": "/notifications",
             "name": "Notifications"
+        },
+        "poolTemperature": {
+            "id": "/heatSources/poolTemperature",
+            "name": "Pool temperature"
         }
     },
     "crawlSensors": [
@@ -392,6 +412,10 @@
         "poolStatus": {
             "id": "/heatSources/poolStatus",
             "name": "poolStatus"
+        },
+        "poolSetpointTemperature": {
+            "id": "/heatSources/poolSetpointTemperature",
+            "name": "poolSetpointTemperature"
         }
     }
 }

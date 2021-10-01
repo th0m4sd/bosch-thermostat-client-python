@@ -1,10 +1,10 @@
 """Gateway module connecting to Bosch thermostat."""
 
 import logging
-from .base_gateway import BaseGateway
+from .base import BaseGateway
 
-from bosch_thermostat_client.connectors import NefitConnector, HttpConnector
-from bosch_thermostat_client.encryption import NefitEncryption as Encryption
+from bosch_thermostat_client.connectors import EasycontrolConnector, HttpConnector
+from bosch_thermostat_client.encryption import EasycontrolEncryption as Encryption
 from bosch_thermostat_client.const import (
     HTTP,
     XMPP,
@@ -15,21 +15,25 @@ from bosch_thermostat_client.const import (
     VALUE,
     REFERENCES,
     ID,
-    HC,
-    DHW,
     SENSORS,
+    ZN,
+    DHW,
 )
-from bosch_thermostat_client.const.nefit import NEFIT, PRODUCT_ID, CIRCUIT_TYPES
+from bosch_thermostat_client.const.easycontrol import (
+    EASYCONTROL,
+    PRODUCT_ID,
+    CIRCUIT_TYPES,
+)
 from bosch_thermostat_client.exceptions import DeviceException
 
 
 _LOGGER = logging.getLogger(__name__)
 
 
-class NefitGateway(BaseGateway):
+class EasycontrolGateway(BaseGateway):
     """Gateway to Bosch thermostat."""
 
-    device_type = NEFIT
+    device_type = EASYCONTROL
     circuit_types = CIRCUIT_TYPES
 
     def __init__(
@@ -40,6 +44,7 @@ class NefitGateway(BaseGateway):
         access_key=None,
         password=None,
         session=None,
+        easycontrol_connector=None,
     ):
         """
         Initialize gateway.
@@ -47,25 +52,24 @@ class NefitGateway(BaseGateway):
         :param access_token:
         :param password:
         :param host:
-        :param device_type -> NEFIT
+        :param device_type -> IVT or NEFIT or EASYCONTROL
         """
         self._access_token = access_token.replace("-", "")
-
         if password:
             access_key = self._access_token
         if session_type == HTTP:
             _LOGGER.warn("I'm using HTTP connector. It's probably debug session!")
-            nefit_connector = HttpConnector
+            easycontrol_connector = HttpConnector
         else:
-            nefit_connector = NefitConnector
-        self._connector = nefit_connector(
+            easycontrol_connector = EasycontrolConnector
+        self._connector = easycontrol_connector(
             host=host,
             loop=session,
             access_key=self._access_token,
             encryption=Encryption(access_key, password),
         )
         self._session_type = session_type
-        self._data = {GATEWAY: {}, HC: None, DHW: None, SENSORS: None}
+        self._data = {GATEWAY: {}, ZN: None, DHW: None, SENSORS: None}
         super().__init__(host)
 
     async def _update_info(self, initial_db):
@@ -85,10 +89,18 @@ class NefitGateway(BaseGateway):
         """Find device model."""
         product_id = self._data[GATEWAY].get(PRODUCT_ID)
         model_scheme = _db[MODELS]
+        model = None
         for bus in self._data[GATEWAY].get(SYSTEM_BUS, []):
             if EMS in bus.get(ID, "").upper():
                 self._bus_type = EMS
                 break
         if self._bus_type == EMS:
-            return model_scheme.get(product_id)
-        _LOGGER.error(f"Couldn't find device model. Got product ID: {product_id}")
+            model = model_scheme.get(product_id)
+        if not model:
+            _LOGGER.error(f"Couldn't find device model. Got product ID: {product_id}")
+        return model
+
+    @property
+    def heating_circuits(self):
+        """Get circuit list."""
+        return self._data[ZN].circuits

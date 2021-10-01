@@ -175,6 +175,13 @@
                 "type": "activeProgram"
             }
         },
+        "switches": {
+            "thermalDisinfectlasttime": {
+                "id": "thermalDisinfect/time",
+                "name": "thermalDisinfect time",
+                "type": "number"
+            }
+        },
         "sensors": {
             "thermalDisinfectlastResult": {
                 "id": "thermalDisinfect/lastResult",
@@ -184,13 +191,13 @@
                 "id": "thermalDisinfect/state",
                 "name": "thermalDisinfect state"
             },
-            "thermalDisinfectlasttime": {
-                "id": "thermalDisinfect/time",
-                "name": "thermalDisinfect time"
-            },
             "thermalDisinfectlastweekDay": {
                 "id": "thermalDisinfect/weekDay",
                 "name": "thermalDisinfect weekDay"
+            },
+            "hotWaterSystem": {
+                "id": "hotWaterSystem",
+                "name": "hotWaterSystem"
             }
 
         }
@@ -231,6 +238,16 @@
             "pagination": "/energy/historyEntries",
             "state_class": "measurement",
             "device_class": "power"
+        },
+        "maintenanceRequest": {
+            "id": "/system/appliance/maintenanceRequest",
+            "name": "maintenanceRequest",
+            "type": "binary"
+        },
+        "autoAwayEnabled": {
+            "id": "/system/autoAway/enabled",
+            "name": "autoAwayEnabled",
+            "type": "binary"
         }
     },
     "crawlSensors": [
@@ -247,6 +264,11 @@
             "id": "/system/awayMode/enabled",
             "name": "Away mode",
             "type": "boolean"
+        },
+        "awayModeTemperature": {
+            "id": "/system/awayMode/temperature",
+            "name": "Away mode temp",
+            "type": "number"
         }
     }
 }

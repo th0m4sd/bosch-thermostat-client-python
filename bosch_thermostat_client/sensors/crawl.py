@@ -27,10 +27,11 @@ class CrawlSensor(Sensor):
 
     @property
     def name(self):
-        return self._data[self.attr_id].get(RESULT, {}).get(NAME, self._main_data[NAME])
+        name = self.get_value(NAME)
+        return name if name else super().name
 
     async def update(self):
-        """Update info about Circuit asynchronously."""
+        """Update info about Crawl Sensor asynchronously."""
 
         def process_result(result):
             if len(result) == 1:

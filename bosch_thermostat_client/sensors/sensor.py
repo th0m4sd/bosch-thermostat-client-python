@@ -7,7 +7,14 @@ class Sensor(BoschSingleEntity):
     """Single sensor object."""
 
     def __init__(
-        self, connector, attr_id, name, path, device_class=None, state_class=None
+        self,
+        connector,
+        attr_id,
+        name,
+        path,
+        device_class=None,
+        state_class=None,
+        kind=REGULAR,
     ):
         """
         Single sensor init.
@@ -17,13 +24,14 @@ class Sensor(BoschSingleEntity):
         :param str path: path to retrieve data from sensor.
         """
         super().__init__(name, connector, attr_id, path)
+        self._kind = kind
         self._device_class = device_class
         self._state_class = state_class
-        self._data = {attr_id: {RESULT: {}, URI: path, TYPE: self.kind}}
+        self._data = {attr_id: {RESULT: {}, URI: path, TYPE: kind}}
 
     @property
     def kind(self):
-        return REGULAR
+        return self._kind
 
     @property
     def device_class(self):

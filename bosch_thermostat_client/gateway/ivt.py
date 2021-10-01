@@ -2,7 +2,7 @@
 
 import logging
 import json
-from .base_gateway import BaseGateway
+from .base import BaseGateway
 from bosch_thermostat_client.const import (
     GATEWAY,
     MODELS,

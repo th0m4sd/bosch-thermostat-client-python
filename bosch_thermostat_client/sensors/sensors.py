@@ -1,6 +1,7 @@
 from bosch_thermostat_client.const import (
     ID,
     NAME,
+    REGULAR,
     URI,
     TYPE,
     VALUE,
@@ -57,6 +58,7 @@ class Sensors(BoschEntities):
                         path=f"{uri_prefix}/{sensor[ID]}" if uri_prefix else sensor[ID],
                         device_class=sensor.get("device_class"),
                         state_class=sensor.get("state_class"),
+                        kind=sensor.get("type", REGULAR),
                     )
 
     async def initialize(self, crawl_sensors):
