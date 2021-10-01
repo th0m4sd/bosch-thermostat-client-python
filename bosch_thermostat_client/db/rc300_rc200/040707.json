@@ -415,7 +415,8 @@
         },
         "poolSetpointTemperature": {
             "id": "/heatSources/poolSetpointTemperature",
-            "name": "poolSetpointTemperature"
+            "name": "poolSetpointTemperature",
+            "type": "number"
         }
     }
 }
