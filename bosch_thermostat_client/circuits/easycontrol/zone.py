@@ -18,7 +18,14 @@ class EasyZoneCircuit(EasycontrolCircuit):
     def __init__(
         self, connector, attr_id, db, _type, bus_type, current_date=None, **kwargs
     ):
-        super().__init__(connector, attr_id, db, _type, bus_type, current_date)
+        super().__init__(
+            connector=connector,
+            attr_id=attr_id,
+            db=db,
+            _type=_type,
+            bus_type=bus_type,
+            current_date=current_date,
+        )
         self._op_mode = EasyControlOperationModeHelper(
             self.name, self._db.get(MODE_TO_SETPOINT)
         )
