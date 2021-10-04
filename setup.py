@@ -6,8 +6,6 @@ with open("bosch_thermostat_client/version.py") as f:
     exec(f.read())
 
 
-REQUIRES = ["pyaes>=1.6.1", "aiohttp", "aioxmpp>=0.12.1", "click>=7", "colorlog"]
-
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
@@ -17,14 +15,14 @@ setup(
     description="Python API for talking to Bosch™ Heating gateway using HTTP or XMPP",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    author="Ludovic Laurent, Pawel Szafer",
-    author_email="ludovic.laurent@gmail.com, pszafer@gmail.com",
+    author="Pawel Szafer",
+    author_email="pszafer@gmail.com",
     url="https://github.com/bosch-thermostat/bosch-thermostat-client-python",
     download_url="https://github.com/bosch-thermostat/bosch-thermostat-client-python/archive/{}.zip".format(
         __version__
     ),
     packages=find_packages(exclude=["tests*"]),
-    install_requires=REQUIRES,
+    install_requires=list(val.strip() for val in open("requirements.txt")),
     include_package_data=True,
     license="Apache License 2.0",
     classifiers=[
