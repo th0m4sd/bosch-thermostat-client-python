@@ -319,6 +319,13 @@ class BaseGateway:
         except DeviceException as err:
             _LOGGER.error(err)
 
+    async def raw_put(self, path, value):
+        """Run RAW PUT."""
+        try:
+            return await self._connector.put(path=path, value=value)
+        except DeviceException as err:
+            _LOGGER.error(err)
+
     async def close(self, force=False):
         await self._connector.close(force)
 

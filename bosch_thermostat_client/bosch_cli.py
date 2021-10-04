@@ -7,6 +7,7 @@ from bosch_thermostat_client.const import XMPP, HTTP
 from bosch_thermostat_client.const.ivt import IVT
 from bosch_thermostat_client.const.nefit import NEFIT
 from bosch_thermostat_client.const.easycontrol import EASYCONTROL
+from bosch_thermostat_client.version import __version__
 import json
 import asyncio
 from functools import wraps
@@ -32,6 +33,15 @@ logging.getLogger().handlers[0].setFormatter(
 )
 
 
+def add_options(options):
+    def _add_options(func):
+        for option in reversed(options):
+            func = option(func)
+        return func
+
+    return _add_options
+
+
 async def _scan(gateway, smallscan, output, stdout):
     _LOGGER.info("Successfully connected to gateway. Found UUID: %s", gateway.uuid)
     if smallscan:
@@ -51,8 +61,15 @@ async def _scan(gateway, smallscan, output, stdout):
 
 async def _runquery(gateway, path):
     _LOGGER.debug("Trying to connect to gateway.")
-    _LOGGER.info("Query succeed: %s", path)
     result = await gateway.raw_query(path)
+    _LOGGER.info("Query succeed: %s", path)
+    click.secho(json.dumps(result, indent=4, sort_keys=True), fg="green")
+
+
+async def _runpush(gateway, path, value):
+    _LOGGER.debug("Trying to connect to gateway.")
+    result = await gateway.raw_put(path, value)
+    _LOGGER.info("Put succeed: %s", path)
     click.secho(json.dumps(result, indent=4, sort_keys=True), fg="green")
 
 
@@ -66,6 +83,7 @@ def coro(f):
 
 @click.group(no_args_is_help=True)
 @click.pass_context
+@click.version_option(__version__)
 @coro
 async def cli(ctx):
     """A tool to run commands against Bosch thermostat."""
@@ -73,64 +91,80 @@ async def cli(ctx):
     pass
 
 
+_cmd1_options = [
+    click.option(
+        "--host",
+        envvar="BOSCH_HOST",
+        type=str,
+        required=True,
+        help="IP address of gateway or SERIAL for XMPP",
+    ),
+    click.option(
+        "--token",
+        envvar="BOSCH_ACCESS_TOKEN",
+        type=str,
+        required=True,
+        help="Token from sticker without dashes.",
+    ),
+    click.option(
+        "--password",
+        envvar="BOSCH_PASSWORD",
+        type=str,
+        required=False,
+        help="Password you set in mobile app.",
+    ),
+    click.option(
+        "--protocol",
+        envvar="BOSCH_PROTOCOL",
+        type=click.Choice([XMPP, HTTP], case_sensitive=True),
+        required=True,
+        help="Bosch protocol. Either XMPP or HTTP.",
+    ),
+    click.option(
+        "--device",
+        envvar="BOSCH_DEVICE",
+        type=click.Choice([NEFIT, IVT, EASYCONTROL], case_sensitive=False),
+        required=True,
+        help="Bosch device type. NEFIT, IVT or EASYCONTROL.",
+    ),
+    click.option(
+        "-d",
+        "--debug",
+        default=False,
+        count=True,
+        help="Set Debug mode. Single debug is debug of this lib. Second d is debug of aioxmpp as well.",
+    ),
+]
+
+_scan_options = [
+    click.option(
+        "-o",
+        "--output",
+        type=str,
+        required=False,
+        help="Path to output file of scan. Default to [raw/small]scan_uuid.json",
+    ),
+    click.option("--stdout", default=False, count=True, help="Print scan to stdout"),
+    click.option("-d", "--debug", default=False, count=True),
+    click.option(
+        "-i",
+        "--ignore-unknown",
+        count=True,
+        default=False,
+        help="Ignore unknown device type. Try to scan anyway. Useful for discovering new devices.",
+    ),
+    click.option(
+        "-s",
+        "--smallscan",
+        type=click.Choice(["HC", "DHW", "SENSORS", "RECORDINGS"], case_sensitive=False),
+        help="Scan only single circuit of thermostat.",
+    ),
+]
+
+
 @cli.command()
-@click.option(
-    "--host",
-    envvar="BOSCH_HOST",
-    type=str,
-    required=True,
-    help="IP address of gateway or SERIAL for XMPP",
-)
-@click.option(
-    "--token",
-    envvar="BOSCH_ACCESS_TOKEN",
-    type=str,
-    required=True,
-    help="Token from sticker without dashes.",
-)
-@click.option(
-    "--password",
-    envvar="BOSCH_PASSWORD",
-    type=str,
-    required=False,
-    help="Password you set in mobile app.",
-)
-@click.option(
-    "--protocol",
-    envvar="BOSCH_PROTOCOL",
-    type=click.Choice([XMPP, HTTP], case_sensitive=True),
-    required=True,
-    help="Bosch protocol. Either XMPP or HTTP.",
-)
-@click.option(
-    "--device",
-    envvar="BOSCH_DEVICE",
-    type=click.Choice([NEFIT, IVT, EASYCONTROL], case_sensitive=False),
-    required=True,
-    help="Bosch device type. NEFIT, IVT or EASYCONTROL.",
-)
-@click.option(
-    "-o",
-    "--output",
-    type=str,
-    required=False,
-    help="Path to output file of scan. Default to [raw/small]scan_uuid.json",
-)
-@click.option("--stdout", default=False, count=True, help="Print scan to stdout")
-@click.option("-d", "--debug", default=False, count=True)
-@click.option(
-    "-i",
-    "--ignore-unknown",
-    count=True,
-    default=False,
-    help="Ignore unknown device type. Try to scan anyway. Useful for discovering new devices.",
-)
-@click.option(
-    "-s",
-    "--smallscan",
-    type=click.Choice(["HC", "DHW", "SENSORS", "RECORDINGS"], case_sensitive=False),
-    help="Scan only single circuit of thermostat.",
-)
+@add_options(_cmd1_options)
+@add_options(_scan_options)
 @click.pass_context
 @coro
 async def scan(
@@ -207,57 +241,20 @@ async def scan(
         await gateway.close(force=True)
 
 
+_path_options = [
+    click.option(
+        "-p",
+        "--path",
+        type=str,
+        required=True,
+        help="Path to run against. Look at rawscan at possible paths. e.g. /gateway/uuid",
+    )
+]
+
+
 @cli.command()
-@click.option(
-    "--host",
-    envvar="BOSCH_HOST",
-    type=str,
-    required=True,
-    help="IP address of gateway or SERIAL for XMPP",
-    show_envvar=True,
-)
-@click.option(
-    "--token",
-    envvar="BOSCH_ACCESS_TOKEN",
-    type=str,
-    required=True,
-    help="Token from sticker without dashes.",
-)
-@click.option(
-    "--password",
-    envvar="BOSCH_PASSWORD",
-    type=str,
-    required=False,
-    help="Password you set in mobile app.",
-)
-@click.option(
-    "--protocol",
-    envvar="BOSCH_PROTOCOL",
-    type=click.Choice([XMPP, HTTP], case_sensitive=False),
-    required=True,
-    help="Bosch protocol. Either XMPP or HTTP.",
-)
-@click.option(
-    "--device",
-    envvar="BOSCH_DEVICE",
-    type=click.Choice([NEFIT, IVT, EASYCONTROL], case_sensitive=False),
-    required=True,
-    help="Bosch device type. NEFIT, IVT or EASYCONTROL.",
-)
-@click.option(
-    "-d",
-    "--debug",
-    default=False,
-    count=True,
-    help="Set Debug mode. Single debug is debug of this lib. Second d is debug of aioxmpp as well.",
-)
-@click.option(
-    "-p",
-    "--path",
-    type=str,
-    required=True,
-    help="Path to run against. Look at rawscan at possible paths. e.g. /gateway/uuid",
-)
+@add_options(_cmd1_options)
+@add_options(_path_options)
 @click.pass_context
 @coro
 async def query(
@@ -315,7 +312,76 @@ async def query(
         await _runquery(gateway, path)
     finally:
         await gateway.close(force=True)
-        # session.close()
+
+
+@cli.command()
+@add_options(_cmd1_options)
+@add_options(_path_options)
+@click.argument("value", nargs=1)
+@click.pass_context
+@coro
+async def put(
+    ctx,
+    host: str,
+    token: str,
+    password: str,
+    protocol: str,
+    device: str,
+    path: str,
+    debug: int,
+    value: str,
+):
+    """Send value to Bosch thermostat.
+
+    VALUE is the raw value to send to thermostat. It will be parsed to json.
+    """
+    if debug == 0:
+        logging.basicConfig(level=logging.INFO)
+    if debug > 0:
+        _LOGGER.info("Debug mode active")
+        _LOGGER.debug(f"Lib version is {bosch.version}")
+    if debug > 1:
+        logging.getLogger("aioxmpp").setLevel(logging.DEBUG)
+        logging.getLogger("aioopenssl").setLevel(logging.DEBUG)
+        logging.getLogger("aiosasl").setLevel(logging.DEBUG)
+        logging.getLogger("asyncio").setLevel(logging.DEBUG)
+    else:
+        logging.getLogger("aioxmpp").setLevel(logging.WARN)
+        logging.getLogger("aioopenssl").setLevel(logging.WARN)
+        logging.getLogger("aiosasl").setLevel(logging.WARN)
+        logging.getLogger("asyncio").setLevel(logging.WARN)
+    if not value:
+        _LOGGER.error("Value to put not provided. Exiting")
+        return
+    if device.upper() in (NEFIT, IVT, EASYCONTROL):
+        BoschGateway = bosch.gateway_chooser(device_type=device)
+    else:
+        _LOGGER.error("Wrong device type.")
+        return
+    session_type = protocol.upper()
+    _LOGGER.info("Connecting to %s with '%s'", host, session_type)
+    if session_type == XMPP:
+        session = asyncio.get_event_loop()
+    elif session_type == HTTP:
+        session = aiohttp.ClientSession()
+        if device.upper() != IVT:
+            _LOGGER.warn(
+                "You're using HTTP protocol, but your device probably doesn't support it. Check for mistakes!"
+            )
+    else:
+        _LOGGER.error("Wrong protocol for this device")
+        return
+    try:
+        gateway = BoschGateway(
+            session=session,
+            session_type=session_type,
+            host=host,
+            access_token=token,
+            password=password,
+        )
+        await _runpush(gateway, path, value)
+    finally:
+        await gateway.close(force=True)
 
 
 if __name__ == "__main__":
