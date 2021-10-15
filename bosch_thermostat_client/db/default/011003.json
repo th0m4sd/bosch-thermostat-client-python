@@ -93,17 +93,20 @@
                 "id": "roomTempOffset",
                 "name": "roomTempOffset"
             },
+            "pumpModulation": {
+                "id": "pumpModulation",
+                "name": "Pump Modulation"
+            }
+        },
+        "switches": {
             "suWiSwitchMode": {
                 "id": "suWiSwitchMode",
                 "name": "Summer Winter Switchmode"
             },
             "suWiThreshold": {
                 "id": "suWiThreshold",
-                "name": "Summer Winter Threshold"
-            },
-            "pumpModulation": {
-                "id": "pumpModulation",
-                "name": "Pump Modulation"
+                "name": "Summer Winter Threshold",
+                "type": "number"
             }
         }
     },
@@ -222,11 +225,15 @@
     "sensors": {
         "outdoor_t1": {
             "id": "/system/sensors/temperatures/outdoor_t1",
-            "name": "Outdoor temperature"
+            "name": "Outdoor temperature",
+            "state_class": "measurement",
+            "device_class": "temperature"
         },
         "hotWater_t2": {
             "id": "/system/sensors/temperatures/hotWater_t2",
-            "name": "Hotwater temp"
+            "name": "Hotwater temp",
+            "state_class": "measurement",
+            "device_class": "temperature"
         },
         "supply_t1_setpoint": {
             "id": "/system/sensors/temperatures/supply_t1_setpoint",
@@ -246,7 +253,9 @@
         },
         "actualPower": {
             "id": "/heatSources/actualPower",
-            "name": "Actual Power"
+            "name": "Actual Power",
+            "state_class": "measurement",
+            "device_class": "power"
         },
         "actualModulation": {
             "id": "/heatSources/actualModulation",
@@ -269,7 +278,9 @@
         {
             "uri": "/recordings",
             "deep": 4,
-            "sensorType": "recording"
+            "sensorType": "recording",
+            "state_class": "total",
+            "device_class": "energy"
         }
     ]
 }

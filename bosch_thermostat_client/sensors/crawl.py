@@ -16,9 +16,9 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class CrawlSensor(Sensor):
-    def __init__(self, connector, attr_id, name, path, state=None, kind=REGULAR):
+    def __init__(self, state=None, kind=REGULAR, **kwargs):
         self._kind = kind
-        super().__init__(connector=connector, attr_id=attr_id, name=name, path=path)
+        super().__init__(**kwargs)
         self._state_key = state
 
     @property

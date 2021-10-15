@@ -7,23 +7,15 @@ class Sensor(BoschSingleEntity):
     """Single sensor object."""
 
     def __init__(
-        self,
-        connector,
-        attr_id,
-        name,
-        path,
-        device_class=None,
-        state_class=None,
-        kind=REGULAR,
+        self, attr_id, path, device_class=None, state_class=None, kind=REGULAR, **kwargs
     ):
         """
         Single sensor init.
 
         :param dics requests: { GET: get function, SUBMIT: submit function}
-        :param str name: name of the sensors
         :param str path: path to retrieve data from sensor.
         """
-        super().__init__(name, connector, attr_id, path)
+        super().__init__(path=path, attr_id=attr_id, **kwargs)
         self._kind = kind
         self._device_class = device_class
         self._state_class = state_class

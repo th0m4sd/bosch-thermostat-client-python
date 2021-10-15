@@ -3,8 +3,6 @@ from bosch_thermostat_client.const import (
     RESULT,
     URI,
     VALUE,
-    ID,
-    NAME,
 )
 from bosch_thermostat_client.const.easycontrol import ENERGY, PAGINATION, USED
 from .sensor import Sensor
@@ -16,12 +14,10 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class EnergySensor(Sensor):
-    def __init__(self, connector, attr_id, data):
-        name = data.get(NAME)
-        path = data.get(ID)
-        self._pagination_uri = data.get(PAGINATION)
+    def __init__(self, **kwargs):
+        self._pagination_uri = kwargs.get(PAGINATION)
         self._page_number = None
-        super().__init__(connector=connector, attr_id=attr_id, name=name, path=path)
+        super().__init__(**kwargs)
 
     @property
     def kind(self):
@@ -40,7 +36,7 @@ class EnergySensor(Sensor):
                 if row["d"] == day:
                     self._data[self.attr_id][RESULT][VALUE] = row
                     self._data[self.attr_id][RESULT]["last_reset"] = last_reset.replace(
-                        hour=23, minute=59, second=59
+                        hour=23, minute=59, second=59, microsecond=0
                     )
                     return True
 

@@ -227,7 +227,7 @@ class BaseGateway:
         await self.initialize_sensors()
         await self.initialize_switches()
         supported.append(SWITCH)
-        if self._data[SWITCHES].number_switches:
+        if NUMBER not in supported and self.number_switches:
             supported.append(NUMBER)
         supported.append(SENSOR)
 

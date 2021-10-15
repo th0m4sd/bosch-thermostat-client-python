@@ -236,7 +236,7 @@
         "energy": {
             "id": "/energy/history",
             "pagination": "/energy/historyEntries",
-            "state_class": "measurement",
+            "state_class": "total",
             "device_class": "power"
         },
         "maintenanceRequest": {

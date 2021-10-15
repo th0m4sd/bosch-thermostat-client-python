@@ -18,17 +18,17 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class RecordingSensor(Sensor):
-    def __init__(self, connector, attr_id, name, path):
-        super().__init__(connector=connector, attr_id=attr_id, name=name, path=path)
+    def __init__(self, path, **kwargs):
+        super().__init__(path=path, **kwargs)
 
-        def unit_chooser(uri):
-            if "energy" in uri:
+        def unit_chooser():
+            if "energy" or "power" in path:
                 return ENERGY_KILO_WATT_HOUR
-            if "temp" in uri:
+            if "temp" in path:
                 return TEMP_CELSIUS
             return None
 
-        self._unit_of_measurement = unit_chooser(uri=path)
+        self._unit_of_measurement = unit_chooser()
 
     @property
     def kind(self):
@@ -53,7 +53,7 @@ class RecordingSensor(Sensor):
                 (recording["y"] / recording["c"]), 1
             )
             self._data[self.attr_id][RESULT]["last_reset"] = last_hour.replace(
-                minute=0, second=0
+                minute=0, second=0, microsecond=0
             )
             return True
 

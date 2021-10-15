@@ -252,7 +252,9 @@
     "sensors": {
         "outdoor_t1": {
             "id": "/system/sensors/temperatures/outdoor_t1",
-            "name": "Outdoor temperature"
+            "name": "Outdoor temperature",
+            "state_class": "measurement",
+            "device_class": "temperature"
         },
         "supply_t1_setpoint": {
             "id": "/system/sensors/temperatures/supply_t1_setpoint",
@@ -284,7 +286,9 @@
         },
         "energyConsumption": {
             "id": "/heatSources/energyMonitoring/consumption",
-            "name": "Energy consumption"
+            "name": "Energy consumption",
+            "state_class": "total",
+            "device_class": "energy"
         },
         "startDateTime": {
             "id": "/heatSources/energyMonitoring/startDateTime",
@@ -322,14 +326,18 @@
         },
         "poolTemperature": {
             "id": "/heatSources/poolTemperature",
-            "name": "Pool temperature"
+            "name": "Pool temperature",
+            "state_class": "measurement",
+            "device_class": "temperature"
         }
     },
     "crawlSensors": [
         {
             "uri": "/recordings",
             "deep": 4,
-            "sensorType": "recording"
+            "sensorType": "recording",
+            "state_class": "total",
+            "device_class": "energy"
         }
     ],
     "switches": {

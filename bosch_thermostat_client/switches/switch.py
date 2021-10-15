@@ -11,7 +11,7 @@ from bosch_thermostat_client.helper import BoschSingleEntity
 
 _LOGGER = logging.getLogger(__name__)
 
-ON_STATES = ["start", "on"]
+ON_STATES = ["start", "on", "active"]
 OFF_STATES = ["stop", "off"]
 
 

@@ -166,7 +166,7 @@ class BoschSingleEntity:
 
     _allowed_types = (REGULAR, BINARY)
 
-    def __init__(self, name, connector, attr_id, path=None):
+    def __init__(self, name, connector, attr_id, path=None, **kwargs):
         """Initialize single entity."""
         self._connector = connector
         self._main_data = {NAME: name, ID: attr_id, PATH: path}
