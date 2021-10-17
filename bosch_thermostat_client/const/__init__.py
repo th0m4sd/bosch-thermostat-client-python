@@ -102,6 +102,7 @@ ENERGY_HISTORY_ENTRIES = "/energy/historyEntries"
 ENERGY_HISTORY = "/energy/history"
 
 ROOT_PATHS = [
+    "/systemStates",
     "/dhwCircuits",
     "/gateway",
     "/heatingCircuits",
@@ -116,6 +117,8 @@ ROOT_PATHS = [
     "/programs",
     "/zones",
     "/ecus",
+    "/application",
+    "/gservice_tariff",
 ]
 SENSORS = "sensors"
 SWITCHES = "switches"

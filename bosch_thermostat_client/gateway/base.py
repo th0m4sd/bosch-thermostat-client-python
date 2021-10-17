@@ -269,7 +269,8 @@ class BaseGateway:
         """Print out all info from gateway."""
         rawlist = []
         for root in ROOT_PATHS:
-            rawlist.append(await deep_into(root, [], self._connector.get))
+            single_scan = await deep_into(root, [], self._connector.get)
+            rawlist.append(single_scan if single_scan else {root: "not found"})
         return rawlist
 
     async def smallscan(self, _type=HC, circuit_number=None):
