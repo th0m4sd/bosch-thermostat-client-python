@@ -215,12 +215,48 @@
                 "type": "activeProgram"
             }
         },
-        "sensors": {}
+        "sensors": {
+            "extraDhwActivationStatus": {
+                "id": "extraDhw/activationStatus",
+                "name": "Active Extra DHW",
+                "type": "binary"
+            }
+        },
+        "switches": {
+            "extraDhwTime": {
+                "id": "extraDhw/time",
+                "name": "Charge duration",
+                "type": "number"
+            },
+            "extraDhwStopTemp": {
+                "id": "extraDhw/stopTemp",
+                "name": "Stop temp",
+                "type": "number"
+            }
+        }
     },
     "sensors": {
         "outdoor_t1": {
             "id": "/system/sensors/outdoorTemperatures/t1",
             "name": "Outdoor temperature"
+        },
+        "compressor": {
+            "id": "/systemStates/compressor",
+            "name": "Compressor state",
+            "type": "binary"
+        },
+        "additionalHeater": {
+            "id": "/systemStates/additionalHeater",
+            "name": "Additional heater"
         }
-    }
+    },
+    "crawlSensors": [
+        {
+            "uri": "/recordings",
+            "deep": 4,
+            "sensorType": "recording",
+            "state_class": "total",
+            "device_class": "energy"
+        }
+    ]
 }
