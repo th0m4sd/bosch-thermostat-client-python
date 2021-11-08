@@ -209,9 +209,29 @@
             "state_class": "measurement",
             "device_class": "temperature"
         },
+        "indoorAirDigital": {
+            "id": "/system/sensors/temperatures/indoorAirDigital",
+            "name": "Indoor Temperature",
+            "state_class": "measurement",
+            "device_class": "temperature"
+        },
+        "indoorChip": {
+            "id": "/system/sensors/temperatures/indoorChip",
+            "name": "Indoor chip temp",
+            "state_class": "measurement",
+            "device_class": "temperature"
+        },
+        "indoorPCB": {
+            "id": "/system/sensors/temperatures/indoorPCB",
+            "name": "Indoor PCB temp",
+            "state_class": "measurement",
+            "device_class": "temperature"
+        },
         "indoor_h1": {
             "id": "/system/sensors/humidity/indoor_h1",
-            "name": "Indoor humidity"
+            "name": "Indoor humidity",
+            "state_class": "measurement",
+            "device_class": "humidity"
         },
         "system_pressure": {
             "id": "/system/appliance/systemPressure",
