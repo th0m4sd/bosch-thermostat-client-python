@@ -96,6 +96,12 @@
             "pumpModulation": {
                 "id": "pumpModulation",
                 "name": "Pump Modulation"
+            },
+            "actualSupplyTemperature": {
+                "id":"actualSupplyTemperature",
+                "name": "Actual supply temp of HC",
+                "state_class": "measurement",
+                "device_class": "temperature"
             }
         },
         "switches": {
@@ -229,23 +235,43 @@
             "state_class": "measurement",
             "device_class": "temperature"
         },
+        "hotWater_t1": {
+            "id": "/system/sensors/temperatures/hotWater_t1",
+            "name": "Hotwater temp 1",
+            "state_class": "measurement",
+            "device_class": "temperature"
+        },
         "hotWater_t2": {
             "id": "/system/sensors/temperatures/hotWater_t2",
-            "name": "Hotwater temp",
+            "name": "Hotwater temp 2",
             "state_class": "measurement",
             "device_class": "temperature"
         },
         "supply_t1_setpoint": {
             "id": "/system/sensors/temperatures/supply_t1_setpoint",
-            "name": "Supply temp setpoint"
+            "name": "Supply temp setpoint",
+            "state_class": "measurement",
+            "device_class": "temperature"
         },
         "supply_t1": {
             "id": "/system/sensors/temperatures/supply_t1",
-            "name": "Actual supply temp"
+            "name": "Actual supply temp",
+            "state_class": "measurement",
+            "device_class": "temperature"
+        },
+        "actualSupplyTemperature": {
+            "id": "/system/appliance/actualSupplyTemperature",
+            "name": "Actual supply temp",
+            "state_class": "measurement",
+            "device_class": "temperature"
         },
         "return": {
             "id": "/system/sensors/temperatures/return",
             "name": "Return temp"
+        },
+        "powerSetpoint": {
+            "id": "/system/appliance/powerSetpoint",
+            "name": "powerSetpoint"
         },
         "healthStatus": {
             "id": "/system/healthStatus",
@@ -271,7 +297,23 @@
         },
         "systemPressure": {
             "id": "/heatSources/systemPressure",
-            "name": "System pressure"
+            "name": "System pressure",
+            "state_class": "measurement",
+            "device_class": "pressure"
+        },
+        "flameStatus": {
+            "id": "/heatSources/flameStatus",
+            "name": "flameStatus",
+            "type": "binary"
+        },
+        "ChimneySweeper": {
+            "id": "/heatSources/ChimneySweeper",
+            "name": "ChimneySweeper",
+            "type": "binary"
+        },
+        "numberOfStarts": {
+            "id": "/heatSources/numberOfStarts",
+            "name": "numberOfStarts"
         }
     },
     "crawlSensors": [

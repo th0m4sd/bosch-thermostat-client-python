@@ -22,9 +22,9 @@ class RecordingSensor(Sensor):
         super().__init__(path=path, **kwargs)
 
         def unit_chooser():
-            if any(x in path for x in ["energy", "power"]):
+            if any(x in path.lower() for x in ["energy", "power"]):
                 return ENERGY_KILO_WATT_HOUR
-            if any(x in path for x in ["temp", "outdoor"]):
+            if any(x in path.lower() for x in ["temp", "outdoor"]):
                 return TEMP_CELSIUS
             return None
 
