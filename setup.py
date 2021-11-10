@@ -22,7 +22,13 @@ setup(
         __version__
     ),
     packages=find_packages(exclude=["tests*"]),
-    install_requires=list(val.strip() for val in open("requirements.txt")),
+    install_requires=[
+        "aioxmpp>=0.12.2",
+        "aiohttp",
+        "click>=8",
+        "colorlog",
+        "pyaes>=1.6.1",
+    ],
     include_package_data=True,
     license="Apache License 2.0",
     classifiers=[
