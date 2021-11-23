@@ -18,7 +18,7 @@ OFF_STATES = ["stop", "off"]
 class BaseSwitch:
     """Base class for switch."""
 
-    def __init__(self, connector, attr_id, name, path, result):
+    def __init__(self, connector, attr_id, name, path, result, **kwargs):
         """
         Single switch init.
 

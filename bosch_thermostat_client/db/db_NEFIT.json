@@ -37,6 +37,16 @@
       "value": "CT100",
       "name": "Junkers CT100",
       "type": "NEFIT"
+    },
+    "7736701043": {
+      "value": "CT100 Cr",
+      "name": "CT100 Croatia",
+      "type": "NEFIT"
+    },
+    "7736701046": {
+      "value": "CT100 Fr",
+      "name": "CT100 France",
+      "type": "NEFIT"
     }
   }
 }
