@@ -10,6 +10,11 @@
     "dateTime": "/gateway/DateTime"
   },
   "models": {
+    "67": {
+      "value": "RC30",
+      "name": "RC30 Controller",
+      "type": "default"
+    },
     "76": {
       "value": "ES73",
       "name": "Sieger ES73",
