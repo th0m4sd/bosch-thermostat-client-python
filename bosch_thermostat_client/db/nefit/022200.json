@@ -72,7 +72,7 @@
                 "name": "Activate Holiday Mode",
                 "turn_on": "on",
                 "turn_off": "off",
-                "type": "boolean"
+                "type": "binary"
             },
             "holidayModeTemperature": {
                 "id": "holidayMode/temperature",
@@ -168,21 +168,21 @@
                 "name": "dhwOffDuringAbsence",
                 "turn_on": "true",
                 "turn_off": "false",
-                "type": "boolean"
+                "type": "binary"
             },
             "dhwOffDuringNight": {
                 "id": "dhwOffDuringNight",
                 "name": "dhwOffDuringNight",
                 "turn_on": "true",
                 "turn_off": "false",
-                "type": "boolean"
+                "type": "binary"
             },
             "extraDhwStatus": {
                 "id": "extraDhw/status",
                 "name": "Extra hot water",
                 "turn_on": "on",
                 "turn_off": "off",
-                "type": "boolean"
+                "type": "binary"
             },
             "extraDhwDuration": {
                 "id": "extraDhw/duration",
@@ -194,7 +194,7 @@
                 "name": "thermaldesinfect state",
                 "turn_on": "on",
                 "turn_off": "off",
-                "type": "boolean"
+                "type": "binary"
             },
             "thermaldesinfecttime": {
                 "id": "thermaldesinfect/time",

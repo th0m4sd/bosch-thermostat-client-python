@@ -1,14 +1,22 @@
 """
 Switches of Bosch thermostat.
 """
-from bosch_thermostat_client.const import ID, NAME, TYPE, NUMBER, TURN_ON, TURN_OFF
+from bosch_thermostat_client.const import (
+    ID,
+    NAME,
+    TYPE,
+    NUMBER,
+    TURN_ON,
+    TURN_OFF,
+    BINARY,
+)
 from bosch_thermostat_client.const.ivt import ALLOWED_VALUES
 from bosch_thermostat_client.const.easycontrol import USED, BOOLEAN, FALSE, TRUE
 from bosch_thermostat_client.helper import BoschEntities
 
 from bosch_thermostat_client.exceptions import DeviceException
 from .switch import Switch
-from .boolean import BooleanSwitch
+from .boolean import BinarySwitch
 from .number import NumberSwitch
 
 
@@ -34,10 +42,10 @@ class Switches(BoschEntities):
         def get_switch_type(switch, retrieved):
             if ALLOWED_VALUES in retrieved:
                 return self._items, Switch
-            elif switch.get(TYPE, False) == BOOLEAN and (
+            elif switch.get(TYPE, False) == BINARY and (
                 retrieved.get(USED, False) or switch.get(TURN_ON)
             ):
-                return self._items, BooleanSwitch
+                return self._items, BinarySwitch
             elif switch.get(TYPE, False) == NUMBER:
                 return self._number_switches, NumberSwitch
             return None, None

@@ -118,10 +118,16 @@ class XMPPBaseConnector:
         await asyncio.wait_for(self._st.aclose(), 10)
 
     async def _request(self, method, path, encrypted_msg=None, timeout=REQUEST_TIMEOUT):
-        if not self._xmppstream:
-            await self.start()
-        await self._lock.acquire()
         data = None
+        try:
+            if not self._xmppstream:
+                await self.start()
+        except asyncio.TimeoutError:
+            _LOGGER.error(
+                "Can't connect to XMPP server!. Check your network connection or credentials!"
+            )
+            return None
+        await self._lock.acquire()
         try:
             msg_to_send = self._build_message(
                 method=method, path=path, data=encrypted_msg

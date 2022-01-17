@@ -6,7 +6,7 @@ from bosch_thermostat_client.helper import (
 from .switch import BaseSwitch
 
 
-class BooleanSwitch(BaseSwitch, BoschSingleEntity):
+class BinarySwitch(BaseSwitch, BoschSingleEntity):
     """Boolean switch object."""
 
     _type = BINARY

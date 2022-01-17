@@ -274,11 +274,6 @@
             "id": "/system/autoAway/enabled",
             "name": "autoAwayEnabled",
             "type": "binary"
-        },
-        "hydraulicBalancing": {
-            "id": "/system/hydraulicBalancing/enabled",
-            "name": "hydraulicBalancing",
-            "type": "binary"
         }
     },
     "crawlSensors": [
@@ -294,12 +289,17 @@
         "awayMode": {
             "id": "/system/awayMode/enabled",
             "name": "Away mode",
-            "type": "boolean"
+            "type": "binary"
         },
         "awayModeTemperature": {
             "id": "/system/awayMode/temperature",
             "name": "Away mode temp",
             "type": "number"
+        },
+        "hydraulicBalancing": {
+            "id": "/system/hydraulicBalancing/enabled",
+            "name": "hydraulicBalancing",
+            "type": "binary"
         }
     }
 }

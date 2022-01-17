@@ -283,7 +283,7 @@
         "awayMode": {
             "id": "/system/awayMode/enabled",
             "name": "Away mode",
-            "type": "boolean"
+            "type": "binary"
         },
         "awayModeTemperature": {
             "id": "/system/awayMode/temperature",
