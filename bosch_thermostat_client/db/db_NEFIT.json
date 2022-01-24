@@ -52,6 +52,11 @@
       "value": "CT100 Bel",
       "name": "CT100 Belgium",
       "type": "NEFIT"
+    },
+    "7716192072": {
+      "value": "CT100 UK",
+      "name": "Worcester Wave Thermostat",
+      "type": "NEFIT"
     }
   }
 }

@@ -41,6 +41,9 @@ def get_initial_db(device_type):
 
 def get_db_of_firmware(device_type, firmware_version):
     """Get db of specific device."""
+    if not firmware_version:
+        _LOGGER.error("Can't find your fw version.")
+        return None
     filename = DEVICE_TYPES[device_type].format(firmware_version.replace(".", ""))
     filepath = os.path.join(MAINPATH, filename)
     _LOGGER.debug("Attempt to load database from file %s", filepath)
