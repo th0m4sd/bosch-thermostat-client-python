@@ -19,7 +19,6 @@ from bosch_thermostat_client.const import (
     BOSCH_NAME,
     HA_NAME,
     SENSORS,
-    SWITCH,
     SWITCHES,
     SWITCH_PROGRAMS,
     VALUE,

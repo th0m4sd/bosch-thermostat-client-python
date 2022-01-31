@@ -3,12 +3,6 @@
     "heatingCircuits": {
         "hastates": [
             {
-                "haname": "off",
-                "boschname": [
-                    "off"
-                ]
-            },
-            {
                 "haname": "heat",
                 "boschname": [
                     "manual"
@@ -17,12 +11,6 @@
             {
                 "haname": "heat_cool",
                 "boschname": []
-            },
-            {
-                "haname": "auto",
-                "boschname": [
-                    "auto"
-                ]
             }
         ],
         "switchprogram": "/heatingCircuits/{}/switchPrograms/{}",
@@ -37,8 +25,8 @@
                 "type": "auto"
             }
         },
-        "min_ref": "setpoint2",
-        "max_ref": "setpoint2",
+        "min_ref": "setpoint1",
+        "max_ref": "setpoint1",
         "refs": {
             "current_temp": {
                 "id": "roomtemperature",
@@ -104,7 +92,7 @@
             },
             "actualSupplyTemperature": {
                 "id": "actualSupplyTemperature",
-                "name": "Actual supply temperature for HC",
+                "name": "actualSupplyTemperature",
                 "state_class": "measurement",
                 "device_class": "temperature"
             },
@@ -127,7 +115,6 @@
             {
                 "haname": "on",
                 "boschname": [
-                    "on",
                     "low"
                 ]
             },
@@ -136,20 +123,6 @@
                 "boschname": [
                     "eco"
                 ]
-            },
-            {
-                "haname": "eletric",
-                "boschname": []
-            },
-            {
-                "haname": "performance",
-                "boschname": [
-                    "ownprogram"
-                ]
-            },
-            {
-                "haname": "heat_pump",
-                "boschname": []
             },
             {
                 "haname": "high_demand",
@@ -170,10 +143,6 @@
                 "setpoint": null,
                 "type": "off"
             },
-            "ownprogram": {
-                "setpoint": null,
-                "type": "auto"
-            },
             "high": {
                 "setpoint": "setpoint3",
                 "type": "manual"
@@ -186,7 +155,7 @@
         "refs": {
             "current_temp": {
                 "id": "actualTemp",
-                "name": "Room temperature",
+                "name": "Actual water temperature",
                 "type": "regular"
             },
             "operation_mode": {
@@ -196,7 +165,7 @@
             },
             "setpoint1": {
                 "id": "currentSetpoint",
-                "name": "Water temp setpoint",
+                "name": "Water temperature setpoint",
                 "type": "setpoint"
             },
             "setpoint2": {
@@ -228,11 +197,6 @@
                 "id": "switchPrograms",
                 "name": "Active Switch Program",
                 "type": "activeProgram"
-            },
-            "switchPrograms": {
-                "id": "switchPrograms",
-                "name": "Switch Programs",
-                "type": "regular"
             }
         },
         "sensors": {
@@ -274,16 +238,12 @@
             "collectorTemperature": {
                 "id": "collectorTemperature",
                 "name": "collectorTemperature",
-                "type": "regular",
-                "state_class": "measurement",
-                "device_class": "temperature"
+                "type": "regular"
             },
             "dhwTankTemperature": {
                 "id": "dhwTankTemperature",
                 "name": "dhwTankTemperature",
-                "type": "regular",
-                "state_class": "measurement",
-                "device_class": "temperature"
+                "type": "regular"
             },
             "solarYield": {
                 "id": "solarYield",
@@ -309,12 +269,6 @@
             "state_class": "measurement",
             "device_class": "temperature"
         },
-        "hotWater_t2": {
-            "id": "/system/sensors/temperatures/hotWater_t2",
-            "name": "Hotwater temp",
-            "state_class": "measurement",
-            "device_class": "temperature"
-        },
         "supply_t1_setpoint": {
             "id": "/system/sensors/temperatures/supply_t1_setpoint",
             "name": "Supply temp setpoint"
@@ -323,7 +277,11 @@
             "id": "/system/sensors/temperatures/supply_t1",
             "name": "Actual supply temp"
         },
-        "switch_temperature": {
+        "return": {
+            "id": "/system/sensors/temperatures/return",
+            "name": "Return temp"
+        },
+        "switch": {
             "id": "/system/sensors/temperatures/switch",
             "name": "Switch temp"
         },
@@ -331,31 +289,9 @@
             "id": "/system/healthStatus",
             "name": "Health status"
         },
-        "return": {
-            "id": "/system/sensors/temperatures/return",
-            "name": "Return temp"
-        },
-        "chimney": {
-            "id": "/system/sensors/temperatures/chimney",
-            "name": "Chimney temp"
-        },
-        "actualPower": {
-            "id": "/heatSources/actualPower",
-            "name": "Actual Power",
-            "state_class": "measurement",
-            "device_class": "power"
-        },
-        "actualSupplyTemp": {
-            "id": "/system/appliance/actualSupplyTemperature",
-            "name": "Actual Supply temperature"
-        },
         "actualModulation": {
             "id": "/heatSources/actualModulation",
             "name": "Actual modulation"
-        },
-        "CHpumpModulation": {
-            "id": "/heatSources/CHpumpModulation",
-            "name": "Actual heating pump modulation"
         },
         "totalSystem": {
             "id": "/heatSources/workingTime/totalSystem",
@@ -375,10 +311,6 @@
             "id": "/heatSources/systemPressure",
             "name": "System pressure"
         },
-        "burnerPowerSetpoint": {
-            "id": "/heatSources/burnerPowerSetpoint",
-            "name": "burner Power Setpoint"
-        },
         "flameStatus": {
             "id": "/heatSources/flameStatus",
             "name": "flameStatus",
@@ -392,6 +324,14 @@
         "numberOfStarts": {
             "id": "/heatSources/numberOfStarts",
             "name": "numberOfStarts"
+        },
+        "collectorTempIn": {
+            "id": "/heatSources/sensors/collectorInTemp",
+            "name": "Collector temperature in"
+        },
+        "collectorTempOut": {
+            "id": "/heatSources/sensors/collectorOutTemp",
+            "name": "Collector temperature out"
         },
         "notifications": {
             "id": "/notifications",
