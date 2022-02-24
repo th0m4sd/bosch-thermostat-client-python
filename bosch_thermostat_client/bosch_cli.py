@@ -1,3 +1,4 @@
+from typing import Any
 import click
 import logging
 from colorlog import ColoredFormatter
@@ -329,7 +330,7 @@ async def put(
     device: str,
     path: str,
     debug: int,
-    value: str,
+    value: Any,
 ):
     """Send value to Bosch thermostat.
 
@@ -353,6 +354,8 @@ async def put(
     if not value:
         _LOGGER.error("Value to put not provided. Exiting")
         return
+    if value.isnumeric():
+        value = float(value)
     if device.upper() in (NEFIT, IVT, EASYCONTROL):
         BoschGateway = bosch.gateway_chooser(device_type=device)
     else:

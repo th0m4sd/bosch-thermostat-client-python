@@ -93,6 +93,12 @@
             "powerSetpoint": {
                 "id": "powerSetpoint",
                 "name": "powerSetpoint"
+            },
+            "actualSupplyTemperature": {
+                "id": "actualSupplyTemperature",
+                "name": "actualSupplyTemperature",
+                "state_class": "measurement",
+                "device_class": "temperature"
             }
         }
     },
