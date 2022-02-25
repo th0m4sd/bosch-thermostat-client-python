@@ -254,7 +254,7 @@
         },
         "totalSystem": {
             "id": "/heatSources/workingTime/totalSystem",
-            "name": "Total system uptime mins"
+            "name": "Total system uptime"
         },
         "energyConsumption": {
             "id": "/heatSources/energyMonitoring/consumption",

@@ -34,7 +34,7 @@ def get_sensor_class(recording_type=False):
 
 
 def get_device_class(uri, default_class="energy"):
-    if any(x in uri for x in ["temp", "outdoor"]):
+    if any(x in uri.lower() for x in ["temp", "outdoor"]):
         return "temperature"
     return default_class
 

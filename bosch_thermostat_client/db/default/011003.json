@@ -293,7 +293,7 @@
         },
         "totalSystem": {
             "id": "/heatSources/workingTime/totalSystem",
-            "name": "Total system uptime mins"
+            "name": "Total system uptime"
         },
         "systemPressure": {
             "id": "/heatSources/systemPressure",

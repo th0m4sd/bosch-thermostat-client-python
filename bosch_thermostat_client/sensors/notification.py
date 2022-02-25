@@ -22,20 +22,20 @@ class NotificationSensor(Sensor):
                 for idx, val in enumerate(vals):
                     if "ccd" in val:
                         ccd = str(val["ccd"])
-                        key_suffix = "" if idx == 0 else "_" + idx
-                        data[RESULT][VALUE + key_suffix] = self.errorcodes.get(
+                        key_suffix = "" if idx == 0 else f"_{idx}"
+                        data[RESULT][f"{VALUE}{key_suffix}"] = self.errorcodes.get(
                             ccd, {"title": "Unknown error"}
                         )["title"]
-                        data[RESULT]["errorCode" + key_suffix] = val["dcd"] + "-" + ccd
+                        data[RESULT][f"errorCode{key_suffix}"] = f'{val["dcd"]}-{ccd}'
                         for key, description in self.errorcodes.get(ccd, {}).items():
                             if isinstance(description, list):
                                 for alternative in description:
                                     for altkey in alternative:
                                         data[RESULT][
-                                            key + key_suffix + "_" + altkey
+                                            f"{key}{key_suffix}_{altkey}"
                                         ] = alternative[altkey]
                             else:
-                                data[RESULT][key + key_suffix] = description
+                                data[RESULT][f"{key}{key_suffix}"] = description
                     else:
                         data[RESULT] = {VALUE: val}
             else:
