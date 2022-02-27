@@ -260,7 +260,7 @@ class BoschSingleEntity:
             for key, item in self._data.items():
                 if item[TYPE] in self._allowed_types:
                     result = await self._connector.get(item[URI])
-                    self.process_results(result, key)
+                    self.process_results(result=result, key=key)
             self._state = True
         except DeviceException as err:
             _LOGGER.error(
@@ -268,3 +268,17 @@ class BoschSingleEntity:
             )
             self._state = False
             self._extra_message = f"Can't update data. Error: {err}"
+
+
+class DeviceClassEntity:
+    def __init__(self, device_class, state_class):
+        self._device_class = device_class
+        self._state_class = state_class
+
+    @property
+    def device_class(self):
+        return self._device_class
+
+    @property
+    def state_class(self):
+        return self._state_class

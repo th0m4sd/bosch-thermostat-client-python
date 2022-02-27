@@ -14,11 +14,11 @@ from bosch_thermostat_client.const import (
     STATE_CLASS,
     DEVICE_CLASS,
 )
+from bosch_thermostat_client.const.ivt import IVT
 from bosch_thermostat_client.helper import (
     BoschEntities,
 )
 
-from .notification import NotificationSensor
 from .sensor import Sensor
 from .recording import RecordingSensor
 from .crawl import CrawlSensor
@@ -51,14 +51,20 @@ class Sensors(BoschEntities):
         self._connector = connector
         super().__init__(connector.get)
         self._items = {}
+
+        if connector.device_type == IVT:
+            from .notification_ivt import NotificationSensor
+        else:
+            from .notification_nefit import NotificationSensor
+
         for sensor_id, sensor in sensors_db.items():
             if sensor_id not in self._items:
                 if sensor_id == NOTIFICATIONS:
                     self._items[sensor_id] = NotificationSensor(
                         connector=connector,
                         attr_id=sensor_id,
-                        name=sensor[NAME],
                         path=f"{uri_prefix}/{sensor[ID]}" if uri_prefix else sensor[ID],
+                        **sensor,
                     )
                 elif sensor_id == ENERGY:
                     self._items[sensor_id] = EnergySensor(

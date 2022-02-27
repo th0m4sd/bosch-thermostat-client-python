@@ -9,7 +9,7 @@ from aiohttp.client_exceptions import (
     ClientError,
 )
 
-from bosch_thermostat_client.const.ivt import HTTP_HEADER
+from bosch_thermostat_client.const.ivt import HTTP_HEADER, IVT
 from bosch_thermostat_client.const import APP_JSON, GET, PUT
 from bosch_thermostat_client.exceptions import DeviceException, ResponseException
 
@@ -19,13 +19,14 @@ _LOGGER = logging.getLogger(__name__)
 class HttpConnector:
     """HTTP connector to Bosch thermostat."""
 
-    def __init__(self, host, encryption, **kwargs):
+    def __init__(self, host, encryption, device_type=IVT, **kwargs):
         """Init of HTTP connector."""
         self._lock = asyncio.Lock()
         self._host = host
         self._websession = kwargs.get("loop")
         self._request_timeout = 10
         self._encryption = encryption
+        self.device_type = device_type
 
     @property
     def encryption_key(self):

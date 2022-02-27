@@ -1,7 +1,7 @@
 """XMPP Connector to talk to bosch."""
 import aioxmpp
 from bosch_thermostat_client.const import PUT, GET, USER_AGENT, CONTENT_TYPE, APP_JSON
-from bosch_thermostat_client.const.ivt import TELEHEATER
+from bosch_thermostat_client.const.ivt import TELEHEATER, IVT
 from .xmpp import XMPPBaseConnector
 
 
@@ -10,6 +10,7 @@ class IVTXMPPConnector(XMPPBaseConnector):
     _rrc_contact_prefix = "contact_"
     _rrc_gateway_prefix = "gateway_"
     xmpp_host = "wa2-mz36-qrmzh6.bosch.de"
+    device_type = IVT
 
     def __init__(self, host, access_key, encryption, **kwargs):
         """IVTConnector constructor

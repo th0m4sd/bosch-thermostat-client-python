@@ -67,6 +67,7 @@ class EasycontrolGateway(BaseGateway):
             loop=session,
             access_key=self._access_token,
             encryption=Encryption(access_key, password),
+            device_type=EASYCONTROL,
         )
         self._session_type = session_type
         self._data = {GATEWAY: {}, ZN: None, DHW: None, SENSORS: None}

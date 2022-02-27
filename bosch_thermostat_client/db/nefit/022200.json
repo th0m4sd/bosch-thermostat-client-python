@@ -237,7 +237,11 @@
             "name": "Total year usage",
             "state_class": "total",
             "device_class": "energy"
-
+        },
+        "notifications": {
+            "id": "/system/appliance/displaycode",
+            "cause": "/system/appliance/causecode",
+            "name": "Notifications"
         }
     }
 }

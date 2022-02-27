@@ -1,12 +1,9 @@
 """XMPP Connector to talk to bosch."""
-import logging
 
 import aioxmpp
 from bosch_thermostat_client.const import PUT, GET, USER_AGENT, CONTENT_TYPE, APP_JSON
-from bosch_thermostat_client.const.nefit import NEFITEASY
+from bosch_thermostat_client.const.nefit import NEFIT, NEFITEASY
 from .xmpp import XMPPBaseConnector
-
-_LOGGER = logging.getLogger(__name__)
 
 
 class NefitConnector(XMPPBaseConnector):
@@ -14,6 +11,7 @@ class NefitConnector(XMPPBaseConnector):
     _rrc_contact_prefix = "rrccontact_"
     _rrc_gateway_prefix = "rrcgateway_"
     xmpp_host = "wa2-mz36-qrmzh6.bosch.de"
+    device_type = NEFIT
 
     def _build_message(self, method, path, data=None):
         msg = aioxmpp.stanza.Message(

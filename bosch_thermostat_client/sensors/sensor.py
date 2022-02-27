@@ -1,9 +1,9 @@
-from bosch_thermostat_client.helper import BoschSingleEntity
+from bosch_thermostat_client.helper import BoschSingleEntity, DeviceClassEntity
 from bosch_thermostat_client.const import RESULT, URI, TYPE, REGULAR, VALUE
 from bosch_thermostat_client.const.ivt import INVALID
 
 
-class Sensor(BoschSingleEntity):
+class Sensor(BoschSingleEntity, DeviceClassEntity):
     """Single sensor object."""
 
     def __init__(
@@ -16,6 +16,9 @@ class Sensor(BoschSingleEntity):
         :param str path: path to retrieve data from sensor.
         """
         super().__init__(path=path, attr_id=attr_id, **kwargs)
+        DeviceClassEntity.__init__(
+            self, device_class=device_class, state_class=state_class
+        )
         self._kind = kind
         self._device_class = device_class
         self._state_class = state_class
@@ -24,14 +27,6 @@ class Sensor(BoschSingleEntity):
     @property
     def kind(self):
         return self._kind
-
-    @property
-    def device_class(self):
-        return self._device_class
-
-    @property
-    def state_class(self):
-        return self._state_class
 
     @property
     def state(self):

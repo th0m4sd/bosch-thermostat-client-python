@@ -9,6 +9,7 @@ from bosch_thermostat_client.const import (
     APP_JSON,
     ACCESS_KEY,
 )
+from bosch_thermostat_client.const.easycontrol import EASYCONTROL
 from .xmpp import XMPPBaseConnector
 
 USERAGENT = "rrc2"
@@ -20,6 +21,7 @@ class EasycontrolConnector(XMPPBaseConnector):
     _rrc_contact_prefix = "rrc2contact_"
     _rrc_gateway_prefix = "rrc2gateway_"
     no_verify = True
+    device_type = EASYCONTROL
 
     def __init__(self, host, encryption, **kwargs):
         self._seqno = 0

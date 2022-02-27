@@ -1,5 +1,6 @@
 """Gateway module connecting to Bosch thermostat."""
 
+from itertools import product
 import logging
 from .base import BaseGateway
 
@@ -63,6 +64,7 @@ class NefitGateway(BaseGateway):
             loop=session,
             access_key=self._access_token,
             encryption=Encryption(access_key, password),
+            device_type=NEFIT,
         )
         self._session_type = session_type
         self._data = {GATEWAY: {}, HC: None, DHW: None, SENSORS: None}
@@ -89,6 +91,14 @@ class NefitGateway(BaseGateway):
             if EMS in bus.get(ID, "").upper():
                 self._bus_type = EMS
                 break
-        if self._bus_type == EMS:
+        if not self._bus_type:
+            _LOGGER.error(
+                "Couldn't fetch bus connection. Something wrong. Got product ID: %s. %s",
+                product_id,
+                "I will guess bus type.",
+            )
+            self._bus_type = EMS
+
+        if self._bus_type == EMS and product_id in model_scheme:
             return model_scheme.get(product_id)
         _LOGGER.error(f"Couldn't find device model. Got product ID: {product_id}")

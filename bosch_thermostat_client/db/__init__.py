@@ -62,3 +62,8 @@ def get_custom_db(firmware_version, _db):
 def get_ivt_errors():
     """Get error codes of IVT devices."""
     return open_json(os.path.join(MAINPATH, "errorcodes_ivt.json"))
+
+
+def get_nefit_errors():
+    """Get error codes of NEFIT devices."""
+    return open_json(os.path.join(MAINPATH, "errorcodes_nefit.json"))
