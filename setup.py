@@ -23,7 +23,7 @@ setup(
     ),
     packages=find_packages(exclude=["tests*"]),
     install_requires=[
-        "aioxmpp>=0.12.2",
+        "aioxmpp>=0.13.1",
         "aiohttp",
         "click>=8",
         "colorlog",
