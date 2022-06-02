@@ -151,7 +151,7 @@
                 "boschname": [
                     "ownprogram"
                 ]
-            },
+            }
         ],
         "min_ref": "setpoint1",
         "max_ref": "setpoint1",
