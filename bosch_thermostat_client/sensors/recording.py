@@ -1,4 +1,6 @@
+import asyncio
 import logging
+from tracemalloc import start, stop
 from bosch_thermostat_client.const import (
     RESULT,
     URI,
@@ -20,6 +22,8 @@ _LOGGER = logging.getLogger(__name__)
 class RecordingSensor(Sensor):
     def __init__(self, path: str, **kwargs) -> None:
         super().__init__(path=path, **kwargs)
+        self._lock = asyncio.Lock()
+        self._past_data = []
 
         def unit_chooser():
             if any(x in path.lower() for x in ["energy", "power"]):
@@ -49,7 +53,7 @@ class RecordingSensor(Sensor):
             # recording = result[RECORDING][last_hour.hour - 1]
             self._data[self.attr_id][RESULT][VALUE] = []
             for idx, recording in enumerate(result[RECORDING]):
-                if recording["c"] == 0:
+                if recording["y"] == 0 or recording["c"] == 0:
                     continue
                 self._data[self.attr_id][RESULT][VALUE].append(
                     {
@@ -59,6 +63,33 @@ class RecordingSensor(Sensor):
                         VALUE: round((recording["y"] / recording["c"]), 1),
                     }
                 )
+
+    async def fetch_range(self, start_time: datetime, stop_time: datetime) -> list:
+        async with self._lock:
+            if self._past_data:
+                return self._past_data
+            current_date = start_time
+            while current_date < stop_time:
+                uri = self.build_uri(time=current_date)
+                data = await self._connector.get(uri)
+                if not data:
+                    continue
+                if RECORDING in data:
+                    for idx, recording in enumerate(data[RECORDING]):
+                        if recording["y"] == 0 or recording["c"] == 0:
+                            continue
+                        _d = current_date.replace(
+                            hour=idx, minute=0, second=0, microsecond=0
+                        )
+                        if start_time <= _d <= stop_time:
+                            self._past_data.append(
+                                {
+                                    "d": _d,
+                                    VALUE: round((recording["y"] / recording["c"]), 1),
+                                }
+                            )
+                current_date += timedelta(days=1)
+            return self._past_data
 
     @property
     def state(self) -> str | None:

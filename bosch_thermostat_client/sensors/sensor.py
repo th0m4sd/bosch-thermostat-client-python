@@ -8,14 +8,14 @@ class Sensor(BoschSingleEntity, DeviceClassEntity):
 
     def __init__(
         self, attr_id, path, device_class=None, state_class=None, kind=REGULAR, **kwargs
-    ):
+    ) -> None:
         """
         Single sensor init.
 
         :param dics requests: { GET: get function, SUBMIT: submit function}
         :param str path: path to retrieve data from sensor.
         """
-        super().__init__(path=path, attr_id=attr_id, **kwargs)
+        BoschSingleEntity.__init__(self, path=path, attr_id=attr_id, **kwargs)
         DeviceClassEntity.__init__(
             self, device_class=device_class, state_class=state_class
         )
@@ -25,11 +25,11 @@ class Sensor(BoschSingleEntity, DeviceClassEntity):
         self._data = {attr_id: {RESULT: {}, URI: path, TYPE: kind}}
 
     @property
-    def kind(self):
+    def kind(self) -> str:
         return self._kind
 
     @property
-    def state(self):
+    def state(self) -> str:
         """Retrieve state of the circuit."""
         result = self._data[self.attr_id].get(RESULT)
         if result:
