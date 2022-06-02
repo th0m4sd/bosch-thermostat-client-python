@@ -68,8 +68,14 @@ async def _runquery(gateway, path):
 
 
 async def _runpush(gateway, path, value):
+    try:
+        if value.isnumeric():
+            _value = int(value)
+        _value = float(value)
+    except ValueError:
+        _value = value
     _LOGGER.debug("Trying to connect to gateway.")
-    result = await gateway.raw_put(path, value)
+    result = await gateway.raw_put(path, _value)
     _LOGGER.info("Put succeed: %s", path)
     click.secho(json.dumps(result, indent=4, sort_keys=True), fg="green")
 
@@ -330,7 +336,7 @@ async def put(
     device: str,
     path: str,
     debug: int,
-    value: Any,
+    value: str,
 ):
     """Send value to Bosch thermostat.
 
