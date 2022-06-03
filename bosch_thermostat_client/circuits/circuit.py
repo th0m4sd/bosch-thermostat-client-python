@@ -160,7 +160,7 @@ class Circuit(BasicCircuit):
     def hvac_action(self):
         return None
 
-    async def update_temp_after_ha_mode(self, old_setpoint, new_mode, old_mode):
+    async def update_temp_after_ha_mode(self, old_setpoint, new_mode, old_mode) -> int:
         """Helper to fetch new temp. attribute if operation mode was changed."""
         different_mode = new_mode != old_mode
         try:
