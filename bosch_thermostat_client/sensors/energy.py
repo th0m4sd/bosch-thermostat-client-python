@@ -30,7 +30,7 @@ class EnergySensor(Sensor):
 
     def clear_past_data(self, sensor: str):
         """Clear past data array if both sensors are already fetched.
-        
+
         So it won't stay in memory unnecessary.
         """
         self._past_put.add(sensor)

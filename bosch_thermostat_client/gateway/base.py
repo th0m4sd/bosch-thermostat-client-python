@@ -275,7 +275,6 @@ class BaseGateway:
             )
             await self._data[SWITCHES].initialize(switches=self._db[SWITCHES])
 
-
     async def rawscan(self):
         """Print out all info from gateway."""
         rawlist = []
@@ -338,7 +337,7 @@ class BaseGateway:
         except DeviceException as err:
             _LOGGER.error(err)
 
-    async def close(self, force: bool=False) -> None:
+    async def close(self, force: bool = False) -> None:
         await self._connector.close(force)
 
     async def check_firmware_validity(self):

@@ -16,7 +16,6 @@ _LOGGER = logging.getLogger(__name__)
 pass_bosch = click.make_pass_decorator(dict, ensure=True)
 
 
-
 def coro(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
@@ -128,7 +127,10 @@ async def switches(ctx, host: str, token: str, password: str, debug: int, device
             BoschGateway = bosch.gateway_chooser(device_type=device)
         gateway = BoschGateway(
             session=session,
-            session_type=HTTP ,host=host, access_token=token, password=password
+            session_type=HTTP,
+            host=host,
+            access_token=token,
+            password=password,
         )
         _LOGGER.debug("Trying to connect to gateway.")
         if await gateway.check_connection():

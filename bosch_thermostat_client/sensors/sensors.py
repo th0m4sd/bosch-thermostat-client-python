@@ -12,7 +12,7 @@ from bosch_thermostat_client.const import (
     STATE_CLASS,
     DEVICE_CLASS,
     ECUS_RECORDING,
-    NAME
+    NAME,
 )
 from bosch_thermostat_client.const.ivt import IVT
 from bosch_thermostat_client.helper import (
@@ -38,7 +38,7 @@ def get_sensor_class(device_type, sensor_type):
     return {
         NOTIFICATIONS: NotificationSensor,
         ENERGY: EnergySensor,
-        ECUS_RECORDING: EcusRecordingSensor
+        ECUS_RECORDING: EcusRecordingSensor,
     }.get(sensor_type, Sensor)
 
 
@@ -73,9 +73,11 @@ class Sensors(BoschEntities):
                     "name": sensor.get(NAME),
                     "path": f"{uri_prefix}/{sensor[ID]}" if uri_prefix else sensor[ID],
                     "kind": sensor.get(TYPE, REGULAR),
-                    **sensor
+                    **sensor,
                 }
-                SensorClass = get_sensor_class(device_type=connector.device_type, sensor_type=sensor_id)
+                SensorClass = get_sensor_class(
+                    device_type=connector.device_type, sensor_type=sensor_id
+                )
                 self._items[sensor_id] = SensorClass(
                     **kwargs,
                 )

@@ -4,10 +4,18 @@ import json
 import logging
 
 from bosch_thermostat_client.connectors import connector_ivt_chooser
-from bosch_thermostat_client.const import (DHW, EMS, GATEWAY, HC, MODELS,
-                                           SENSORS, SYSTEM_BUS, VALUE, VALUES)
-from bosch_thermostat_client.const.ivt import (CAN, CIRCUIT_TYPES, IVT,
-                                               SYSTEM_INFO)
+from bosch_thermostat_client.const import (
+    DHW,
+    EMS,
+    GATEWAY,
+    HC,
+    MODELS,
+    SENSORS,
+    SYSTEM_BUS,
+    VALUE,
+    VALUES,
+)
+from bosch_thermostat_client.const.ivt import CAN, CIRCUIT_TYPES, IVT, SYSTEM_INFO
 from bosch_thermostat_client.encryption import IVTEncryption as Encryption
 from bosch_thermostat_client.exceptions import DeviceException
 

@@ -60,9 +60,7 @@ class Switches(BoschEntities):
         async def prepare_switch(switch_id, switch, uri):
             retrieved = await self._get(uri)
 
-            items, ChoosenSwitch = get_switch_type(
-                switch=switch, retrieved=retrieved
-            )
+            items, ChoosenSwitch = get_switch_type(switch=switch, retrieved=retrieved)
             if items is not None and ChoosenSwitch:
                 items[switch_id] = ChoosenSwitch(
                     connector=self._connector,
@@ -93,12 +91,14 @@ class Switches(BoschEntities):
                             else f"{ref_id}{switch[ID]}"
                         )
                         name = ref_id.split("/")[-1]
-                        _switch={
+                        _switch = {
                             **switch,
                             ID: f"{ref_id}{switch[ID]}",
-                            NAME: f"{switch[NAME]} {name}"
+                            NAME: f"{switch[NAME]} {name}",
                         }
-                        await prepare_switch(switch_id=f"{name}{switch[ID]}", switch=_switch, uri=uri)
+                        await prepare_switch(
+                            switch_id=f"{name}{switch[ID]}", switch=_switch, uri=uri
+                        )
                 else:
                     uri = (
                         f"{self._uri_prefix}/{switch[ID]}"
@@ -106,7 +106,7 @@ class Switches(BoschEntities):
                         else switch[ID]
                     )
                     await prepare_switch(switch_id=switch_id, switch=switch, uri=uri)
-                
+
             except DeviceException:
                 pass
 

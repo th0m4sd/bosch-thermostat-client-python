@@ -2,15 +2,27 @@
 
 import logging
 
-from bosch_thermostat_client.connectors import (EasycontrolConnector,
-                                                HttpConnector)
-from bosch_thermostat_client.const import (DHW, EMS, GATEWAY, HTTP, ID, MODELS,
-                                           REFERENCES, SENSORS, SYSTEM_BUS,
-                                           VALUE, XMPP, ZN)
-from bosch_thermostat_client.const.easycontrol import (CIRCUIT_TYPES,
-                                                       EASYCONTROL, PRODUCT_ID)
-from bosch_thermostat_client.encryption import \
-    EasycontrolEncryption as Encryption
+from bosch_thermostat_client.connectors import EasycontrolConnector, HttpConnector
+from bosch_thermostat_client.const import (
+    DHW,
+    EMS,
+    GATEWAY,
+    HTTP,
+    ID,
+    MODELS,
+    REFERENCES,
+    SENSORS,
+    SYSTEM_BUS,
+    VALUE,
+    XMPP,
+    ZN,
+)
+from bosch_thermostat_client.const.easycontrol import (
+    CIRCUIT_TYPES,
+    EASYCONTROL,
+    PRODUCT_ID,
+)
+from bosch_thermostat_client.encryption import EasycontrolEncryption as Encryption
 from bosch_thermostat_client.exceptions import DeviceException
 
 from .base import BaseGateway
