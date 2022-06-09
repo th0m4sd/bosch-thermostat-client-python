@@ -1,3 +1,4 @@
+from __future__ import annotations
 from bosch_thermostat_client.helper import BoschSingleEntity, DeviceClassEntity
 from bosch_thermostat_client.const import RESULT, URI, TYPE, REGULAR, VALUE
 from bosch_thermostat_client.const.ivt import INVALID

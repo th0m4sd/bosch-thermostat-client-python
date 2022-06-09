@@ -1,3 +1,4 @@
+from __future__ import annotations
 import asyncio
 import logging
 from bosch_thermostat_client.const import (

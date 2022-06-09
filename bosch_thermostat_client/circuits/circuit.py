@@ -1,4 +1,5 @@
 """Main circuit object."""
+from __future__ import annotations
 from bosch_thermostat_client.switches import Switches
 import logging
 from bosch_thermostat_client.const import (
