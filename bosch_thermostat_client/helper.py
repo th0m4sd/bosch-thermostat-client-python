@@ -272,13 +272,16 @@ class BoschSingleEntity:
 
 class DeviceClassEntity:
     def __init__(self, device_class, state_class):
+        """Initialize device class."""
         self._device_class = device_class
         self._state_class = state_class
 
     @property
     def device_class(self):
+        """Return device class."""
         return self._device_class
 
     @property
     def state_class(self):
+        """Return state class."""
         return self._state_class
