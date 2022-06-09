@@ -3,6 +3,12 @@
     "heatingCircuits": {
         "hastates": [
             {
+                "haname": "off",
+                "boschname": [
+                    "off"
+                ]
+            },
+            {
                 "haname": "heat",
                 "boschname": [
                     "manual"
@@ -242,6 +248,20 @@
             "id": "/system/appliance/displaycode",
             "cause": "/system/appliance/causecode",
             "name": "Notifications"
+        },
+        "ecus_recording": {
+            "name": "Gas usage",
+            "id": "/ecus/rrc/recordings/gasusage",
+            "pagination": "/ecus/rrc/recordings/gasusagePointer",
+            "state_class": "total",
+            "device_class": "energy"
+        }
+    },
+    "switches": {
+        "summerSwitchOff": {
+            "id": "/ecus/rrc/weatherDependent/summerSwitchOff",
+            "name": "summerSwitchOff",
+            "type": "number"
         }
     }
 }

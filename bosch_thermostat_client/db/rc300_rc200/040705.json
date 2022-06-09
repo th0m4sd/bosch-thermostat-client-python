@@ -359,7 +359,45 @@
             "name": "Notifications"
         }
     },
-    "recordingsSensors": [
-        "/recordings"
-    ]
+    "crawlSensors": [
+        {
+            "uri": "/recordings",
+            "deep": 4,
+            "sensorType": "recording",
+            "state_class": "total",
+            "device_class": "energy"
+        }
+    ],
+    "switches": {
+        "poolStatus": {
+            "id": "/heatSources/poolStatus",
+            "name": "poolStatus"
+        },
+        "poolSetpointTemperature": {
+            "id": "/heatSources/poolSetpointTemperature",
+            "name": "poolSetpointTemperature",
+            "type": "number"
+        },
+        "dhwMode": {
+            "id": "/dhwMode",
+            "crawl": true,
+            "base": "/system/holidayModes",
+            "name": "Holiday DHW Mode",
+            "type": "select"
+        },
+        "hcMode": {
+            "id": "/hcMode",
+            "crawl": true,
+            "base": "/system/holidayModes",
+            "name": "Holiday HC Mode",
+            "type": "select"
+        },
+        "assignedTo": {
+            "id": "/assignedTo",
+            "crawl": true,
+            "base": "/system/holidayModes",
+            "name": "Holiday Mode Assigned To",
+            "type": "select"
+        }
+    }
 }

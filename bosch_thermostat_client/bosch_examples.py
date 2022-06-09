@@ -3,7 +3,9 @@ import logging
 import aiohttp
 import bosch_thermostat_client as bosch
 from bosch_thermostat_client.db import open_json, MAINPATH
-from bosch_thermostat_client.const import HC, SENSORS, DHW
+from bosch_thermostat_client.const import HC, HTTP, SENSORS, DHW
+from bosch_thermostat_client.const.nefit import NEFIT
+from bosch_thermostat_client.const.ivt import IVT
 import os
 import asyncio
 
@@ -13,12 +15,6 @@ _LOGGER = logging.getLogger(__name__)
 
 pass_bosch = click.make_pass_decorator(dict, ensure=True)
 
-rc300 = open_json(os.path.join(MAINPATH, "rc300.json"))
-default = open_json(os.path.join(MAINPATH, "default.json"))
-
-sensors_dict = next(iter(default.values()))[SENSORS]
-sensors_dict.update(next(iter(rc300.values()))[SENSORS])
-sensor_list = " , ".join(sensors_dict.keys())
 
 
 def coro(f):
@@ -63,12 +59,6 @@ async def cli(ctx):
     help="Bosch device type. NEFIT or IVT.",
 )
 @click.option("-d", "--debug", default=False, count=True)
-@click.option(
-    "--sensor",
-    "-s",
-    multiple=True,
-    help="You can use multiple sensors. Possible values: %s" % sensor_list,
-)
 @click.pass_context
 @coro
 async def sensors(ctx, host: str, token: str, password: str, debug: int, sensor):
@@ -93,6 +83,61 @@ async def sensors(ctx, host: str, token: str, password: str, debug: int, sensor)
             for sensor_obj in sensors:
                 await sensor_obj.update()
                 print(sensor_obj.name, ":", sensor_obj.get_property(sensor_obj.attr_id))
+        else:
+            _LOGGER.error("Couldn't connect to gateway!")
+        await session.close()
+
+
+@cli.command()
+@click.option(
+    "--host", envvar="BOSCH_HOST", type=str, required=True, help="IP address of gateway"
+)
+@click.option(
+    "--token",
+    envvar="BOSCH_ACCESS_TOKEN",
+    type=str,
+    required=True,
+    help="Token from sticker without dashes.",
+)
+@click.option(
+    "--password",
+    envvar="BOSCH_PASSWORD",
+    type=str,
+    required=False,
+    help="Password you set in mobile app.",
+)
+@click.option(
+    "--device",
+    envvar="BOSCH_DEVICE",
+    type=click.Choice([NEFIT, IVT], case_sensitive=False),
+    required=True,
+    help="Bosch device type. NEFIT or IVT.",
+)
+@click.option("-d", "--debug", default=False, count=True)
+@click.pass_context
+@coro
+async def switches(ctx, host: str, token: str, password: str, debug: int, device: str):
+    if debug:
+        logging.basicConfig(level=logging.DEBUG)
+        _LOGGER.info("Debug mode active")
+        _LOGGER.debug(f"Lib version is {bosch.version}")
+    else:
+        logging.basicConfig(level=logging.INFO)
+    async with aiohttp.ClientSession() as session:
+        if device.upper() == NEFIT or device.upper() == IVT:
+            BoschGateway = bosch.gateway_chooser(device_type=device)
+        gateway = BoschGateway(
+            session=session,
+            session_type=HTTP ,host=host, access_token=token, password=password
+        )
+        _LOGGER.debug("Trying to connect to gateway.")
+        if await gateway.check_connection():
+            _LOGGER.info(
+                "Successfully connected to gateway. Found UUID: %s", gateway.uuid
+            )
+            await gateway.initialize_switches()
+            switches = gateway.switches
+            print(switches.selects)
         else:
             _LOGGER.error("Couldn't connect to gateway!")
         await session.close()

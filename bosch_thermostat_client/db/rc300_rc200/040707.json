@@ -421,6 +421,27 @@
             "id": "/heatSources/poolSetpointTemperature",
             "name": "poolSetpointTemperature",
             "type": "number"
+        },
+        "dhwMode": {
+            "id": "/dhwMode",
+            "crawl": true,
+            "base": "/system/holidayModes",
+            "name": "Holiday DHW Mode",
+            "type": "select"
+        },
+        "hcMode": {
+            "id": "/hcMode",
+            "crawl": true,
+            "base": "/system/holidayModes",
+            "name": "Holiday HC Mode",
+            "type": "select"
+        },
+        "assignedTo": {
+            "id": "/assignedTo",
+            "crawl": true,
+            "base": "/system/holidayModes",
+            "name": "Holiday Mode Assigned To",
+            "type": "select"
         }
     }
 }
