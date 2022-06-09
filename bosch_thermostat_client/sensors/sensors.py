@@ -1,7 +1,5 @@
-from bosch_thermostat_client.const.easycontrol import PAGINATION
 from bosch_thermostat_client.const import (
     ID,
-    NAME,
     REGULAR,
     URI,
     TYPE,
@@ -13,11 +11,14 @@ from bosch_thermostat_client.const import (
     DB_RECORD,
     STATE_CLASS,
     DEVICE_CLASS,
+    ECUS_RECORDING,
+    NAME
 )
 from bosch_thermostat_client.const.ivt import IVT
 from bosch_thermostat_client.helper import (
     BoschEntities,
 )
+from bosch_thermostat_client.sensors.ecus_recording import EcusRecordingSensor
 
 from .sensor import Sensor
 from .recording import RecordingSensor
@@ -29,7 +30,19 @@ STATE = "state"
 ENERGY = "energy"
 
 
-def get_sensor_class(recording_type=False):
+def get_sensor_class(device_type, sensor_type):
+    if device_type == IVT:
+        from .notification_ivt import NotificationSensor
+    else:
+        from .notification_nefit import NotificationSensor
+    return {
+        NOTIFICATIONS: NotificationSensor,
+        ENERGY: EnergySensor,
+        ECUS_RECORDING: EcusRecordingSensor
+    }.get(sensor_type, Sensor)
+
+
+def get_crawl_sensor_class(recording_type=False):
     return RecordingSensor if recording_type else CrawlSensor
 
 
@@ -52,39 +65,20 @@ class Sensors(BoschEntities):
         super().__init__(connector.get)
         self._items = {}
 
-        if connector.device_type == IVT:
-            from .notification_ivt import NotificationSensor
-        else:
-            from .notification_nefit import NotificationSensor
-
         for sensor_id, sensor in sensors_db.items():
             if sensor_id not in self._items:
-                if sensor_id == NOTIFICATIONS:
-                    self._items[sensor_id] = NotificationSensor(
-                        connector=connector,
-                        attr_id=sensor_id,
-                        path=f"{uri_prefix}/{sensor[ID]}" if uri_prefix else sensor[ID],
-                        **sensor,
-                    )
-                elif sensor_id == ENERGY:
-                    self._items[sensor_id] = EnergySensor(
-                        connector=connector,
-                        attr_id=sensor_id,
-                        name=sensor.get(NAME),
-                        path=sensor.get(ID),
-                        pagination=sensor.get(PAGINATION),
-                        state_class=sensor.get(STATE_CLASS),
-                    )
-                else:
-                    self._items[sensor_id] = Sensor(
-                        connector=connector,
-                        attr_id=sensor_id,
-                        name=sensor[NAME],
-                        path=f"{uri_prefix}/{sensor[ID]}" if uri_prefix else sensor[ID],
-                        device_class=sensor.get(DEVICE_CLASS),
-                        state_class=sensor.get(STATE_CLASS),
-                        kind=sensor.get(TYPE, REGULAR),
-                    )
+                kwargs = {
+                    "connector": connector,
+                    "attr_id": sensor_id,
+                    "name": sensor.get(NAME),
+                    "path": f"{uri_prefix}/{sensor[ID]}" if uri_prefix else sensor[ID],
+                    "kind": sensor.get(TYPE, REGULAR),
+                    **sensor
+                }
+                SensorClass = get_sensor_class(device_type=connector.device_type, sensor_type=sensor_id)
+                self._items[sensor_id] = SensorClass(
+                    **kwargs,
+                )
 
     async def initialize(self, crawl_sensors):
         """Initialize recording sensors."""
@@ -111,7 +105,7 @@ class Sensors(BoschEntities):
             for rec in found[VALUE]:
                 sensor_id = get_id(rec, found[RECORDING])
                 if sensor_id not in self._items:
-                    self._items[sensor_id] = get_sensor_class(found[RECORDING])(
+                    self._items[sensor_id] = get_crawl_sensor_class(found[RECORDING])(
                         connector=self._connector,
                         attr_id=sensor_id,
                         name=sensor_id,

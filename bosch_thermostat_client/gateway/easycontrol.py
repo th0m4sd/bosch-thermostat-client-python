@@ -1,31 +1,19 @@
 """Gateway module connecting to Bosch thermostat."""
 
 import logging
-from .base import BaseGateway
 
-from bosch_thermostat_client.connectors import EasycontrolConnector, HttpConnector
-from bosch_thermostat_client.encryption import EasycontrolEncryption as Encryption
-from bosch_thermostat_client.const import (
-    HTTP,
-    XMPP,
-    GATEWAY,
-    MODELS,
-    EMS,
-    SYSTEM_BUS,
-    VALUE,
-    REFERENCES,
-    ID,
-    SENSORS,
-    ZN,
-    DHW,
-)
-from bosch_thermostat_client.const.easycontrol import (
-    EASYCONTROL,
-    PRODUCT_ID,
-    CIRCUIT_TYPES,
-)
+from bosch_thermostat_client.connectors import (EasycontrolConnector,
+                                                HttpConnector)
+from bosch_thermostat_client.const import (DHW, EMS, GATEWAY, HTTP, ID, MODELS,
+                                           REFERENCES, SENSORS, SYSTEM_BUS,
+                                           VALUE, XMPP, ZN)
+from bosch_thermostat_client.const.easycontrol import (CIRCUIT_TYPES,
+                                                       EASYCONTROL, PRODUCT_ID)
+from bosch_thermostat_client.encryption import \
+    EasycontrolEncryption as Encryption
 from bosch_thermostat_client.exceptions import DeviceException
 
+from .base import BaseGateway
 
 _LOGGER = logging.getLogger(__name__)
 

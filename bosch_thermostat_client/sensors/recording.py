@@ -1,12 +1,10 @@
 import asyncio
 import logging
-from tracemalloc import start, stop
 from bosch_thermostat_client.const import (
     RESULT,
     URI,
     VALUE,
     INTERVAL,
-    RECORDINGS,
     RECORDING,
     TEMP_CELSIUS,
     ENERGY_KILO_WATT_HOUR,
@@ -36,7 +34,7 @@ class RecordingSensor(Sensor):
 
     @property
     def kind(self) -> str:
-        return RECORDINGS
+        return RECORDING
 
     @property
     def unit_of_measurement(self) -> str:

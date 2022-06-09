@@ -7,7 +7,7 @@ class Sensor(BoschSingleEntity, DeviceClassEntity):
     """Single sensor object."""
 
     def __init__(
-        self, attr_id, path, device_class=None, state_class=None, kind=REGULAR, **kwargs
+        self, attr_id: str, path: str, device_class: str=None, state_class: str=None, kind: str=REGULAR, **kwargs
     ) -> None:
         """
         Single sensor init.

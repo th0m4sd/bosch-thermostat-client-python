@@ -1,24 +1,17 @@
 """Gateway module connecting to Bosch thermostat."""
 
-import logging
 import json
-from .base import BaseGateway
-from bosch_thermostat_client.const import (
-    GATEWAY,
-    MODELS,
-    EMS,
-    SYSTEM_BUS,
-    VALUE,
-    VALUES,
-    HC,
-    DHW,
-    SENSORS,
-)
-from bosch_thermostat_client.const.ivt import IVT, SYSTEM_INFO, CAN, CIRCUIT_TYPES
+import logging
+
 from bosch_thermostat_client.connectors import connector_ivt_chooser
+from bosch_thermostat_client.const import (DHW, EMS, GATEWAY, HC, MODELS,
+                                           SENSORS, SYSTEM_BUS, VALUE, VALUES)
+from bosch_thermostat_client.const.ivt import (CAN, CIRCUIT_TYPES, IVT,
+                                               SYSTEM_INFO)
 from bosch_thermostat_client.encryption import IVTEncryption as Encryption
 from bosch_thermostat_client.exceptions import DeviceException
 
+from .base import BaseGateway
 
 _LOGGER = logging.getLogger(__name__)
 

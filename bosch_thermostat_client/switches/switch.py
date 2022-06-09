@@ -1,4 +1,5 @@
 import logging
+from typing import Any
 from bosch_thermostat_client.const import (
     RESULT,
     URI,
@@ -32,7 +33,7 @@ class BaseSwitch:
         self.process_results(result, attr_id)
 
     @property
-    def state(self):
+    def state(self) -> Any:
         """Retrieve state of the switch."""
         result = self._data[self.attr_id].get(RESULT)
         if result:
@@ -46,20 +47,20 @@ class Switch(BaseSwitch, BoschSingleEntity):
     _type = REGULAR
     _allowed_types = REGULAR
 
-    async def turn_on(self):
+    async def turn_on(self) -> None:
         await self._turn_action(ON_STATES)
 
-    async def turn_off(self):
+    async def turn_off(self) -> None:
         await self._turn_action(OFF_STATES)
 
-    async def _turn_action(self, states):
+    async def _turn_action(self, states) -> None:
         allowed = self._data[self.attr_id].get(RESULT, {}).get(ALLOWED_VALUES, [])
         _LOGGER.debug("Trying to toggle %s. Allowed values %s", states, allowed)
         for state in states:
             if state in allowed:
                 await self._connector.put(self._data[self.attr_id][URI], state)
                 self._data[self.attr_id][RESULT][VALUE] = state
-                break
+                return
 
     def check_state(self, value):
         return True if value in ON_STATES else False

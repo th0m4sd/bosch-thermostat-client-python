@@ -78,7 +78,7 @@ class BasicCircuit(BoschSingleEntity):
         return self._sensors
 
     @property
-    def switches(self):
+    def regular_switches(self):
         return self._switches
 
     @property

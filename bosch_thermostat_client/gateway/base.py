@@ -1,6 +1,7 @@
 """Gateway module connecting to Bosch thermostat."""
 
 import logging
+from typing import Any
 
 from bosch_thermostat_client.circuits import Circuits
 from bosch_thermostat_client.const import (
@@ -18,6 +19,7 @@ from bosch_thermostat_client.const import (
     REFS,
     ROOT_PATHS,
     SC,
+    SELECT,
     SENSORS,
     SENSOR,
     SWITCH,
@@ -181,6 +183,12 @@ class BaseGateway:
 
     @property
     def switches(self):
+        """Get switches class."""
+        if SWITCHES in self._data:
+            return self._data[SWITCHES]
+
+    @property
+    def regular_switches(self):
         """Get switches list."""
         if SWITCHES in self._data:
             return self._data[SWITCHES].switches
@@ -229,6 +237,8 @@ class BaseGateway:
         supported.append(SWITCH)
         if NUMBER not in supported and self.number_switches:
             supported.append(NUMBER)
+        if SELECT not in supported and self.switches.selects:
+            supported.append(SELECT)
         supported.append(SENSOR)
 
         return supported
@@ -258,12 +268,13 @@ class BaseGateway:
 
     async def initialize_switches(self):
         """Initialize switches objects."""
-        _LOGGER.info("Initializing Switches Sensors.")
         if SWITCHES in self._db:
+            _LOGGER.info("Initializing Switches and Selects.")
             self._data[SWITCHES] = Switches(
                 connector=self._connector,
             )
             await self._data[SWITCHES].initialize(switches=self._db[SWITCHES])
+
 
     async def rawscan(self):
         """Print out all info from gateway."""
@@ -320,14 +331,14 @@ class BaseGateway:
         except DeviceException as err:
             _LOGGER.error(err)
 
-    async def raw_put(self, path, value):
+    async def raw_put(self, path: str, value: Any) -> None:
         """Run RAW PUT."""
         try:
             return await self._connector.put(path=path, value=value)
         except DeviceException as err:
             _LOGGER.error(err)
 
-    async def close(self, force=False):
+    async def close(self, force: bool=False) -> None:
         await self._connector.close(force)
 
     async def check_firmware_validity(self):

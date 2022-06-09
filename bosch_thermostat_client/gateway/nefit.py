@@ -1,6 +1,5 @@
 """Gateway module connecting to Bosch thermostat."""
 
-from itertools import product
 import logging
 from .base import BaseGateway
 
