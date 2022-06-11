@@ -195,6 +195,12 @@ class BaseGateway:
         return []
 
     @property
+    def select_switches(self):
+        """Get switches list."""
+        if SWITCHES in self._data:
+            return self._data[SWITCHES].selects
+
+    @property
     def number_switches(self):
         """Get number switches list."""
         if SWITCHES in self._data:
@@ -237,7 +243,7 @@ class BaseGateway:
         supported.append(SWITCH)
         if NUMBER not in supported and self.number_switches:
             supported.append(NUMBER)
-        if SELECT not in supported and self.switches.selects:
+        if SELECT not in supported and self.select_switches:
             supported.append(SELECT)
         supported.append(SENSOR)
 
