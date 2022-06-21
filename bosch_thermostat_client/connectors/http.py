@@ -75,7 +75,7 @@ class HttpConnector:
     async def get(self, path):
         """Get message from API with given path."""
         async with self._lock:
-            return await self._request(
+            data = await self._request(
                 self._websession.get,
                 path,
                 headers=HTTP_HEADER,
@@ -83,6 +83,8 @@ class HttpConnector:
                 skip_auto_headers=["Accept-Encoding", "Accept"],
                 raise_for_status=True,
             )
+            _LOGGER.debug("Response to GET request %s: %s", path, json.dumps(data))
+            return data
 
     async def put(self, path, value):
         """Send message to API with given path."""
