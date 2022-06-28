@@ -52,7 +52,7 @@ class RecordingSensor(Sensor):
             # recording = result[RECORDING][last_hour.hour - 1]
             self._data[self.attr_id][RESULT][VALUE] = []
             for idx, recording in enumerate(result[RECORDING]):
-                if recording["y"] == 0 or recording["c"] == 0:
+                if recording["c"] == 0:
                     continue
                 self._data[self.attr_id][RESULT][VALUE].append(
                     {
