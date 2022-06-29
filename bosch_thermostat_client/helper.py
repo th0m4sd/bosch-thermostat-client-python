@@ -263,7 +263,7 @@ class BoschSingleEntity:
                     self.process_results(result=result, key=key)
             self._state = True
         except DeviceException as err:
-            _LOGGER.error(
+            _LOGGER.warning(
                 f"Can't update data for {self.name}. Trying uri: {item[URI]}. Error message: {err}"
             )
             self._state = False

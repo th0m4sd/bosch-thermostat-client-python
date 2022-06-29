@@ -95,8 +95,8 @@ class Schedule:
             self._schedule_found = True
         except DeviceException:
             self._schedule_found = False
-            _LOGGER.warning(
-                "URI for Active Program %s doesn't exists. Maybe we can figure out how to work anyway",
+            _LOGGER.info(
+                "URI for Active Program %s doesn't exists. Maybe we can figure it out how to work anyway",
                 active_program,
             )
             pass
