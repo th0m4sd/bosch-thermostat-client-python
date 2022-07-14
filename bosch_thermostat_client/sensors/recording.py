@@ -45,20 +45,21 @@ class RecordingSensor(Sensor):
         """Convert multi-level json object to one level object."""
 
         def get_last_full_hour() -> time:
-            return time - timedelta(hours=1)
+            return (time - timedelta(hours=1)).replace(
+                minute=0, second=0, microsecond=0
+            )
 
         if result and RECORDING in result:
             last_hour = get_last_full_hour()
-            # recording = result[RECORDING][last_hour.hour - 1]
             self._data[self.attr_id][RESULT][VALUE] = []
             for idx, recording in enumerate(result[RECORDING]):
                 if recording["c"] == 0:
                     continue
                 self._data[self.attr_id][RESULT][VALUE].append(
                     {
-                        "d": last_hour.replace(
-                            hour=idx + 1, minute=0, second=0, microsecond=0
-                        ),
+                        "d": last_hour.replace(hour=idx + 1)
+                        if idx < 23
+                        else last_hour.replace(hour=0) + timedelta(days=1),
                         VALUE: round((recording["y"] / recording["c"]), 1),
                     }
                 )
