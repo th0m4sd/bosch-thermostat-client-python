@@ -85,7 +85,7 @@ class BaseGateway:
                 return
             else:
                 raise FirmwareException(
-                    "You might have unsuporrted firmware version %s"
+                    "You might have unsupported firmware version %s"
                     % self._firmware_version
                 )
         else:
@@ -352,6 +352,6 @@ class BaseGateway:
         if get_db_of_firmware(self._device[TYPE], fw.get(VALUE, "")):
             return True
         raise FirmwareException(
-            "You might have unsuporrted firmware version %s. Maybe it get updated?"
+            "You might have unsupported firmware version %s. Maybe it get updated?"
             % self._firmware_version
         )
