@@ -264,6 +264,10 @@
             "id": "/heatSources/returnTemperature",
             "name": "Return temperature"
         },
+        "totalWorkingTime": {
+            "id": "/heatSources/workingTime/totalSystem",
+            "name": "Total working time"
+        },
         "refillNeeded": {
             "id": "/heatSources/refillNeeded",
             "name": "Refill needed11"
