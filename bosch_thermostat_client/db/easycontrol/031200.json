@@ -256,6 +256,10 @@
             "id": "/heatSources/actualSupplyTemperature",
             "name": "Actual supply temperature"
         },
+        "numberOfStarts": {
+            "id": "/heatSources/numberOfStarts",
+            "name": "Number of starts"
+        },
         "returnTemperature": {
             "id": "/heatSources/returnTemperature",
             "name": "Return temperature"
