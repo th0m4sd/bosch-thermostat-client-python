@@ -60,6 +60,11 @@
       "name": "Enviline/Compress 6000/7000",
       "type": "NSC_ICOM_GATEWAY"
     },
+    "224": {
+      "value": "RC300",
+      "name": "Bosch Condens 9000i",
+      "type": "RC300_RC200"
+    },
     "CAN": {
       "value": "CAN",
       "name": "iCom_low_CAN_v1 CAN",
