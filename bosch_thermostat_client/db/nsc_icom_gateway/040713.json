@@ -102,6 +102,7 @@
             {
                 "haname": "on",
                 "boschname": [
+                    "on",
                     "low"
                 ]
             },
@@ -109,6 +110,12 @@
                 "haname": "eco",
                 "boschname": [
                     "eco"
+                ]
+            },
+            {
+                "haname": "performance",
+                "boschname": [
+                    "ownprogram"
                 ]
             },
             {

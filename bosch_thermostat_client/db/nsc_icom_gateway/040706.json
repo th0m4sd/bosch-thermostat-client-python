@@ -88,8 +88,15 @@
     "dhwCircuits": {
         "hastates": [
             {
+                "haname": "off",
+                "boschname": [
+                    "Off"
+                ]
+            },
+            {
                 "haname": "on",
                 "boschname": [
+                    "on",
                     "low"
                 ]
             },
@@ -97,6 +104,12 @@
                 "haname": "eco",
                 "boschname": [
                     "eco"
+                ]
+            },
+            {
+                "haname": "performance",
+                "boschname": [
+                    "ownprogram"
                 ]
             },
             {
