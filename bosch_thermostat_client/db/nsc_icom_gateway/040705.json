@@ -1,5 +1,6 @@
 {
     "versionFirmware": "04.07.05",
+    "date_format": "%Y-%m-%dT%H:%M:%S",
     "heatingCircuits": {
         "hastates": [
             {
@@ -13,7 +14,13 @@
                 "boschname": []
             }
         ],
-        "switchprogram": "/heatingCircuits/{}/switchPrograms/{}",
+        "schedule": {
+            "program":"/heatingCircuits/{}/switchPrograms/{}",
+            "key_day": "dayOfWeek",
+            "key_setpoint": "setpoint",
+            "key_time": "time",
+            "switch_points": "switchPoints"
+        },
         "mode_to_setpoint": {
             "manual": {
                 "setpoint": "setpoint1",
@@ -121,7 +128,13 @@
         ],
         "min_ref": "setpoint2",
         "max_ref": "setpoint3",
-        "switchprogram": "/dhwCircuits/{}/switchPrograms/{}",
+        "schedule": {
+            "program":"/dhwCircuits/{}/switchPrograms/{}",
+            "key_day": "dayOfWeek",
+            "key_setpoint": "setpoint",
+            "key_time": "time",
+            "switch_points": "switchPoints"
+        },
         "mode_to_setpoint": {
             "low": {
                 "setpoint": "setpoint4",

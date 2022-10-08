@@ -1,6 +1,7 @@
 """Main circuit object."""
 from __future__ import annotations
 from bosch_thermostat_client.switches import Switches
+from bosch_thermostat_client.schedule import Schedule
 import logging
 from bosch_thermostat_client.const import (
     ID,
@@ -23,6 +24,10 @@ from bosch_thermostat_client.const import (
     SWITCHES,
     SWITCH_PROGRAMS,
     VALUE,
+    MAX_VALUE,
+    MIN_VALUE,
+    DEFAULT_MAX_TEMP,
+    DEFAULT_MIN_TEMP
 )
 from bosch_thermostat_client.helper import BoschSingleEntity
 from bosch_thermostat_client.exceptions import DeviceException
@@ -279,12 +284,89 @@ class Circuit(BasicCircuit):
 
             if key == last_item:
                 self._state = True
-        if self.schedule:
-            active_program = self.get_activeswitchprogram()
-            if active_program:
-                await self.schedule.update_schedule(active_program)
 
     @property
     def support_charge(self):
         """Is DHW support charge."""
         return True
+
+
+class CircuitWithSchedule(Circuit):
+
+    def __init__(self, connector, attr_id, db, _type, bus_type, current_date=None, **kwargs):
+        super().__init__(
+            connector=connector,
+            attr_id=attr_id,
+            db=db,
+            _type=_type,
+            bus_type=bus_type,
+            current_date=current_date,
+        )
+        self._schedule = Schedule(
+            connector,
+            _type,
+            self.name,
+            current_date,
+            bus_type,
+            self._db,
+            self._op_mode,
+        )
+
+    @property
+    def schedule(self):
+        """Retrieve schedule of HC/DHW."""
+        return self._schedule or None
+
+    @property
+    def setpoint(self):
+        """
+        Retrieve setpoint in which is currently Circuit.
+        Might be equal to operation_mode, might me taken from schedule.
+        """
+        if self._op_mode.is_off:
+            return OFF
+        if self._op_mode.is_manual:
+            return self._op_mode.current_mode
+        if self._schedule:
+            found_setpoint = self._schedule.get_setpoint_for_current_mode()
+            if found_setpoint == ACTIVE_PROGRAM:
+                found_setpoint = self._schedule.active_program
+            return found_setpoint
+
+    @property
+    def target_temperature(self):
+        """Get target temperature of Circtuit. Temporary or Room set point."""
+        if self._op_mode.is_off:
+            self._target_temp = 0
+            return self._target_temp
+        if self._temp_setpoint:
+            target_temp = self.get_value(self._temp_setpoint, 0)
+            if target_temp > 0:
+                self._target_temp = target_temp
+                return self._target_temp
+        target_temp = self.schedule.get_temp_for_current_mode()
+        if target_temp == ACTIVE_PROGRAM:
+            target_temp = self.get_value_from_active_setpoint(VALUE)
+        if target_temp >= 0:
+            self._target_temp = target_temp
+        return self._target_temp
+
+    @property
+    def active_program_setpoint(self):
+        return self._op_mode.temp_setpoint(self.schedule.active_program)
+
+    def get_value_from_active_setpoint(self, prop_name):
+        activeSetpointValue = self.get_property(self.active_program_setpoint)
+        default = 0
+        if prop_name == MIN_VALUE:
+            default = DEFAULT_MIN_TEMP
+        elif prop_name == MAX_VALUE:
+            default = DEFAULT_MAX_TEMP
+        return activeSetpointValue.get(prop_name, default)
+
+    async def update(self):
+        """Update info about Circuit asynchronously."""
+        await super().update()
+        active_program = self.get_activeswitchprogram()
+        if active_program:
+            await self._schedule.update_schedule(active_program)

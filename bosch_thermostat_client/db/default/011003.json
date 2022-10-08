@@ -1,5 +1,6 @@
 {
     "versionFirmware": "01.10.03",
+    "date_format": "%Y-%m-%dT%H:%M:%S",
     "heatingCircuits": {
         "hastates": [
             {
@@ -29,7 +30,13 @@
         ],
         "min_ref": "setpoint2",
         "max_ref": "setpoint1",
-        "switchprogram": "/heatingCircuits/{}/switchPrograms/{}",
+        "schedule": {
+            "program":"/heatingCircuits/{}/switchPrograms/{}",
+            "key_day": "dayOfWeek",
+            "key_setpoint": "setpoint",
+            "key_time": "time",
+            "switch_points": "switchPoints"
+        },
         "mode_to_setpoint": {
             "night": {
                 "setpoint": "setpoint2",
@@ -139,7 +146,13 @@
         ],
         "min_ref": "setpoint1",
         "max_ref": "setpoint2",
-        "switchprogram": "/dhwCircuits/{}/switchPrograms/{}",
+        "schedule": {
+            "program":"/dhwCircuits/{}/switchPrograms/{}",
+            "key_day": "dayOfWeek",
+            "key_setpoint": "setpoint",
+            "key_time": "time",
+            "switch_points": "switchPoints"
+        },
         "mode_to_setpoint": {
             "on": {
                 "setpoint": "setpoint2",

@@ -1,5 +1,6 @@
 """Circuits module of Bosch thermostat."""
 import logging
+from bosch_thermostat_client.circuits.easycontrol.dhw import EasyDhwCircuit
 from bosch_thermostat_client.const import (
     ID,
     HC,
@@ -27,14 +28,16 @@ def choose_circuit_type(device_type, circuit_type):
             return ZN
         elif circuit_type == HC and device_type == NEFIT:
             return HC
+        elif circuit_type == DHW and device_type == EASYCONTROL:
+            return DHW
         else:
             return ""
-
     return {
         IVT: IVTCircuit,
         NEFIT: NefitCircuit,
         NEFIT + HC: NefitHeatingCircuit,
         EASYCONTROL: EasycontrolCircuit,
+        EASYCONTROL + DHW: EasyDhwCircuit,
         EASYCONTROL + ZN: EasyZoneCircuit,
     }[device_type + suffix()]
 

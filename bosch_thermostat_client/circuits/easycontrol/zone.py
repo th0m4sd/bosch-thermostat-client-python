@@ -12,7 +12,7 @@ from bosch_thermostat_client.const import (
 )
 from bosch_thermostat_client.operation_mode import EasyControlOperationModeHelper
 from bosch_thermostat_client.const.easycontrol import IDLE
-
+from bosch_thermostat_client.const.easycontrol import CIRCUIT_TYPES
 
 class EasyZoneCircuit(EasycontrolCircuit):
     def __init__(
@@ -22,7 +22,7 @@ class EasyZoneCircuit(EasycontrolCircuit):
             connector=connector,
             attr_id=attr_id,
             db=db,
-            _type=_type,
+            _type=CIRCUIT_TYPES[_type],
             bus_type=bus_type,
             current_date=current_date,
         )

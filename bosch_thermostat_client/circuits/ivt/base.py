@@ -1,7 +1,7 @@
 """IVT Circuit."""
 import logging
 
-from ..circuit import Circuit
+from ..circuit import CircuitWithSchedule
 from bosch_thermostat_client.const import (
     HVAC_ACTION,
     HVAC_HEAT,
@@ -24,6 +24,7 @@ from bosch_thermostat_client.const import (
     SWITCH_PROGRAMS,
     ID,
     WRITEABLE,
+    SCHEDULE
 )
 from bosch_thermostat_client.const.ivt import (
     CURRENT_SETPOINT,
@@ -31,49 +32,20 @@ from bosch_thermostat_client.const.ivt import (
     ALLOWED_VALUES,
     CIRCUIT_TYPES,
 )
-from bosch_thermostat_client.schedule import Schedule
 
 _LOGGER = logging.getLogger(__name__)
 
 
-class IVTCircuit(Circuit):
+class IVTCircuit(CircuitWithSchedule):
     def __init__(self, connector, attr_id, db, _type, bus_type, current_date, **kwargs):
-        super().__init__(connector, attr_id, db, CIRCUIT_TYPES[_type], bus_type)
-        self._schedule = Schedule(
-            connector,
-            CIRCUIT_TYPES[_type],
-            self.name,
-            current_date,
-            bus_type,
-            self._db,
-            self._op_mode,
-        )
-
-    @property
-    def schedule(self):
-        """Retrieve schedule of HC/DHW."""
-        return self._schedule
+        super().__init__(connector, attr_id, db, CIRCUIT_TYPES[_type], bus_type, current_date)
+    
 
     @property
     def support_presets(self):
         if self._op_mode.is_auto:
             return True
         return False
-
-    @property
-    def setpoint(self):
-        """
-        Retrieve setpoint in which is currently Circuit.
-        Might be equal to operation_mode, might me taken from schedule.
-        """
-        if self._op_mode.is_off:
-            return OFF
-        if self._op_mode.is_manual:
-            return self._op_mode.current_mode
-        found_setpoint = self._schedule.get_setpoint_for_current_mode()
-        if found_setpoint == ACTIVE_PROGRAM:
-            found_setpoint = self.schedule.active_program
-        return found_setpoint
 
     @property
     def state(self):
@@ -135,6 +107,7 @@ class IVTCircuit(Circuit):
             _LOGGER.debug("Temperature is the same as already set. Exiting")
             return True
         if self.min_temp < temperature < self.max_temp and target_temp != temperature:
+            target_uri = None
             if self._temp_setpoint:
                 target_uri = self._data[self._temp_setpoint][URI]
             elif self._op_mode.is_auto:
@@ -150,7 +123,7 @@ class IVTCircuit(Circuit):
             if result:
                 if self._temp_setpoint:
                     self._data[self._temp_setpoint][RESULT][VALUE] = temperature
-                elif not active_program_not_in_schedule:
+                elif not active_program_not_in_schedule and self.schedule:
                     self.schedule.cache_temp_for_mode(temperature)
                 return True
         _LOGGER.error(
@@ -158,36 +131,7 @@ class IVTCircuit(Circuit):
         )
         return False
 
-    @property
-    def target_temperature(self):
-        """Get target temperature of Circtuit. Temporary or Room set point."""
-        if self._op_mode.is_off:
-            self._target_temp = 0
-            return self._target_temp
-        if self._temp_setpoint:
-            target_temp = self.get_value(self._temp_setpoint, 0)
-            if target_temp > 0:
-                self._target_temp = target_temp
-                return self._target_temp
-        target_temp = self.schedule.get_temp_for_current_mode()
-        if target_temp == ACTIVE_PROGRAM:
-            target_temp = self.get_value_from_active_setpoint(VALUE)
-        if target_temp >= 0:
-            self._target_temp = target_temp
-        return self._target_temp
-
-    @property
-    def active_program_setpoint(self):
-        return self._op_mode.temp_setpoint(self.schedule.active_program)
-
-    def get_value_from_active_setpoint(self, prop_name):
-        activeSetpointValue = self.get_property(self.active_program_setpoint)
-        default = 0
-        if prop_name == MIN_VALUE:
-            default = DEFAULT_MIN_TEMP
-        elif prop_name == MAX_VALUE:
-            default = DEFAULT_MAX_TEMP
-        return activeSetpointValue.get(prop_name, default)
+    
 
     @property
     def ha_modes(self):

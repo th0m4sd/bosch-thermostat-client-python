@@ -19,12 +19,10 @@ from bosch_thermostat_client.const import (
 _LOGGER = logging.getLogger(__name__)
 
 
-from bosch_thermostat_client.const.easycontrol import CIRCUIT_TYPES
+
 
 
 class EasycontrolCircuit(Circuit):
-    def __init__(self, connector, attr_id, db, _type, bus_type, **kwargs):
-        super().__init__(connector, attr_id, db, CIRCUIT_TYPES[_type], bus_type)
 
     @property
     def state(self):

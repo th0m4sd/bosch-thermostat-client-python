@@ -1,5 +1,6 @@
 {
     "versionFirmware": "03.06.02",
+    "date_format": "%Y-%m-%dT%H:%M:%S%z",
     "programList": "/programs/list",
     "devices": {
         "refs": {
@@ -151,7 +152,18 @@
             "high": {
                 "setpoint": "setpoint1",
                 "type": "manual"
+            },
+            "ownprogram": {
+                "setpoint": null,
+                "type": "auto"
             }
+        },
+        "schedule": {
+            "program":"/dhwCircuits/{}/programs/{}/week",
+            "key_day": "d",
+            "key_setpoint": "dhw",
+            "key_time": "t",
+            "switch_points": "value"
         },
         "refs": {
             "operation_mode": {
@@ -173,6 +185,11 @@
                 "id": "programs",
                 "name": "Active Switch Program",
                 "type": "activeProgram"
+            },
+            "switchPrograms": {
+                "id": "programs",
+                "name": "Switch Programs",
+                "type": "regular"
             }
         },
         "sensors": {
