@@ -11,9 +11,10 @@ class Sensor(BoschSingleEntity, DeviceClassEntity):
         self,
         attr_id: str,
         path: str,
-        device_class: str = None,
-        state_class: str = None,
+        device_class: str | None = None,
+        state_class: str | None = None,
         kind: str = REGULAR,
+        data: dict | None = None,
         **kwargs
     ) -> None:
         """
@@ -29,7 +30,11 @@ class Sensor(BoschSingleEntity, DeviceClassEntity):
         self._kind = kind
         self._device_class = device_class
         self._state_class = state_class
-        self._data = {attr_id: {RESULT: {}, URI: path, TYPE: kind}}
+        if data:
+            data[attr_id] = {RESULT: {}, URI: path, TYPE: kind}
+            self._data = data[attr_id]
+        else:
+            self._data = {attr_id: {RESULT: {}, URI: path, TYPE: kind}}
 
     @property
     def kind(self) -> str:

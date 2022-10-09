@@ -62,6 +62,8 @@ class IVTCircuit(CircuitWithSchedule):
     def hvac_action(self):
         """For IVT is probably the best to check pumpModulation."""
         hvac_uri = self._db.get(HVAC_ACTION)
+        if self.target_temperature == 0:
+            return HVAC_OFF
         if hvac_uri:
             hv_value = int(self.get_value(hvac_uri, -1))
             if hv_value == 0:

@@ -54,6 +54,7 @@ class BasicCircuit(BoschSingleEntity):
             connector=connector,
             sensors_db=self._db.get(SENSORS),
             uri_prefix=self._main_uri,
+            data=self._data
         )
         self._switches = Switches(
             connector=connector,
