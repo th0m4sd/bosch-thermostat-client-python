@@ -237,12 +237,14 @@
             "chargeDuration": {
                 "id": "chargeDuration",
                 "name": "Charge duration",
-                "type": "number"
+                "type": "number",
+                "defaultStep": 15.0
             },
             "singleChargeSetpoint": {
                 "id": "singleChargeSetpoint",
                 "name": "Charge setpoint",
-                "type": "number"
+                "type": "number",
+                "defaultStep": 0.5
             }
         }
     },
@@ -381,7 +383,8 @@
         "poolSetpointTemperature": {
             "id": "/heatSources/poolSetpointTemperature",
             "name": "poolSetpointTemperature",
-            "type": "number"
+            "type": "number",
+            "defaultStep": 1.0
         },
         "dhwMode": {
             "id": "/dhwMode",

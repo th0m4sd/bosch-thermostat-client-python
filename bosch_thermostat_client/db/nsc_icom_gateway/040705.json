@@ -328,7 +328,8 @@
         "poolSetpointTemperature": {
             "id": "/heatSources/poolSetpointTemperature",
             "name": "poolSetpointTemperature",
-            "type": "number"
+            "type": "number",
+            "defaultStep": 0.5
         },
         "dhwMode": {
             "id": "/dhwMode",

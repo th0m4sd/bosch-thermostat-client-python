@@ -155,3 +155,5 @@ PROGRAM = "program"
 K_DAY = "key_day"
 K_SETPOINT = "key_setpoint"
 K_TIME = "key_time"
+
+DEFAULT_STEP = "defaultStep"

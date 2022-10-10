@@ -239,12 +239,14 @@
             "extraDhwTime": {
                 "id": "extraDhw/time",
                 "name": "Charge duration",
-                "type": "number"
+                "type": "number",
+                "defaultStep": 0.5
             },
             "extraDhwStopTemp": {
                 "id": "extraDhw/stopTemp",
                 "name": "Stop temp",
-                "type": "number"
+                "type": "number",
+                "defaultStep": 1.0
             }
         }
     },

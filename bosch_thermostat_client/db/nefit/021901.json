@@ -114,7 +114,8 @@
         "summerSwitchOff": {
             "id": "/ecus/rrc/weatherDependent/summerSwitchOff",
             "name": "summerSwitchOff",
-            "type": "number"
+            "type": "number",
+            "defaultStep": 1.0
         }
     }
 }

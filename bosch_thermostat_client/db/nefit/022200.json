@@ -206,7 +206,8 @@
             "extraDhwDuration": {
                 "id": "extraDhw/duration",
                 "name": "Extra hot water durtaion",
-                "type": "number"
+                "type": "number",
+                "defaultStep": 1.0
             },
             "thermaldesinfectState": {
                 "id": "thermaldesinfect/state",
@@ -218,7 +219,8 @@
             "thermaldesinfecttime": {
                 "id": "thermaldesinfect/time",
                 "name": "thermaldesinfect time",
-                "type": "number"
+                "type": "number",
+                "defaultStep": 1.0
             }
         }
     },
@@ -268,7 +270,8 @@
         "summerSwitchOff": {
             "id": "/ecus/rrc/weatherDependent/summerSwitchOff",
             "name": "summerSwitchOff",
-            "type": "number"
+            "type": "number",
+            "defaultStep": 1.0
         }
     }
 }
