@@ -93,8 +93,8 @@ class IVTGateway(BaseGateway):
                     _LOGGER.debug("Found supported device %s with id %s", model, _id)
                     attached_devices[_id] = model
             if attached_devices:
-                if 158 in attached_devices:
-                    found_model = attached_devices[158]
+                if "158" in attached_devices:
+                    found_model = attached_devices["158"]
                 else:
                     found_model = attached_devices[sorted(attached_devices.keys())[-1]]
                 _LOGGER.debug("Using model %s as database schema", found_model[VALUE])
