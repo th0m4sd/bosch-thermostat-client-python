@@ -1,4 +1,4 @@
-from bosch_thermostat_client.db import get_ivt_errors
+from bosch_thermostat_client.db import get_ivt_errors, get_nefit_errors
 from bosch_thermostat_client.const.ivt import INVALID
 from .sensor import Sensor
 from bosch_thermostat_client.const import (
@@ -9,7 +9,7 @@ from bosch_thermostat_client.const import (
 
 
 class NotificationSensor(Sensor):
-    errorcodes = get_ivt_errors()
+    errorcodes = get_nefit_errors() | get_ivt_errors()
 
     def process_results(self, result, key=None, return_data=False):
         """Convert multi-level json object to one level object."""
