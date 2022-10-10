@@ -59,11 +59,11 @@ def get_custom_db(firmware_version, _db):
     return None
 
 
-def get_ivt_errors():
+def get_ivt_errors() -> dict:
     """Get error codes of IVT devices."""
     return open_json(os.path.join(MAINPATH, "errorcodes_ivt.json"))
 
 
-def get_nefit_errors():
+def get_nefit_errors() -> dict:
     """Get error codes of NEFIT devices."""
     return open_json(os.path.join(MAINPATH, "errorcodes_nefit.json"))

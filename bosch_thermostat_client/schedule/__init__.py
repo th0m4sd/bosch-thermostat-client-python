@@ -27,7 +27,7 @@ from bosch_thermostat_client.const import (
     K_DAY,
     K_SETPOINT,
     K_TIME,
-    OFF
+    OFF,
 )
 
 from bosch_thermostat_client.const.ivt import (
@@ -43,10 +43,6 @@ from bosch_thermostat_client.exceptions import DeviceException
 _LOGGER = logging.getLogger(__name__)
 
 
-
-
-    
-
 class Schedule:
     """Scheduler logic."""
 
@@ -59,6 +55,7 @@ class Schedule:
         bus_type,
         db,
         op_mode,
+        date_format: str = "%Y-%m-%dT%H:%M:%S",
     ):
         """Initialize schedule handling of Bosch gateway."""
         self._connector = connector
@@ -81,8 +78,10 @@ class Schedule:
         self._day_key = self._schedule_def_db.get(K_DAY, DAYOFWEEK)
         self._setpoint_key = self._schedule_def_db.get(K_SETPOINT, SETPOINT)
         self._time_key = self._schedule_def_db.get(K_TIME, TIME)
-        self._switchpoints_key = self._schedule_def_db.get("switch_points", SWITCH_POINTS)
-        self._date_format = self._db.get("date_format", "%Y-%m-%dT%H:%M:%S")
+        self._switchpoints_key = self._schedule_def_db.get(
+            "switch_points", SWITCH_POINTS
+        )
+        self._date_format = date_format
 
     async def update_schedule(self, active_program):
         """Update schedule from Bosch gateway."""
@@ -261,9 +260,9 @@ class Schedule:
         def sort_switchpoints(switchpoints):
             day = switchpoints[self._day_key]
             return (DAYS_INT.index(day), switchpoints[self._time_key])
-            
+
         if self._time:
-            bosch_date = datetime.strptime(self._time[0:25] , self._date_format)
+            bosch_date = datetime.strptime(self._time[0:25], self._date_format)
             day_of_week = DAYS_INT[bosch_date.weekday()]
             if self._switch_points:
                 switch_points = self._switch_points.copy()
@@ -303,5 +302,6 @@ class Schedule:
             ).total_seconds()
             / 60.0
         )
+
 
 __all__ = ["Schedule", "ZonePrograms"]
