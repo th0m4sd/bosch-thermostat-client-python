@@ -133,6 +133,44 @@
             }
         }
     },
+    "heatingCircuits": {
+        "refs": {
+            "status": {
+                "id": "control",
+                "name": "status",
+                "type": "regular"
+            }
+         },
+        "switches": {
+            "boostTemperature": {
+                "id": "boostTemperature",
+                "name": "Boost temperature",
+                "type": "number",
+                "defaultStep": 1.0
+            },
+            "boostDuration": {
+                "id": "boostDuration",
+                "name": "Boost duration",
+                "type": "number",
+                "defaultStep": 1.0
+            },
+            "boostMode": {
+                "id": "boostMode",
+                "name": "Boost",
+                "type": "binary"
+            }
+        },
+        "sensors": {
+            "supplyTemperatureSetpoint": {
+                "id": "supplyTemperatureSetpoint",
+                "name": "Supply Temperature Setpoint"
+            },
+            "boostRemainingTime": {
+                "id": "boostRemainingTime",
+                "name": "Boost remaining time"
+            }
+        }
+    },
     "dhwCircuits": {
         "hastates": [
             {
