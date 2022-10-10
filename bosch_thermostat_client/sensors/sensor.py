@@ -15,7 +15,7 @@ class Sensor(BoschSingleEntity, DeviceClassEntity):
         state_class: str | None = None,
         kind: str = REGULAR,
         data: dict | None = None,
-        **kwargs
+        **kwargs,
     ) -> None:
         """
         Single sensor init.
@@ -32,7 +32,7 @@ class Sensor(BoschSingleEntity, DeviceClassEntity):
         self._state_class = state_class
         if data:
             data[attr_id] = {RESULT: {}, URI: path, TYPE: kind}
-            self._data = data[attr_id]
+            self._data = data
         else:
             self._data = {attr_id: {RESULT: {}, URI: path, TYPE: kind}}
 

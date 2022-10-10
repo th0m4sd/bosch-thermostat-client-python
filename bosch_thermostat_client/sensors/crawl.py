@@ -34,7 +34,7 @@ class CrawlSensor(Sensor):
         """Update info about Crawl Sensor asynchronously."""
 
         def process_result(result):
-            if len(result) == 1:
+            if result and len(result) == 1:
                 for key, value in result[0].items():
                     result[0][key] = check_base64(value)
                 if self._state_key:
@@ -45,7 +45,10 @@ class CrawlSensor(Sensor):
         try:
             for key, item in self._data.items():
                 result = await self._connector.get(item[URI])
-                self._data[key][RESULT] = process_result(result.get(VALUE))
+                value = result.get(VALUE)
+                if not value:
+                    continue
+                self._data[key][RESULT] = process_result(value)
             self._state = True
         except DeviceException as err:
             _LOGGER.error(
