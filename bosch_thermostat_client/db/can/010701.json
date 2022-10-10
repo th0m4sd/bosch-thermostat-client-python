@@ -163,7 +163,7 @@
             "key_day": "dayOfWeek",
             "key_setpoint": "setpoint",
             "key_time": "time",
-            "switch_points": "switchPoints",
+            "switch_points": "switchPoints"
         },
         "mode_to_setpoint": {
             "Automatic": {
