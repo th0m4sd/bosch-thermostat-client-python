@@ -27,7 +27,7 @@ from bosch_thermostat_client.const import (
     MAX_VALUE,
     MIN_VALUE,
     DEFAULT_MAX_TEMP,
-    DEFAULT_MIN_TEMP
+    DEFAULT_MIN_TEMP,
 )
 from bosch_thermostat_client.helper import BoschSingleEntity
 from bosch_thermostat_client.exceptions import DeviceException
@@ -39,7 +39,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class BasicCircuit(BoschSingleEntity):
-    def __init__(self, connector, attr_id, db, _type, bus_type):
+    def __init__(self, connector, attr_id, db, _type, bus_type, **kwargs):
         """Basic circuit init."""
         name = attr_id.split("/").pop()
         self._db = db[_type]
@@ -54,7 +54,7 @@ class BasicCircuit(BoschSingleEntity):
             connector=connector,
             sensors_db=self._db.get(SENSORS),
             uri_prefix=self._main_uri,
-            data=self._data
+            data=self._data,
         )
         self._switches = Switches(
             connector=connector,
@@ -293,8 +293,9 @@ class Circuit(BasicCircuit):
 
 
 class CircuitWithSchedule(Circuit):
-
-    def __init__(self, connector, attr_id, db, _type, bus_type, current_date=None, **kwargs):
+    def __init__(
+        self, connector, attr_id, db, _type, bus_type, current_date=None, **kwargs
+    ):
         super().__init__(
             connector=connector,
             attr_id=attr_id,
@@ -304,13 +305,14 @@ class CircuitWithSchedule(Circuit):
             current_date=current_date,
         )
         self._schedule = Schedule(
-            connector,
-            _type,
-            self.name,
-            current_date,
-            bus_type,
-            self._db,
-            self._op_mode,
+            connector=connector,
+            circuit_type=_type,
+            circuit_name=self.name,
+            current_time=current_date,
+            bus_type=bus_type,
+            db=self._db,
+            op_mode=self._op_mode,
+            date_format=db.get("date_format", "%Y-%m-%dT%H:%M:%S"),
         )
 
     @property

@@ -1,5 +1,6 @@
 """Circuits module of Bosch thermostat."""
 import logging
+from bosch_thermostat_client.circuits.circuit import BasicCircuit
 from bosch_thermostat_client.circuits.easycontrol.dhw import EasyDhwCircuit
 from bosch_thermostat_client.const import (
     ID,
@@ -10,7 +11,6 @@ from bosch_thermostat_client.const import (
     REFERENCES,
 )
 from bosch_thermostat_client.helper import BoschEntities
-from .circuit import BasicCircuit
 from .nefit import NefitCircuit, NefitHeatingCircuit
 from .ivt import IVTCircuit
 from .easycontrol import EasycontrolCircuit, EasyZoneCircuit
@@ -32,6 +32,7 @@ def choose_circuit_type(device_type, circuit_type):
             return DHW
         else:
             return ""
+
     return {
         IVT: IVTCircuit,
         NEFIT: NefitCircuit,
@@ -88,7 +89,18 @@ class Circuits(BoschEntities):
 
     def create_circuit(self, circuit, database, current_date):
         """Create single circuit of given type."""
-        if self._circuit_type in (HC, DHW, ZN):
+
+        if self._circuit_type == SC or (
+            self._circuit_type == HC and self._device_type == EASYCONTROL
+        ):
+            return BasicCircuit(
+                connector=self._connector,
+                attr_id=circuit[ID],
+                db=database,
+                _type=CIRCUIT_TYPES[self._circuit_type],
+                bus_type=self._bus_type,
+            )
+        elif self._circuit_type in (HC, DHW, ZN):
             Circuit = choose_circuit_type(self._device_type, self._circuit_type)
             return Circuit(
                 connector=self._connector,
@@ -98,13 +110,5 @@ class Circuits(BoschEntities):
                 bus_type=self._bus_type,
                 current_date=current_date,
                 zone_program=self._zone_programs,
-            )
-        elif self._circuit_type == SC:
-            return BasicCircuit(
-                connector=self._connector,
-                attr_id=circuit[ID],
-                db=database,
-                _type=CIRCUIT_TYPES[self._circuit_type],
-                bus_type=self._bus_type,
             )
         return None
