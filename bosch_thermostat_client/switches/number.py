@@ -8,6 +8,7 @@ from bosch_thermostat_client.const import (
     MAX_VALUE,
     MIN_VALUE,
 )
+from bosch_thermostat_client.const.easycontrol import STEP_SIZE
 from bosch_thermostat_client.helper import BoschSingleEntity
 from .switch import BaseSwitch
 
@@ -41,7 +42,7 @@ class NumberSwitch(BaseSwitch, BoschSingleEntity):
 
     @property
     def step(self) -> float:
-        return self.get_property(self.attr_id).get("stepSize", self._default_step)
+        return self.get_property(self.attr_id).get(STEP_SIZE, self._default_step)
  
     async def set_value(self, value):
         if self.min_value <= value <= self.max_value:

@@ -26,6 +26,7 @@ from bosch_thermostat_client.const import (
     ENERGY_HISTORY_ENTRIES,
     ENERGY_HISTORY,
 )
+from bosch_thermostat_client.const.easycontrol import STEP_SIZE
 from bosch_thermostat_client.const.ivt import ALLOWED_VALUES, STATE, INVALID
 
 from .exceptions import DeviceException, EncryptionException
@@ -196,6 +197,7 @@ class BoschSingleEntity:
                 REFERENCES,
                 WRITEABLE,
                 USED,
+                STEP_SIZE
             ]:
                 if res_key in result:
                     value = result[res_key]

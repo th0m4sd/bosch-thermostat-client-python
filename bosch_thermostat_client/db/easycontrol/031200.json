@@ -152,7 +152,9 @@
             "boostMode": {
                 "id": "boostMode",
                 "name": "Boost",
-                "type": "binary"
+                "type": "binary",
+                "turn_on": "on",
+                "turn_off": "off"
             }
         },
         "sensors": {
