@@ -258,18 +258,20 @@ class BoschSingleEntity:
 
     async def update(self):
         """Update info about Circuit asynchronously."""
-        try:
-            for key, item in self._data.items():
-                if item[TYPE] in self._allowed_types:
+        state = False
+        for key, item in self._data.items():
+            if item[TYPE] in self._allowed_types:
+                try:
                     result = await self._connector.get(item[URI])
                     self.process_results(result=result, key=key)
-            self._state = True
-        except DeviceException as err:
-            _LOGGER.warning(
-                f"Can't update data for {self.name}. Trying uri: {item[URI]}. Error message: {err}"
-            )
-            self._state = False
-            self._extra_message = f"Can't update data. Error: {err}"
+                    state = True
+                except DeviceException as err:
+                    _LOGGER.warning(
+                        f"Can't update data for {self.name}. Trying uri: {item[URI]}. Error message: {err}"
+                    )
+        self._state = state
+        if not state:
+            self._extra_message = f"Can't update data. Error: {self.name}"
 
 
 class DeviceClassEntity:

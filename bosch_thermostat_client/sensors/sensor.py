@@ -1,8 +1,11 @@
 from __future__ import annotations
+import logging
+from bosch_thermostat_client.exceptions import DeviceException
 from bosch_thermostat_client.helper import BoschSingleEntity, DeviceClassEntity
-from bosch_thermostat_client.const import RESULT, URI, TYPE, REGULAR, VALUE
+from bosch_thermostat_client.const import ID, RESULT, URI, TYPE, REGULAR, VALUE
 from bosch_thermostat_client.const.ivt import INVALID
 
+_LOGGER = logging.getLogger(__name__)
 
 class Sensor(BoschSingleEntity, DeviceClassEntity):
     """Single sensor object."""
@@ -47,3 +50,18 @@ class Sensor(BoschSingleEntity, DeviceClassEntity):
         if result:
             return result.get(VALUE, INVALID)
         return "unavailable"
+
+    async def update(self):
+        """Update info about Sensor asynchronously."""
+        item = self._data[self._main_data[ID]]
+        if item[TYPE] in self._allowed_types:
+            try:
+                result = await self._connector.get(item[URI])
+                self.process_results(result=result, key=self._main_data[ID])
+                self._state = True
+            except DeviceException as err:
+                _LOGGER.warning(
+                    f"Can't update data for {self.name}. Trying uri: {item[URI]}. Error message: {err}"
+                )
+                self._extra_message = f"Can't update data. Error: {err}"
+                self._state = False
