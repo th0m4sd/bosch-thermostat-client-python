@@ -69,6 +69,7 @@ class EasycontrolCircuit(Circuit):
         if self._op_mode.is_off:
             return False
         if self.min_temp <= temperature <= self.max_temp and target_temp != temperature:
+            target_uri = None
             if self._temp_setpoint:
                 target_uri = self._data[self._temp_setpoint][URI]
             if not target_uri:
