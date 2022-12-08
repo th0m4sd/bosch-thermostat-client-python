@@ -47,9 +47,10 @@ class BasicCircuit(BoschSingleEntity):
         super().__init__(name, connector, attr_id)
         self._main_uri = f"/{_type}/{self.name}"
         self._operation_mode = {}
-        for key, value in self._db[REFS].items():
-            uri = f"{self._main_uri}/{value[ID]}"
-            self._data[key] = {RESULT: {}, URI: uri, TYPE: value[TYPE]}
+        if REFS in self._db:
+            for key, value in self._db[REFS].items():
+                uri = f"{self._main_uri}/{value[ID]}"
+                self._data[key] = {RESULT: {}, URI: uri, TYPE: value[TYPE]}
         self._sensors = Sensors(
             connector=connector,
             sensors_db=self._db.get(SENSORS),

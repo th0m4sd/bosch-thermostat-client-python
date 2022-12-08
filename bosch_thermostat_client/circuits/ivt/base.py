@@ -10,7 +10,6 @@ from bosch_thermostat_client.const import (
     MIN_VALUE,
     MAX_VALUE,
     ACTIVE_PROGRAM,
-    OFF,
     DEFAULT_MIN_TEMP,
     DEFAULT_MAX_TEMP,
     MIN_REF,
@@ -24,7 +23,6 @@ from bosch_thermostat_client.const import (
     SWITCH_PROGRAMS,
     ID,
     WRITEABLE,
-    SCHEDULE
 )
 from bosch_thermostat_client.const.ivt import (
     CURRENT_SETPOINT,
