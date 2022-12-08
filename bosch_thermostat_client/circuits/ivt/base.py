@@ -36,8 +36,9 @@ _LOGGER = logging.getLogger(__name__)
 
 class IVTCircuit(CircuitWithSchedule):
     def __init__(self, connector, attr_id, db, _type, bus_type, current_date, **kwargs):
-        super().__init__(connector, attr_id, db, CIRCUIT_TYPES[_type], bus_type, current_date)
-    
+        super().__init__(
+            connector, attr_id, db, CIRCUIT_TYPES[_type], bus_type, current_date
+        )
 
     @property
     def support_presets(self):
@@ -130,8 +131,6 @@ class IVTCircuit(CircuitWithSchedule):
             "Setting temperature not allowed in this mode. Temperature is probably out of range MIN-MAX!"
         )
         return False
-
-    
 
     @property
     def ha_modes(self):

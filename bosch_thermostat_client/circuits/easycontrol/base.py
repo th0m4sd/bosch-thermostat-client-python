@@ -19,11 +19,7 @@ from bosch_thermostat_client.const import (
 _LOGGER = logging.getLogger(__name__)
 
 
-
-
-
 class EasycontrolCircuit(Circuit):
-
     @property
     def state(self):
         """Retrieve state of the circuit."""
@@ -114,3 +110,9 @@ class EasycontrolCircuit(Circuit):
     def support_charge(self):
         """Is DHW support charge."""
         return True
+
+
+class EasyControlDVCircuit(EasycontrolCircuit):
+    def __init__(self, **kwargs):
+        print("DV", kwargs)
+        super().__init__(**kwargs)

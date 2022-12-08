@@ -36,7 +36,7 @@ class EnergySensor(Sensor):
         """
         self._past_put.add(sensor)
         if self._past_put == set(["eCH", "eHW"]):
-            self._past_data = []
+            self._past_data = {}
 
     @property
     def last_entry(self):
