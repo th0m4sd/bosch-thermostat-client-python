@@ -10,7 +10,7 @@ from bosch_thermostat_client.const.easycontrol import ENERGY, PAGINATION, TRUE, 
 from .sensor import Sensor
 from bosch_thermostat_client.exceptions import DeviceException
 
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -68,6 +68,31 @@ class EnergySensor(Sensor):
     def build_uri(self, page_number: int = 0) -> str:
         return f"{self._data[self.attr_id][URI]}?entry={page_number}"
 
+    async def fetch_range(self, start_time: datetime, stop_time: datetime) -> dict:
+        output = {}
+
+        async with self._lock:
+            current_date = start_time
+            while current_date < stop_time:
+                _day_dt = current_date.strftime("%d-%m-%Y")
+                if self._past_data and _day_dt in self._past_data:
+                    output[_day_dt] = self._past_data[_day_dt]
+                else:
+                    _LOGGER.debug(
+                        "Day not found in current past data. Searching in API. It can take some time!"
+                    )
+                    for i in range(self.page_number - 1, -1):
+                        data = await self._connector.get(self.build_uri(page_number=i))
+                        if not data:
+                            continue
+                        for row in data.get(VALUE, []):
+                            self._past_data[row["d"]] = row
+                    if self._past_data and _day_dt in self._past_data:
+                        _LOGGER.debug("Data for day %s found!", _day_dt)
+                        output[_day_dt] = self._past_data[_day_dt]
+                current_date += timedelta(days=1)
+            return output
+
     async def fetch_all(self):
         async with self._lock:
             if self._past_data:
@@ -81,7 +106,7 @@ class EnergySensor(Sensor):
             return self._past_data
 
     @property
-    def page_number(self) -> int | None:
+    def page_number(self) -> int:
         if self._page_number:
             return int(self._page_number)
         return -1
