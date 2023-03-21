@@ -7,6 +7,7 @@ from bosch_thermostat_client.const.ivt import INVALID
 
 _LOGGER = logging.getLogger(__name__)
 
+
 class Sensor(BoschSingleEntity, DeviceClassEntity):
     """Single sensor object."""
 
@@ -16,6 +17,7 @@ class Sensor(BoschSingleEntity, DeviceClassEntity):
         path: str,
         device_class: str | None = None,
         state_class: str | None = None,
+        entity_category: str | None = None,
         kind: str = REGULAR,
         data: dict | None = None,
         **kwargs,
@@ -28,7 +30,10 @@ class Sensor(BoschSingleEntity, DeviceClassEntity):
         """
         BoschSingleEntity.__init__(self, path=path, attr_id=attr_id, **kwargs)
         DeviceClassEntity.__init__(
-            self, device_class=device_class, state_class=state_class
+            self,
+            device_class=device_class,
+            state_class=state_class,
+            entity_category=entity_category,
         )
         self._kind = kind
         self._device_class = device_class

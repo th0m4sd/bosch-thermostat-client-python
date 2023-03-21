@@ -48,7 +48,7 @@ class BaseEncryption:
         except json.JSONDecodeError:
             raise DeviceException("Unable to decode Json response.")
 
-    def encrypt(self, raw):
+    def encrypt(self, raw) -> bytes:
         """Encrypt raw message."""
         if len(raw) % self._bs != 0:
             raw = self._pad(raw)

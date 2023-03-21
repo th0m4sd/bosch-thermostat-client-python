@@ -102,6 +102,8 @@ class BasicCircuit(BoschSingleEntity):
 class Circuit(BasicCircuit):
     """Parent object for circuit of type HC or DHW."""
 
+    _omit_updates = []
+
     def __init__(self, connector, attr_id, db, _type, bus_type, current_date=None):
         """Initialize circuit with get, put and id from gateway."""
         super().__init__(connector, attr_id, db, _type, bus_type)
@@ -270,19 +272,26 @@ class Circuit(BasicCircuit):
         """Update info about Circuit asynchronously."""
         _LOGGER.debug("Updating circuit %s", self.name)
         last_item = list(self._data.keys())[-1]
-        for key, item in self._data.items():
-            is_operation_type = item[TYPE] == OPERATION_MODE
+
+        async def fetch_data(key) -> dict | None:
             try:
                 result = await self._connector.get(item[URI])
                 self.process_results(result, key)
+                return result
             except DeviceException:
-                continue
-            if is_operation_type and result:
-                op_mode = self.process_results(result, key, True)
-                if not self._op_mode.is_set:
-                    self._op_mode.init_op_mode(op_mode, item[URI])
-                else:
-                    self._op_mode.set_new_operation_mode(op_mode[VALUE])
+                pass
+            return None
+
+        for key, item in self._data.items():
+            if not (self._omit_updates and key in self._omit_updates):
+                result = await fetch_data(key)
+                is_operation_type = item[TYPE] == OPERATION_MODE
+                if is_operation_type and result:
+                    op_mode = self.process_results(result, key, True)
+                    if not self._op_mode.is_set:
+                        self._op_mode.init_op_mode(op_mode, item[URI])
+                    else:
+                        self._op_mode.set_new_operation_mode(op_mode[VALUE])
 
             if key == last_item:
                 self._state = True

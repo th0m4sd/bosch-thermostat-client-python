@@ -197,7 +197,7 @@ class BoschSingleEntity:
                 REFERENCES,
                 WRITEABLE,
                 USED,
-                STEP_SIZE
+                STEP_SIZE,
             ]:
                 if res_key in result:
                     value = result[res_key]
@@ -275,10 +275,11 @@ class BoschSingleEntity:
 
 
 class DeviceClassEntity:
-    def __init__(self, device_class, state_class):
+    def __init__(self, device_class, state_class, entity_category):
         """Initialize device class."""
         self._device_class = device_class
         self._state_class = state_class
+        self._entity_category = entity_category
 
     @property
     def device_class(self):
@@ -289,3 +290,8 @@ class DeviceClassEntity:
     def state_class(self):
         """Return state class."""
         return self._state_class
+
+    @property
+    def entity_category(self):
+        """Return Entity category."""
+        return self._entity_category

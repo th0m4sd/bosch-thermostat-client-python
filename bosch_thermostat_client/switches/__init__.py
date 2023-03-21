@@ -71,7 +71,7 @@ class Switches(BoschEntities):
                     result=retrieved,
                     on_turn_on=switch.get(TURN_ON, TRUE),
                     on_turn_off=switch.get(TURN_OFF, FALSE),
-                    default_step=switch.get(DEFAULT_STEP)
+                    default_step=switch.get(DEFAULT_STEP),
                 )
 
         for switch_id, switch in switches.items():

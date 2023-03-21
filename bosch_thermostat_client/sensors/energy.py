@@ -72,12 +72,10 @@ class EnergySensor(Sensor):
         output = {}
         pages_fetched = []
         days_to_find = [(start_time + timedelta(x)).strftime("%d-%m-%Y") for x in range(0, (stop_time - start_time).days + 1)]
-        print("let check", days_to_find, start_time, stop_time)
         async with self._lock:
             current_date = start_time
             while current_date <= stop_time:
                 _day_dt = current_date.strftime("%d-%m-%Y")
-                print("day", _day_dt, days_to_find, self._past_data, output)
                 if self._past_data and _day_dt in self._past_data:
                     output[_day_dt] = self._past_data[_day_dt]
                     try:
@@ -98,7 +96,6 @@ class EnergySensor(Sensor):
                             _LOGGER.debug("Data not returned from API.")
                             continue
                         for row in data.get(VALUE, []):
-                            print("dodajeeeae", row)
                             self._past_data[row["d"]] = row
                             try:
                                 days_to_find.remove(row["d"])

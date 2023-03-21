@@ -21,6 +21,7 @@ from bosch_thermostat_client.const.easycontrol import (
     CIRCUIT_TYPES,
     EASYCONTROL,
     PRODUCT_ID,
+    DV
 )
 from bosch_thermostat_client.encryption import EasycontrolEncryption as Encryption
 from bosch_thermostat_client.exceptions import DeviceException
@@ -70,7 +71,7 @@ class EasycontrolGateway(BaseGateway):
             device_type=EASYCONTROL,
         )
         self._session_type = session_type
-        self._data = {GATEWAY: {}, ZN: None, DHW: None, SENSORS: None}
+        self._data = {GATEWAY: {}, ZN: None, DHW: None, DV: None, SENSORS: None}
         super().__init__(host)
 
     async def _update_info(self, initial_db):
