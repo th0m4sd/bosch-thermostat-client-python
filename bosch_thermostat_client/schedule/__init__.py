@@ -72,7 +72,7 @@ class Schedule:
         self._db = db
         self._schedule_def_db = self._db[SCHEDULE]
         self._op_mode = op_mode
-        self._switchprogram_mode = LEVELS
+        self._switchprogram_mode = self._schedule_def_db.get("default_mode", LEVELS)
         self._schedule_found = False
         self._program_uri = self._db[SCHEDULE][PROGRAM]
         self._day_key = self._schedule_def_db.get(K_DAY, DAYOFWEEK)
@@ -101,7 +101,7 @@ class Schedule:
             self._time = await self._time_retrieve()
             result = await self._connector.get(self._active_program_uri)
             await self._parse_schedule(
-                result.get(self._switchpoints_key), result.get(SETPOINT_PROP)
+                result.get(self._switchpoints_key, []), result.get(SETPOINT_PROP)
             )
             self._schedule_found = True
         except DeviceException:

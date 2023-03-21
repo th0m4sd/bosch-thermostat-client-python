@@ -40,6 +40,7 @@ from bosch_thermostat_client.exceptions import (
 from bosch_thermostat_client.helper import deep_into
 from bosch_thermostat_client.sensors import Sensors
 from bosch_thermostat_client.switches import Switches
+from datetime import datetime
 import json
 
 _LOGGER = logging.getLogger(__name__)
@@ -83,13 +84,11 @@ class BaseGateway:
                 self._db.update(initial_db)
                 self._initialized = True
                 return
-            else:
-                raise FirmwareException(
-                    "You might have unsupported firmware version %s"
-                    % self._firmware_version
-                )
-        else:
-            raise UnknownDevice("Your device is unknown %s" % json.dumps(self._device))
+            raise FirmwareException(
+                "You might have unsupported firmware version %s"
+                % self._firmware_version
+            )
+        raise UnknownDevice("Your device is unknown %s" % json.dumps(self._device))
 
     def custom_initialize(self, extra_db):
         "Custom initialization of component"
@@ -134,9 +133,15 @@ class BaseGateway:
 
     async def current_date(self):
         """Find current datetime of gateway."""
-        response = await self._connector.get(self._db[GATEWAY].get(DATE))
-        self._data[GATEWAY][DATE] = response.get(VALUE)
-        return response.get(VALUE)
+        try:
+            response = await self._connector.get(self._db[GATEWAY].get(DATE))
+            date = response.get(VALUE)
+        except DeviceException:
+            date = datetime.now().strftime(
+                self._db.get("date_format", "%Y-%m-%dT%H:%M:%S")
+            )
+        self._data[GATEWAY][DATE] = date
+        return date
 
     @property
     def database(self):
@@ -177,9 +182,11 @@ class BaseGateway:
         return self._data[SC].circuits
 
     @property
-    def sensors(self):
+    def sensors(self) -> list:
         """Get sensors list."""
-        return self._data[SENSORS].sensors
+        if self._data[SENSORS]:
+            return self._data[SENSORS].sensors
+        return []
 
     @property
     def switches(self):
@@ -264,9 +271,10 @@ class BaseGateway:
 
     async def initialize_sensors(self):
         """Initialize sensors objects."""
-        self._data[SENSORS] = Sensors(
-            connector=self._connector, sensors_db=self._db[SENSORS]
-        )
+        if SENSORS in self._db:
+            self._data[SENSORS] = Sensors(
+                connector=self._connector, sensors_db=self._db[SENSORS]
+            )
         if CRAWL_SENSORS in self._db:
             _LOGGER.info("Initializing Crawl Sensors.")
             await self._data[SENSORS].initialize(crawl_sensors=self._db[CRAWL_SENSORS])

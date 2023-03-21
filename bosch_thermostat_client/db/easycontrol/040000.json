@@ -5,9 +5,60 @@
   "devices": {
     "refs": {
       "status": {
-        "id": "list",
-        "name": "list",
+        "id": "type",
+        "name": "type",
         "type": "regular"
+      },
+      "name": {
+        "id": "name",
+        "name": "name",
+        "type": "regular"
+      }
+    },
+    "sensors": {
+      "battery": {
+        "id": "battery",
+        "name": "battery",
+        "type": "regular"
+      },
+      "signal": {
+        "id": "signal",
+        "name": "signal",
+        "type": "regular",
+        "entity_category": "diagnostic"
+      },
+      "etrvTemperatureActual": {
+        "id": "etrv/temperatureActual",
+        "name": "Actual temperature",
+        "type": "regular",
+        "state_class": "measurement",
+        "device_class": "temperature"
+      },
+      "etrvValvePosition": {
+        "id": "etrv/valvePosition",
+        "name": "Valve position",
+        "type": "regular"
+      }
+    },
+    "switches": {
+      "etrvChildLock": {
+        "id": "etrv/childLock/enabled",
+        "type": "binary",
+        "turn_on": "true",
+        "turn_off": "false",
+        "name": "Child lock"
+      },
+      "etrvOffset": {
+        "id": "etrv/offset",
+        "name": "Valve offset",
+        "type": "number",
+        "defaultStep": 0.5
+      },
+      "etrvMaxValvePosition": {
+        "id": "etrv/maxValvePosition",
+        "name": "Max valve posistion",
+        "type": "number",
+        "defaultStep": 1.0
       }
     }
   },
@@ -354,15 +405,7 @@
       "type": "binary"
     }
   },
-  "crawlSensors": [
-    {
-      "uri": "/devices",
-      "deep": 1,
-      "exclude": "^.*(device\\d|list|productLookup)$",
-      "sensorType": "array",
-      "state": "battery"
-    }
-  ],
+  "crawlSensors": [],
   "switches": {
     "awayMode": {
       "id": "/system/awayMode/enabled",

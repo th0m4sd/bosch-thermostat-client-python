@@ -126,6 +126,6 @@ class Sensors(BoschEntities):
         return iter(self._items.values())
 
     @property
-    def sensors(self):
+    def sensors(self) -> list:
         """Get sensor list."""
         return self.get_items().values()

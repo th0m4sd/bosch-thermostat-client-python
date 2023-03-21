@@ -1,7 +1,10 @@
 """Circuits module of Bosch thermostat."""
 import logging
 from bosch_thermostat_client.circuits.circuit import BasicCircuit
-from bosch_thermostat_client.circuits.easycontrol import EasyDhwCircuit, EasyControlDVCircuit
+from bosch_thermostat_client.circuits.easycontrol import (
+    EasyDhwCircuit,
+    EasyControlDVCircuit,
+)
 from bosch_thermostat_client.const import (
     ID,
     HC,
@@ -14,9 +17,14 @@ from bosch_thermostat_client.helper import BoschEntities
 from .nefit import NefitCircuit, NefitHeatingCircuit
 from .ivt import IVTCircuit
 from .easycontrol import EasycontrolCircuit, EasyZoneCircuit
-from bosch_thermostat_client.const.ivt import IVT, CIRCUIT_TYPES
+from bosch_thermostat_client.const.ivt import IVT, CIRCUIT_TYPES, IVT_MBLAN
 from bosch_thermostat_client.const.nefit import NEFIT
-from bosch_thermostat_client.const.easycontrol import EASYCONTROL, PROGRAM_LIST, DV, CIRCUIT_TYPES as EASYCONTROL_CIRCUIT_TYPES
+from bosch_thermostat_client.const.easycontrol import (
+    EASYCONTROL,
+    PROGRAM_LIST,
+    DV,
+    CIRCUIT_TYPES as EASYCONTROL_CIRCUIT_TYPES,
+)
 from bosch_thermostat_client.schedule import ZonePrograms
 
 _LOGGER = logging.getLogger(__name__)
@@ -35,6 +43,7 @@ def choose_circuit_type(device_type, circuit_type):
 
     return {
         IVT: IVTCircuit,
+        IVT_MBLAN: IVTCircuit,
         NEFIT: NefitCircuit,
         NEFIT + HC: NefitHeatingCircuit,
         EASYCONTROL: EasycontrolCircuit,
@@ -117,6 +126,6 @@ class Circuits(BoschEntities):
                 attr_id=circuit[ID],
                 db=database,
                 _type=EASYCONTROL_CIRCUIT_TYPES[self._circuit_type],
-                bus_type=self._bus_type
+                bus_type=self._bus_type,
             )
         return None
