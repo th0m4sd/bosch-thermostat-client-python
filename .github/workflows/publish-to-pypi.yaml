@@ -24,7 +24,7 @@ jobs:
       - uses: pdm-project/setup-pdm@v3
         name: Setup Python and PDM
         with:
-          python-version: 3.10
+          python-version: "3.10"
           architecture: x64
           # version: 1.15.3
           enable-pep582: true # Enable PEP 582 package loading globally
