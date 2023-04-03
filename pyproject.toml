@@ -24,3 +24,6 @@ build-backend = "pdm.pep517.api"
 [tool]
 [tool.pdm]
 version = {from = "bosch_thermostat_client/version.py"}
+
+[project.scripts]
+bosch_cli= "bosch_thermostat_client.bosch_cli:cli"
