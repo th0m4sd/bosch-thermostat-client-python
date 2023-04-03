@@ -1,16 +1,15 @@
-name: Publish BoneIO 🐍 distributions 📦 to PyPI
+name: Publish Bosch Thermostat Client 🐍 distributions 📦 to PyPI
 
 on:
   push:
     tags:
       - v*
     branches:
-      - 'main'
       - 'dev'
     paths:
       - '**.py'
   pull_request:
-    branches: [main]
+    branches: [dev]
   release:
     types: # This configuration does not affect the page_build event above
       - created
