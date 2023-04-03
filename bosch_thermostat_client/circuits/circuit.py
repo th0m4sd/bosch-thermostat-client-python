@@ -44,7 +44,7 @@ class BasicCircuit(BoschSingleEntity):
         name = attr_id.split("/").pop()
         self._db = db[_type]
         self._bus_type = bus_type
-        super().__init__(name, connector, attr_id)
+        super().__init__(name=name, connector=connector, attr_id=attr_id)
         self._main_uri = f"/{_type}/{self.name}"
         self._operation_mode = {}
         if REFS in self._db:
@@ -56,10 +56,12 @@ class BasicCircuit(BoschSingleEntity):
             sensors_db=self._db.get(SENSORS),
             uri_prefix=self._main_uri,
             data=self._data,
+            parent=self,
         )
         self._switches = Switches(
             connector=connector,
             uri_prefix=self._main_uri,
+            parent=self,
         )
 
     @property
@@ -97,6 +99,11 @@ class BasicCircuit(BoschSingleEntity):
         """Check each uri if return json with values."""
         await self.update_requested_key(STATUS)
         await self._switches.initialize(switches=self._db.get(SWITCHES))
+
+    @property
+    def id(self):
+        """Get ID of circuit. Name might be overriden by eg Zone name, so id is always last part of URI."""
+        return super().name
 
 
 class Circuit(BasicCircuit):

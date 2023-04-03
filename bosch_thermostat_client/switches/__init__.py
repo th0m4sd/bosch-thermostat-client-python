@@ -26,7 +26,7 @@ from .number import NumberSwitch
 class Switches(BoschEntities):
     """Sensors object containing multiple Sensor objects."""
 
-    def __init__(self, connector, uri_prefix=None):
+    def __init__(self, connector, uri_prefix=None, parent=None):
         """
         Initialize sensors.
 
@@ -39,6 +39,7 @@ class Switches(BoschEntities):
         self._selects = {}
         self._uri_prefix = uri_prefix
         self._bases = {}
+        self._parent = parent
 
     async def initialize(self, switches):
         if not switches:
@@ -72,6 +73,7 @@ class Switches(BoschEntities):
                     on_turn_on=switch.get(TURN_ON, TRUE),
                     on_turn_off=switch.get(TURN_OFF, FALSE),
                     default_step=switch.get(DEFAULT_STEP),
+                    parent=self._parent,
                 )
 
         for switch_id, switch in switches.items():

@@ -98,7 +98,6 @@ class Circuits(BoschEntities):
 
     def create_circuit(self, circuit, database, current_date):
         """Create single circuit of given type."""
-
         if self._circuit_type == SC or (
             self._circuit_type == HC and self._device_type == EASYCONTROL
         ):

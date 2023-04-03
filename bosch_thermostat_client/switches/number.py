@@ -15,7 +15,7 @@ from .switch import BaseSwitch
 _LOGGER = logging.getLogger(__name__)
 
 
-class NumberSwitch(BaseSwitch, BoschSingleEntity):
+class NumberSwitch(BaseSwitch):
     """Number switch object."""
 
     _type = NUMBER
@@ -43,7 +43,7 @@ class NumberSwitch(BaseSwitch, BoschSingleEntity):
     @property
     def step(self) -> float:
         return self.get_property(self.attr_id).get(STEP_SIZE, self._default_step)
- 
+
     async def set_value(self, value):
         if self.min_value <= value <= self.max_value:
             _LOGGER.debug("Trying to set number %s.", value)

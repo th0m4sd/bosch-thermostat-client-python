@@ -6,13 +6,12 @@ from bosch_thermostat_client.const import (
     VALUE,
 )
 from bosch_thermostat_client.const.ivt import ALLOWED_VALUES
-from bosch_thermostat_client.helper import BoschSingleEntity
 from .switch import BaseSwitch
 
 _LOGGER = logging.getLogger(__name__)
 
 
-class SelectSwitch(BaseSwitch, BoschSingleEntity):
+class SelectSwitch(BaseSwitch):
     """Number switch object."""
 
     _type = SELECT

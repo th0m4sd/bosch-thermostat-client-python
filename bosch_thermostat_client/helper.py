@@ -167,19 +167,24 @@ class BoschSingleEntity:
 
     _allowed_types = (REGULAR, BINARY)
 
-    def __init__(self, name, connector, attr_id, path=None, **kwargs):
+    def __init__(self, name, connector, attr_id, path=None, parent=None, **kwargs):
         """Initialize single entity."""
         self._connector = connector
         self._main_data = {NAME: name, ID: attr_id, PATH: path}
         self._data = {}
         self._update_initialized = False
         self._state = False
+        self._parent: BoschSingleEntity | None = parent
         self._extra_message = "Waiting to fetch data"
 
     @property
     def connector(self):
         """Retrieve connector."""
         return self._connector
+
+    @property
+    def parent_id(self) -> str | None:
+        return self._parent.id if self._parent else None
 
     def process_results(self, result, key=None, return_data=False):
         """Convert multi-level json object to one level object."""
@@ -250,6 +255,11 @@ class BoschSingleEntity:
     def name(self):
         """Name of Bosch entity."""
         return self._main_data[NAME]
+
+    @property
+    def id(self):
+        """Get ID of Entity."""
+        return self.name
 
     @property
     def path(self):
