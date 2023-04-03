@@ -1,5 +1,5 @@
 [project]
-name = "bosch-thermostat-client-python"
+name = "bosch-thermostat-client"
 dynamic = ["version"]
 description = "Python API for talking to Bosch™ Heating gateway using HTTP or XMPP"
 authors = [
