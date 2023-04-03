@@ -24,6 +24,42 @@ build-backend = "pdm.pep517.api"
 [tool]
 [tool.pdm]
 version = {from = "bosch_thermostat_client/version.py"}
+[tool.pdm.dev-dependencies]
+dev = [
+    "black>=23.3.0",
+    "isort>=5.12.0",
+    "flake8>=6.0.0",
+    "bandit>=1.7.5",
+    "pre-commit>=3.2.1",
+]
 
 [project.scripts]
 bosch_cli= "bosch_thermostat_client.bosch_cli:cli"
+
+[tool.black]
+line-length = 88
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | pdm/_vendor
+  | tests/fixtures
+)/
+'''
+
+[tool.isort]
+profile = "black"
+atomic = true
+filter_files = true
+known_first_party = ["bosch_thermostat_client"]
+
+[tool.pdm.scripts]
+lint = "pre-commit run --all-files"
