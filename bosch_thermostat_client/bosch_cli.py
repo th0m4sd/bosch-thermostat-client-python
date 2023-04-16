@@ -1,4 +1,5 @@
 from typing import Any
+import os
 import click
 import logging
 from colorlog import ColoredFormatter
@@ -12,6 +13,12 @@ from bosch_thermostat_client.version import __version__
 import json
 import asyncio
 from functools import wraps
+from yaml import load
+try:
+    from yaml import CLoader as Loader
+except ImportError:
+    from yaml import Loader
+
 
 _LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -33,6 +40,13 @@ logging.getLogger().handlers[0].setFormatter(
     )
 )
 
+
+def set_default(ctx, param, value):
+    if os.path.exists(value):
+        with open(value, 'r') as f:
+            config = load(f.read(), Loader=Loader)
+        ctx.default_map = config
+    return value
 
 def add_options(options):
     def _add_options(func):
@@ -99,6 +113,16 @@ async def cli(ctx):
 
 
 _cmd1_options = [
+    click.option(
+        "--config",
+        default="config.yml",
+        type=click.Path(),
+        callback=set_default,
+        is_eager=True,
+        expose_value=False,
+        show_default=True,
+        help="Read configuration from PATH.",
+    ),
     click.option(
         "--host",
         envvar="BOSCH_HOST",
