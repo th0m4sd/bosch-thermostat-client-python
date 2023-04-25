@@ -79,6 +79,7 @@ async def _runquery(gateway, path):
     result = []
     for p in path:
         result.append(await gateway.raw_query(p))
+        await asyncio.sleep(0.3)
     _LOGGER.info("Query succeed: %s", path)
     click.secho(json.dumps(result, indent=4, sort_keys=True), fg="green")
 
