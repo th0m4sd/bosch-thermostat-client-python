@@ -76,7 +76,10 @@ async def _scan(gateway, smallscan, output, stdout):
 
 async def _runquery(gateway, path):
     _LOGGER.debug("Trying to connect to gateway.")
-    result = await gateway.raw_query(path)
+    result = []
+    for p in path:
+        result.append(await gateway.raw_query(p))
+        await asyncio.sleep(0.3)
     _LOGGER.info("Query succeed: %s", path)
     click.secho(json.dumps(result, indent=4, sort_keys=True), fg="green")
 
@@ -278,7 +281,8 @@ _path_options = [
         "--path",
         type=str,
         required=True,
-        help="Path to run against. Look at rawscan at possible paths. e.g. /gateway/uuid",
+        multiple=True,
+        help="Path to run against. Look at rawscan at possible paths. e.g. /gateway/uuid - Can be specified multiple times!",
     )
 ]
 
@@ -295,7 +299,7 @@ async def query(
     password: str,
     protocol: str,
     device: str,
-    path: str,
+    path: list[str],
     debug: int,
 ):
     """Query values of Bosch thermostat."""
