@@ -9,6 +9,7 @@ from bosch_thermostat_client.const import (
     RECORDING,
     TEMP_CELSIUS,
     ENERGY_KILO_WATT_HOUR,
+    ENERGY_WATT_HOUR
 )
 from .sensor import Sensor
 from bosch_thermostat_client.exceptions import DeviceException
@@ -25,6 +26,8 @@ class RecordingSensor(Sensor):
         self._past_data = {}
 
         def unit_chooser():
+            if any(x in path.lower() for x in ["solar"]):
+                return ENERGY_WATT_HOUR
             if any(x in path.lower() for x in ["energy", "power"]):
                 return ENERGY_KILO_WATT_HOUR
             if any(x in path.lower() for x in ["temp", "outdoor"]):
