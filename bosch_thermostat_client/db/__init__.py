@@ -5,7 +5,12 @@ import os
 
 from bosch_thermostat_client.const import DEFAULT, FIRMWARE_VERSION
 from bosch_thermostat_client.const.nefit import NEFIT
-from bosch_thermostat_client.const.ivt import CAN, NSC_ICOM_GATEWAY, RC300_RC200
+from bosch_thermostat_client.const.ivt import (
+    CAN,
+    NSC_ICOM_GATEWAY,
+    RC300_RC200,
+    MBLAN,
+)
 from bosch_thermostat_client.const.easycontrol import EASYCONTROL
 
 _LOGGER = logging.getLogger(__name__)
@@ -16,6 +21,7 @@ DEVICE_TYPES = {
     RC300_RC200: "rc300_rc200/{}.json",
     DEFAULT: "default/{}.json",
     CAN: "can/{}.json",
+    MBLAN: "mblan/{}.json",
     NEFIT: "nefit/{}.json",
     NSC_ICOM_GATEWAY: "nsc_icom_gateway/{}.json",
     EASYCONTROL: "easycontrol/{}.json",

@@ -1,5 +1,5 @@
 {
-  "versionFirmware": "04.00.00",
+  "versionFirmware": "04.02.01",
   "date_format": "%Y-%m-%dT%H:%M:%S%z",
   "programList": "/programs/list",
   "devices": {

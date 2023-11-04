@@ -44,7 +44,7 @@ class BasicCircuit(BoschSingleEntity):
         name = attr_id.split("/").pop()
         self._db = db[_type]
         self._bus_type = bus_type
-        super().__init__(name, connector, attr_id)
+        super().__init__(name=name, connector=connector, attr_id=attr_id)
         self._main_uri = f"/{_type}/{self.name}"
         self._operation_mode = {}
         if REFS in self._db:
@@ -56,10 +56,12 @@ class BasicCircuit(BoschSingleEntity):
             sensors_db=self._db.get(SENSORS),
             uri_prefix=self._main_uri,
             data=self._data,
+            parent=self,
         )
         self._switches = Switches(
             connector=connector,
             uri_prefix=self._main_uri,
+            parent=self,
         )
 
     @property
@@ -98,9 +100,16 @@ class BasicCircuit(BoschSingleEntity):
         await self.update_requested_key(STATUS)
         await self._switches.initialize(switches=self._db.get(SWITCHES))
 
+    @property
+    def id(self):
+        """Get ID of circuit. Name might be overriden by eg Zone name, so id is always last part of URI."""
+        return super().name
+
 
 class Circuit(BasicCircuit):
     """Parent object for circuit of type HC or DHW."""
+
+    _omit_updates = []
 
     def __init__(self, connector, attr_id, db, _type, bus_type, current_date=None):
         """Initialize circuit with get, put and id from gateway."""
@@ -270,19 +279,26 @@ class Circuit(BasicCircuit):
         """Update info about Circuit asynchronously."""
         _LOGGER.debug("Updating circuit %s", self.name)
         last_item = list(self._data.keys())[-1]
-        for key, item in self._data.items():
-            is_operation_type = item[TYPE] == OPERATION_MODE
+
+        async def fetch_data(key) -> dict | None:
             try:
                 result = await self._connector.get(item[URI])
                 self.process_results(result, key)
+                return result
             except DeviceException:
-                continue
-            if is_operation_type and result:
-                op_mode = self.process_results(result, key, True)
-                if not self._op_mode.is_set:
-                    self._op_mode.init_op_mode(op_mode, item[URI])
-                else:
-                    self._op_mode.set_new_operation_mode(op_mode[VALUE])
+                pass
+            return None
+
+        for key, item in self._data.items():
+            if not (self._omit_updates and key in self._omit_updates):
+                result = await fetch_data(key)
+                is_operation_type = item[TYPE] == OPERATION_MODE
+                if is_operation_type and result:
+                    op_mode = self.process_results(result, key, True)
+                    if not self._op_mode.is_set:
+                        self._op_mode.init_op_mode(op_mode, item[URI])
+                    else:
+                        self._op_mode.set_new_operation_mode(op_mode[VALUE])
 
             if key == last_item:
                 self._state = True

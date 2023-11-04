@@ -17,10 +17,12 @@ ON_STATES = ["start", "on", "active"]
 OFF_STATES = ["stop", "off"]
 
 
-class BaseSwitch:
+class BaseSwitch(BoschSingleEntity):
     """Base class for switch."""
 
-    def __init__(self, connector, attr_id, name, path, result, **kwargs):
+    _type = REGULAR
+
+    def __init__(self, attr_id, path, result, **kwargs):
         """
         Single switch init.
 
@@ -29,7 +31,7 @@ class BaseSwitch:
         :param str path: path to retrieve data from switch.
         :param str obj: result retrieved during initialization.
         """
-        super().__init__(name, connector, attr_id, path)
+        super().__init__(attr_id=attr_id, path=path, **kwargs)
         self._data = {attr_id: {RESULT: {}, URI: path, TYPE: self._type}}
         self.process_results(result, attr_id)
 
@@ -41,8 +43,11 @@ class BaseSwitch:
             return self.check_state(result.get(VALUE, INVALID))
         return False
 
+    def check_state(self, value):
+        raise NotImplementedError
 
-class Switch(BaseSwitch, BoschSingleEntity):
+
+class Switch(BaseSwitch):
     """Single switch object."""
 
     _type = REGULAR

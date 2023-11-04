@@ -1,12 +1,9 @@
 from bosch_thermostat_client.const.easycontrol import FALSE, TRUE
 from bosch_thermostat_client.const import BINARY, RESULT, URI, VALUE
-from bosch_thermostat_client.helper import (
-    BoschSingleEntity,
-)
 from .switch import BaseSwitch
 
 
-class BinarySwitch(BaseSwitch, BoschSingleEntity):
+class BinarySwitch(BaseSwitch):
     """Boolean switch object."""
 
     _type = BINARY

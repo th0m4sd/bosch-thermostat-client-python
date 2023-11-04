@@ -1,4 +1,5 @@
 from typing import Any
+import os
 import click
 import logging
 from colorlog import ColoredFormatter
@@ -12,6 +13,12 @@ from bosch_thermostat_client.version import __version__
 import json
 import asyncio
 from functools import wraps
+from yaml import load
+try:
+    from yaml import CLoader as Loader
+except ImportError:
+    from yaml import Loader
+
 
 _LOGGER = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -33,6 +40,13 @@ logging.getLogger().handlers[0].setFormatter(
     )
 )
 
+
+def set_default(ctx, param, value):
+    if os.path.exists(value):
+        with open(value, 'r') as f:
+            config = load(f.read(), Loader=Loader)
+        ctx.default_map = config
+    return value
 
 def add_options(options):
     def _add_options(func):
@@ -62,7 +76,10 @@ async def _scan(gateway, smallscan, output, stdout):
 
 async def _runquery(gateway, path):
     _LOGGER.debug("Trying to connect to gateway.")
-    result = await gateway.raw_query(path)
+    result = []
+    for p in path:
+        result.append(await gateway.raw_query(p))
+        await asyncio.sleep(0.3)
     _LOGGER.info("Query succeed: %s", path)
     click.secho(json.dumps(result, indent=4, sort_keys=True), fg="green")
 
@@ -99,6 +116,16 @@ async def cli(ctx):
 
 
 _cmd1_options = [
+    click.option(
+        "--config",
+        default="config.yml",
+        type=click.Path(),
+        callback=set_default,
+        is_eager=True,
+        expose_value=False,
+        show_default=True,
+        help="Read configuration from PATH.",
+    ),
     click.option(
         "--host",
         envvar="BOSCH_HOST",
@@ -254,7 +281,8 @@ _path_options = [
         "--path",
         type=str,
         required=True,
-        help="Path to run against. Look at rawscan at possible paths. e.g. /gateway/uuid",
+        multiple=True,
+        help="Path to run against. Look at rawscan at possible paths. e.g. /gateway/uuid - Can be specified multiple times!",
     )
 ]
 
@@ -271,7 +299,7 @@ async def query(
     password: str,
     protocol: str,
     device: str,
-    path: str,
+    path: list[str],
     debug: int,
 ):
     """Query values of Bosch thermostat."""

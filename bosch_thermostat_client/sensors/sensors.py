@@ -55,7 +55,9 @@ def get_device_class(uri, default_class="energy"):
 class Sensors(BoschEntities):
     """Sensors object containing multiple Sensor objects."""
 
-    def __init__(self, connector, sensors_db, uri_prefix=None, data=None):
+    def __init__(
+        self, connector, sensors_db, uri_prefix=None, data=None, parent=None
+    ):
         """
         Initialize sensors.
 
@@ -74,6 +76,7 @@ class Sensors(BoschEntities):
                     "path": f"{uri_prefix}/{sensor[ID]}" if uri_prefix else sensor[ID],
                     "kind": sensor.get(TYPE, REGULAR),
                     "data": data,
+                    "parent": parent,
                     **sensor,
                 }
                 SensorClass = get_sensor_class(
@@ -126,6 +129,6 @@ class Sensors(BoschEntities):
         return iter(self._items.values())
 
     @property
-    def sensors(self):
+    def sensors(self) -> list:
         """Get sensor list."""
         return self.get_items().values()

@@ -15,7 +15,13 @@ from bosch_thermostat_client.const import (
     VALUE,
     VALUES,
 )
-from bosch_thermostat_client.const.ivt import CAN, CIRCUIT_TYPES, IVT, SYSTEM_INFO
+from bosch_thermostat_client.const.ivt import (
+    CAN,
+    CIRCUIT_TYPES,
+    IVT,
+    IVT_MBLAN,
+    SYSTEM_INFO,
+)
 from bosch_thermostat_client.encryption import IVTEncryption as Encryption
 from bosch_thermostat_client.exceptions import DeviceException
 
@@ -99,6 +105,21 @@ class IVTGateway(BaseGateway):
                     found_model = attached_devices[sorted(attached_devices.keys())[-1]]
                 _LOGGER.debug("Using model %s as database schema", found_model[VALUE])
                 return found_model
+        _LOGGER.error(
+            "I cannot find supported device. Your devices: %s", json.dumps(system_info)
+        )
+
+
+class IVTMBLanGateway(IVTGateway):
+    device_type = IVT_MBLAN
+
+    async def get_device_model(self, _db):
+        """Find device model."""
+        model_scheme = _db[MODELS]
+        self._bus_type = EMS
+        system_info = self._data[GATEWAY].get(SYSTEM_INFO)
+        if system_info and system_info == "iCom_Low_v1":
+            return model_scheme.get("iCom_Low_v1")
         _LOGGER.error(
             "I cannot find supported device. Your devices: %s", json.dumps(system_info)
         )

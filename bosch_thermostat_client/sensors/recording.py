@@ -9,6 +9,7 @@ from bosch_thermostat_client.const import (
     RECORDING,
     TEMP_CELSIUS,
     ENERGY_KILO_WATT_HOUR,
+    ENERGY_WATT_HOUR
 )
 from .sensor import Sensor
 from bosch_thermostat_client.exceptions import DeviceException
@@ -22,9 +23,11 @@ class RecordingSensor(Sensor):
     def __init__(self, path: str, **kwargs) -> None:
         super().__init__(path=path, **kwargs)
         self._lock = asyncio.Lock()
-        self._past_data = []
+        self._past_data = {}
 
         def unit_chooser():
+            if any(x in path.lower() for x in ["solar"]):
+                return ENERGY_WATT_HOUR
             if any(x in path.lower() for x in ["energy", "power"]):
                 return ENERGY_KILO_WATT_HOUR
             if any(x in path.lower() for x in ["temp", "outdoor"]):
@@ -44,30 +47,21 @@ class RecordingSensor(Sensor):
     def process_results(self, result: dict, time: datetime) -> None:
         """Convert multi-level json object to one level object."""
 
-        def get_last_full_hour() -> time:
-            return (time - timedelta(hours=1)).replace(
-                minute=0, second=0, microsecond=0
-            )
-
         if result and RECORDING in result:
-            last_hour = get_last_full_hour()
+            last_hour = time.replace(minute=0, second=0, microsecond=0)
             self._data[self.attr_id][RESULT][VALUE] = []
             for idx, recording in enumerate(result[RECORDING]):
                 if recording["c"] == 0:
                     continue
                 self._data[self.attr_id][RESULT][VALUE].append(
                     {
-                        "d": last_hour.replace(hour=idx + 1)
-                        if idx < 23
-                        else last_hour.replace(hour=0) + timedelta(days=1),
+                        "d": last_hour.replace(hour=idx),
                         VALUE: round((recording["y"] / recording["c"]), 1),
                     }
                 )
 
-    async def fetch_range(self, start_time: datetime, stop_time: datetime) -> list:
+    async def fetch_range(self, start_time: datetime, stop_time: datetime) -> dict:
         async with self._lock:
-            if self._past_data:
-                return self._past_data
             current_date = start_time
             while current_date < stop_time:
                 uri = self.build_uri(time=current_date)
@@ -82,12 +76,10 @@ class RecordingSensor(Sensor):
                             hour=idx, minute=0, second=0, microsecond=0
                         )
                         if start_time <= _d <= stop_time:
-                            self._past_data.append(
-                                {
-                                    "d": _d,
-                                    VALUE: round((recording["y"] / recording["c"]), 1),
-                                }
-                            )
+                            self._past_data[_d] = {
+                                "d": _d,
+                                VALUE: round((recording["y"] / recording["c"]), 1),
+                            }
                 current_date += timedelta(days=1)
             return self._past_data
 
@@ -97,13 +89,15 @@ class RecordingSensor(Sensor):
         return self._data[self.attr_id].get(RESULT, {}).get(VALUE)
 
     def build_uri(self, time: datetime) -> str:
-        interval = (time - timedelta(hours=1)).strftime("%Y-%m-%d")
+        interval = time.strftime("%Y-%m-%d")
         return f"{self._data[self.attr_id][URI]}?{INTERVAL}={interval}"
 
     async def update(self, time: datetime = datetime.utcnow()) -> None:
         """Update info about Recording Sensor asynchronously."""
         try:
-            result = await self._connector.get(self.build_uri(time))
+            uri = self.build_uri(time)
+            result = await self._connector.get(uri)
+            _LOGGER.debug("Fetching uri for recording sensor %s", uri)
             self.process_results(result, time)
         except DeviceException as err:
             _LOGGER.error(

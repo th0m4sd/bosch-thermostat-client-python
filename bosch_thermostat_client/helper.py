@@ -167,19 +167,24 @@ class BoschSingleEntity:
 
     _allowed_types = (REGULAR, BINARY)
 
-    def __init__(self, name, connector, attr_id, path=None, **kwargs):
+    def __init__(self, name, connector, attr_id, path=None, parent=None, **kwargs):
         """Initialize single entity."""
         self._connector = connector
         self._main_data = {NAME: name, ID: attr_id, PATH: path}
         self._data = {}
         self._update_initialized = False
         self._state = False
+        self._parent: BoschSingleEntity | None = parent
         self._extra_message = "Waiting to fetch data"
 
     @property
     def connector(self):
         """Retrieve connector."""
         return self._connector
+
+    @property
+    def parent_id(self) -> str | None:
+        return self._parent.id if self._parent else None
 
     def process_results(self, result, key=None, return_data=False):
         """Convert multi-level json object to one level object."""
@@ -197,7 +202,7 @@ class BoschSingleEntity:
                 REFERENCES,
                 WRITEABLE,
                 USED,
-                STEP_SIZE
+                STEP_SIZE,
             ]:
                 if res_key in result:
                     value = result[res_key]
@@ -252,6 +257,11 @@ class BoschSingleEntity:
         return self._main_data[NAME]
 
     @property
+    def id(self):
+        """Get ID of Entity."""
+        return self.name
+
+    @property
     def path(self):
         """Get path of Bosch API which entity is using for data."""
         return self._main_data[PATH]
@@ -275,10 +285,11 @@ class BoschSingleEntity:
 
 
 class DeviceClassEntity:
-    def __init__(self, device_class, state_class):
+    def __init__(self, device_class, state_class, entity_category):
         """Initialize device class."""
         self._device_class = device_class
         self._state_class = state_class
+        self._entity_category = entity_category
 
     @property
     def device_class(self):
@@ -289,3 +300,8 @@ class DeviceClassEntity:
     def state_class(self):
         """Return state class."""
         return self._state_class
+
+    @property
+    def entity_category(self):
+        """Return Entity category."""
+        return self._entity_category

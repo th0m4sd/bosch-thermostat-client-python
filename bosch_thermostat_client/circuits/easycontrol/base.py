@@ -14,6 +14,8 @@ from bosch_thermostat_client.const import (
     MAX_VALUE,
     OFF,
     USED,
+    NAME,
+    SWITCHES,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -113,6 +115,26 @@ class EasycontrolCircuit(Circuit):
 
 
 class EasyControlDVCircuit(EasycontrolCircuit):
+    _omit_updates = [NAME]
+
     def __init__(self, **kwargs):
-        print("DV", kwargs)
         super().__init__(**kwargs)
+
+    async def initialize(self):
+        """Check each uri if return json with values."""
+        await self.update_requested_key(STATUS)
+        await self.update_requested_key(NAME)
+        await self._switches.initialize(switches=self._db.get(SWITCHES))
+
+    @property
+    def state(self) -> str | bool | None:
+        if self._state:
+            state = self.get_value(STATUS)
+            if state == "thermostat":
+                return None
+        return self._state
+
+    @property
+    def name(self):
+        name = self.get_value(NAME)
+        return name if name else super().name
