@@ -8,7 +8,7 @@ import asyncio
 from contextlib import AsyncExitStack
 import aioxmpp
 from aioxmpp.version.xso import Query
-
+from OpenSSL.SSL import ZeroReturnError
 from bosch_thermostat_client.exceptions import (
     DeviceException,
     MsgException,
@@ -127,6 +127,11 @@ class XMPPBaseConnector:
                 "Can't connect to XMPP server!. Check your network connection or credentials!"
             )
             return None
+        except ZeroReturnError:
+            _LOGGER.error(
+                "XMPP server won't respond properly!"
+            )
+            return None
         await self._lock.acquire()
         try:
             msg_to_send = self._build_message(
@@ -145,7 +150,7 @@ class XMPPBaseConnector:
                 if recv_body == BODY_400:
                     future.set_exception(MsgException("400 HTTP Error"))
                 elif recv_body is None and http_response == WRONG_ENCRYPTION:
-                    future.set_exception(MsgException("Can't decrypt for %s" % path))
+                    future.set_exception(EncryptionException("Can't decrypt for %s" % path))
                 elif method == GET and recv_body.get("id") in path:
                     try:
                         future.set_result(recv_body)
@@ -165,6 +170,9 @@ class XMPPBaseConnector:
                 data = await asyncio.wait_for(future, timeout)
             except (asyncio.TimeoutError, MsgException):
                 _LOGGER.info("Msg exception for %s", path)
+            except (EncryptionException) as err:
+                _LOGGER.warn(err)
+                raise EncryptionException(err)
             except (asyncio.InvalidStateError) as err:
                 _LOGGER.error("Unknown error occured. Please check logs. %s", err)
             finally:
