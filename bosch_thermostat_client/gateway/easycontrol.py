@@ -87,7 +87,7 @@ class EasycontrolGateway(BaseGateway):
                 _LOGGER.debug("Can't fetch data for update_info %s", err)
                 pass
 
-    async def get_device_model(self, _db):
+    def get_device_model(self, _db):
         """Find device model."""
         product_id = self._data[GATEWAY].get(PRODUCT_ID)
         model_scheme = _db[MODELS]

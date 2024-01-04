@@ -81,7 +81,7 @@ class IVTGateway(BaseGateway):
                 _LOGGER.debug("Can't fetch data for update_info %s", err)
                 pass
 
-    async def get_device_model(self, _db):
+    def get_device_model(self, _db):
         """Find device model."""
         system_bus = self._data[GATEWAY].get(SYSTEM_BUS)
         model_scheme = _db[MODELS]
@@ -113,7 +113,7 @@ class IVTGateway(BaseGateway):
 class IVTMBLanGateway(IVTGateway):
     device_type = IVT_MBLAN
 
-    async def get_device_model(self, _db):
+    def get_device_model(self, _db):
         """Find device model."""
         model_scheme = _db[MODELS]
         self._bus_type = EMS

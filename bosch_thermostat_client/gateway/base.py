@@ -72,7 +72,7 @@ class BaseGateway:
         initial_db = self.get_base_db()
         await self._update_info(initial_db.get(GATEWAY))
         self._firmware_version = self._data[GATEWAY].get(FIRMWARE_VERSION)
-        self._device = await self.get_device_model(initial_db)
+        self._device = self.get_device_model(initial_db)
         if self._device and VALUE in self._device:
             _LOGGER.debug("Found device %s", json.dumps(self._device))
             self._db = get_db_of_firmware(self._device[TYPE], self._firmware_version)
@@ -102,7 +102,7 @@ class BaseGateway:
     async def _update_info(self, initial_db):
         raise NotImplementedError
 
-    async def get_device_model(self, _db):
+    def get_device_model(self, _db):
         raise NotImplementedError
 
     @property
