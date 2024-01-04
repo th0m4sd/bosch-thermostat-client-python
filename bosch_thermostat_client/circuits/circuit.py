@@ -176,6 +176,10 @@ class Circuit(BasicCircuit):
     @property
     def hvac_action(self):
         return None
+    
+    @property
+    def extra_state_attributes(self) -> dict:
+        return {}
 
     async def update_temp_after_ha_mode(self, old_setpoint, new_mode, old_mode) -> int:
         """Helper to fetch new temp. attribute if operation mode was changed."""
