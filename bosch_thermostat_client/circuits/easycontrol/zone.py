@@ -11,8 +11,7 @@ from bosch_thermostat_client.const import (
     URI,
 )
 from bosch_thermostat_client.operation_mode import EasyControlOperationModeHelper
-from bosch_thermostat_client.const.easycontrol import IDLE
-from bosch_thermostat_client.const.easycontrol import CIRCUIT_TYPES
+from bosch_thermostat_client.const.easycontrol import IDLE, LOW_BATTERY, CIRCUIT_TYPES
 
 class EasyZoneCircuit(EasycontrolCircuit):
     def __init__(
@@ -29,7 +28,6 @@ class EasyZoneCircuit(EasycontrolCircuit):
         self._op_mode = EasyControlOperationModeHelper(
             self.name, self._db.get(MODE_TO_SETPOINT)
         )
-
         self._zone_program = kwargs.get("zone_program")
 
     @property
@@ -52,12 +50,26 @@ class EasyZoneCircuit(EasycontrolCircuit):
         await super().update()
 
     @property
+    def battery_state(self) -> bool:
+        status = self.get_value(STATUS)
+        return True if status == LOW_BATTERY else False
+
+    @property
+    def extra_state_attributes(self) -> dict:
+        return {
+            "low_battery": self.battery_state
+        }
+
+    @property
     def hvac_action(self):
+        """Zone device give battery status in same """
         hvac_uri = self._db.get(HVAC_ACTION)
         if hvac_uri:
             hv_value = self.get_value(hvac_uri)
             if hv_value == IDLE:
                 return HVAC_OFF
+            elif hv_value == LOW_BATTERY:
+                return None
             else:
                 return HVAC_HEAT
 
