@@ -134,6 +134,10 @@
         "name": "humidity",
         "state_class": "measurement",
         "device_class": "humidity"
+      },
+      "openWindowDetectionStatus": {
+        "id": "openWindowDetection/status",
+        "name": "openWindowDetection Status"
       }
     }
   },
@@ -265,10 +269,6 @@
       "hotWaterSystem": {
         "id": "hotWaterSystem",
         "name": "hotWaterSystem"
-      },
-      "openWindowDetectionStatus": {
-        "id": "openWindowDetection/status",
-        "name": "openWindowDetection Status"
       }
     }
   },
