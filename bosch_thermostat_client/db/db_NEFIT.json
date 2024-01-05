@@ -8,6 +8,11 @@
     "dateTime": "/gateway/time/timestamp"
   },
   "models": {
+    "7736701187": {
+      "value": "CT100",
+      "name": "Bosch ControlConnect",
+      "type": "NEFIT"
+    },
     "7736701042": {
       "value": "TC100",
       "name": "Bosch TC100",
