@@ -4,8 +4,6 @@ on:
   push:
     tags:
       - v*
-    branches:
-      - 'dev'
     paths:
       - '**.py'
   pull_request:
@@ -38,4 +36,4 @@ jobs:
         if: startsWith(github.ref, 'refs/tags') || startsWith(github.event.inputs.tags, 'Deploy')
         run: |
           pdm plugin add pdm-publish
-          pdm publish -v --password ${{ secrets.PYPI_API_TOKEN }}
+          pdm publish --password ${{ secrets.PYPI_API_TOKEN }}
