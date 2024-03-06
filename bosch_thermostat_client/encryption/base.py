@@ -40,7 +40,7 @@ class BaseEncryption:
         """Return key to store in config entry."""
         return self._saved_key
 
-    def json_encrypt(self, raw):
+    def json_decrypt(self, raw):
         try:
             if raw:
                 return json.loads(self.decrypt(raw), cls=self.jsondecoder)

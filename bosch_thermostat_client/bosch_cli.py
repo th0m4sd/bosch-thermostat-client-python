@@ -348,10 +348,20 @@ async def query(
     finally:
         await gateway.close(force=True)
 
+_path_put_options = [
+    click.option(
+        "-p",
+        "--path",
+        type=str,
+        required=True,
+        multiple=False,
+        help="Path to run against. Look at rawscan at possible paths. e.g. /gateway/uuid - Can be specified multiple times!",
+    )
+]
 
 @cli.command()
 @add_options(_cmd1_options)
-@add_options(_path_options)
+@add_options(_path_put_options)
 @click.argument("value", nargs=1)
 @click.pass_context
 @coro

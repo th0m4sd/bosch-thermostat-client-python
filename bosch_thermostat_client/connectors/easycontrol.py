@@ -32,10 +32,8 @@ class EasycontrolConnector(XMPPBaseConnector):
         )
 
     def _build_message(self, method, path, data=None):
-        msg = aioxmpp.stanza.Message(
-            to=self._to,
-            type_=aioxmpp.MessageType.CHAT,
-        )
+        if not path:
+            return
         if method == GET:
             body = "\n".join(
                 [
@@ -57,6 +55,7 @@ class EasycontrolConnector(XMPPBaseConnector):
                     "\r",
                 ]
             )
-        msg.body[None] = body
+        else:
+            return
         self._seqno += 1
-        return msg
+        return body

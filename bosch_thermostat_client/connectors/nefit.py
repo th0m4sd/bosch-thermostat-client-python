@@ -13,11 +13,9 @@ class NefitConnector(XMPPBaseConnector):
     xmpp_host = "wa2-mz36-qrmzh6.bosch.de"
     device_type = NEFIT
 
-    def _build_message(self, method, path, data=None):
-        msg = aioxmpp.stanza.Message(
-            to=self._to,
-            type_=aioxmpp.MessageType.CHAT,
-        )
+    def _build_message(self, method, path, data=None) -> str:
+        if not path:
+            return
         if method == GET:
             body = "\r\r".join(
                 [f"GET {path} HTTP/1.1", f"{USER_AGENT}: {NEFITEASY}", "\r\r"]
@@ -34,5 +32,6 @@ class NefitConnector(XMPPBaseConnector):
                     "\r\r",
                 ]
             )
-        msg.body[None] = body
-        return msg
+        else:
+            return
+        return body

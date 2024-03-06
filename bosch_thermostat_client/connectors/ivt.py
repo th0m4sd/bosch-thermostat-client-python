@@ -1,5 +1,4 @@
 """XMPP Connector to talk to bosch."""
-import aioxmpp
 from bosch_thermostat_client.const import PUT, GET, USER_AGENT, CONTENT_TYPE, APP_JSON
 from bosch_thermostat_client.const.ivt import TELEHEATER, IVT
 from .xmpp import XMPPBaseConnector
@@ -23,14 +22,9 @@ class IVTXMPPConnector(XMPPBaseConnector):
         self._seqno = 1
         super().__init__(host=host, access_key=access_key, encryption=encryption)
 
-    def _build_message(self, method, path, data=None):
+    def _build_message(self, method, path, data=None) -> str:
         if not path:
             return
-        msg = aioxmpp.stanza.Message(
-            to=self._to,
-            type_=aioxmpp.MessageType.CHAT,
-        )
-        msg.autoset_id()
         if method == GET:
             body = "\r\r".join(
                 [
@@ -54,6 +48,5 @@ class IVTXMPPConnector(XMPPBaseConnector):
             )
         else:
             return
-        msg.body[None] = body
         self._seqno += 1
-        return msg
+        return body
