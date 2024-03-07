@@ -1,6 +1,5 @@
 """XMPP Connector to talk to bosch."""
 
-import aioxmpp
 from bosch_thermostat_client.const import (
     PUT,
     GET,
@@ -10,9 +9,11 @@ from bosch_thermostat_client.const import (
     ACCESS_KEY,
 )
 from bosch_thermostat_client.const.easycontrol import EASYCONTROL
+from pathlib import Path
 from .xmpp import XMPPBaseConnector
 
 USERAGENT = "rrc2"
+ROOT_DIR = Path(__file__).resolve().parent.parent
 
 
 class EasycontrolConnector(XMPPBaseConnector):
@@ -22,6 +23,11 @@ class EasycontrolConnector(XMPPBaseConnector):
     _rrc_gateway_prefix = "rrc2gateway_"
     no_verify = True
     device_type = EASYCONTROL
+    ca_certs = Path(ROOT_DIR, "easycontrol_ca.pem")
+
+    disable_starttls = False
+    force_starttls = False
+    use_ssl = False
 
     def __init__(self, host, encryption, **kwargs):
         self._seqno = 0

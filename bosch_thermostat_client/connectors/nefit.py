@@ -1,6 +1,5 @@
 """XMPP Connector to talk to bosch."""
 
-import aioxmpp
 from bosch_thermostat_client.const import PUT, GET, USER_AGENT, CONTENT_TYPE, APP_JSON
 from bosch_thermostat_client.const.nefit import NEFIT, NEFITEASY
 from .xmpp import XMPPBaseConnector
@@ -12,6 +11,9 @@ class NefitConnector(XMPPBaseConnector):
     _rrc_gateway_prefix = "rrcgateway_"
     xmpp_host = "wa2-mz36-qrmzh6.bosch.de"
     device_type = NEFIT
+    disable_starttls = True
+    force_starttls = False
+    use_ssl = False
 
     def _build_message(self, method, path, data=None) -> str:
         if not path:

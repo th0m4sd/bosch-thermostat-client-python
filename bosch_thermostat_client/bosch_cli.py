@@ -391,15 +391,12 @@ async def put(
         _LOGGER.info("Debug mode active")
         _LOGGER.debug(f"Lib version is {bosch.version}")
     if debug > 1:
-        logging.getLogger("aioxmpp").setLevel(logging.DEBUG)
-        logging.getLogger("aioopenssl").setLevel(logging.DEBUG)
-        logging.getLogger("aiosasl").setLevel(logging.DEBUG)
+        logging.getLogger("slixmpp").setLevel(logging.DEBUG)
         logging.getLogger("asyncio").setLevel(logging.DEBUG)
     else:
-        logging.getLogger("aioxmpp").setLevel(logging.WARN)
-        logging.getLogger("aioopenssl").setLevel(logging.WARN)
-        logging.getLogger("aiosasl").setLevel(logging.WARN)
+        logging.getLogger("slixmpp").setLevel(logging.WARN)
         logging.getLogger("asyncio").setLevel(logging.WARN)
+    logging.getLogger("slixmpp.stringprep").setLevel(logging.ERROR)
     if not value:
         _LOGGER.error("Value to put not provided. Exiting")
         return

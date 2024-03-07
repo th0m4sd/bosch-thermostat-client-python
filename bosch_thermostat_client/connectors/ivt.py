@@ -10,6 +10,10 @@ class IVTXMPPConnector(XMPPBaseConnector):
     _rrc_gateway_prefix = "gateway_"
     xmpp_host = "wa2-mz36-qrmzh6.bosch.de"
     device_type = IVT
+    disable_starttls = True
+    force_starttls = False
+    use_ssl = False
+
 
     def __init__(self, host, access_key, encryption, **kwargs):
         """IVTConnector constructor

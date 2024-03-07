@@ -3,7 +3,6 @@
 import logging
 import json
 import re
-
 from slixmpp import ClientXMPP, Iq
 from slixmpp.exceptions import IqError, IqTimeout
 from slixmpp.xmlstream.handler import Callback
@@ -26,8 +25,15 @@ from bosch_thermostat_client.const import (
 _LOGGER = logging.getLogger(__name__)
 
 
+class BoschClientXMPP(ClientXMPP):
+
+    def __init__(self, jid, password, ca_certs, **kwargs):
+        ClientXMPP.__init__(self, jid=jid, password=password, **kwargs)
+        self.ca_certs = ca_certs
+
+
 class XMPPBaseConnector:
-    no_verify = False
+    ca_certs = None
 
     def __init__(self, host, encryption, **kwargs):
         """
@@ -43,8 +49,7 @@ class XMPPBaseConnector:
 
         self._to = self._rrc_gateway_prefix + identifier
         self._password = self._accesskey_prefix + kwargs.get(ACCESS_KEY)
-
-        self.client = ClientXMPP(jid=self._from, password=self._password)
+        self.client = BoschClientXMPP(jid=self._from, password=self._password, ca_certs=self.ca_certs)
         self.client.register_plugin("xep_0030")  # Service Discovery
         self.client.register_plugin("xep_0199")  # XMPP Ping
         self.client.add_event_handler("session_start", self.session_start)
@@ -57,6 +62,9 @@ class XMPPBaseConnector:
                 StanzaPath("iq@type=get"),
                 self.handle_query_request,
             )
+        )
+        self.client.add_event_handler(
+            "ssl_invalid_chain", self.discard_ssl_invalid_chain
         )
         self.connected_event = asyncio.Event()
         self.disconnect_event = asyncio.Event()
@@ -123,7 +131,7 @@ class XMPPBaseConnector:
         try:
             if not self.session_started:
                 self.client.connect(
-                    use_ssl=False, force_starttls=False, disable_starttls=True
+                    use_ssl=self.use_ssl, force_starttls=self.force_starttls, disable_starttls=self.disable_starttls
                 )
                 await asyncio.wait_for(self.connected_event.wait(), timeout=10)
         except asyncio.TimeoutError:
@@ -213,3 +221,8 @@ class XMPPBaseConnector:
         if re.match(r"HTTP/1.[0-1] 40*", http_response):
             _LOGGER.info(f"400 HTTP Error - {body_arr}")
             notify_error(body=BODY_400, response=http_response)
+    
+    @staticmethod
+    def discard_ssl_invalid_chain(event):
+        """Do nothing if ssl certificate is invalid."""
+        _LOGGER.info("Ignoring invalid SSL certificate as requested")
