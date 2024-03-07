@@ -150,7 +150,7 @@ class XMPPBaseConnector:
                         "Future is already done. If it happens too often that it might be a bug. Report it."
                     )
                     return
-                if method == PUT and http_response == "HTTP/1.0 204 No Content":
+                if method == PUT and re.match(r"HTTP/1.[0-1] 20[0-9] No Content", http_response):
                     future.set_result(True)
                 if recv_body == BODY_400:
                     future.set_exception(MsgException("400 HTTP Error"))
