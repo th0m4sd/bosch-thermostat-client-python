@@ -76,12 +76,17 @@ async def _scan(gateway, smallscan, output, stdout):
 
 async def _runquery(gateway, path):
     _LOGGER.debug("Trying to connect to gateway.")
-    result = []
+    results = []
     for p in path:
-        result.append(await gateway.raw_query(p))
+        result = await gateway.raw_query(p)
+        if result:
+            results.append(result)
         await asyncio.sleep(0.3)
-    _LOGGER.info("Query succeed: %s", path)
-    click.secho(json.dumps(result, indent=4, sort_keys=True), fg="green")
+    if results:
+        _LOGGER.info("Query succeed: %s", path)
+        click.secho(json.dumps(result, indent=4, sort_keys=True), fg="green")
+    else:
+        _LOGGER.warning("No results from queries: %s", path)
 
 
 async def _runpush(gateway, path, value):
