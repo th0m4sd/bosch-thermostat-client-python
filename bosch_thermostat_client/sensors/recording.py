@@ -89,6 +89,8 @@ class RecordingSensor(Sensor):
         return self._data[self.attr_id].get(RESULT, {}).get(VALUE)
 
     def build_uri(self, time: datetime) -> str:
+        if time.hour < 1:
+            time = time - timedelta(hours=12)
         interval = time.strftime("%Y-%m-%d")
         return f"{self._data[self.attr_id][URI]}?{INTERVAL}={interval}"
 
