@@ -46,7 +46,7 @@ class HttpConnector:
                 and res.status == 200
                 and res.content_type == APP_JSON
             ):
-                data = await res.json(loads=self._encryption.json_encrypt)
+                data = await res.json(loads=self._encryption.json_decrypt)
                 return data
             raise ResponseException(res)
 

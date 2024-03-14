@@ -10,6 +10,7 @@ from bosch_thermostat_client.const.ivt import IVT
 from bosch_thermostat_client.const.nefit import NEFIT
 from bosch_thermostat_client.const.easycontrol import EASYCONTROL
 from bosch_thermostat_client.version import __version__
+from bosch_thermostat_client.exceptions import FailedAuthException
 import json
 import asyncio
 from functools import wraps
@@ -39,6 +40,21 @@ logging.getLogger().handlers[0].setFormatter(
         },
     )
 )
+
+
+def set_debug(debug: int) -> None:
+    if debug == 0:
+        logging.basicConfig(level=logging.INFO)
+    if debug > 0:
+        _LOGGER.info("Debug mode active")
+        _LOGGER.debug(f"Lib version is {bosch.version}")
+    if debug > 1:
+        logging.getLogger("slixmpp").setLevel(logging.DEBUG)
+        logging.getLogger("asyncio").setLevel(logging.DEBUG)
+    else:
+        logging.getLogger("slixmpp").setLevel(logging.WARN)
+        logging.getLogger("asyncio").setLevel(logging.WARN)
+    logging.getLogger("slixmpp.stringprep").setLevel(logging.ERROR)
 
 
 def set_default(ctx, param, value):
@@ -220,8 +236,6 @@ async def scan(
     smallscan: str,
 ):
     """Create rawscan of Bosch thermostat."""
-    if debug == 0:
-        logging.basicConfig(level=logging.INFO)
     if debug > 0:
         logging.basicConfig(
             # colorfmt,
@@ -230,18 +244,7 @@ async def scan(
             filename="out.log",
             filemode="a",
         )
-        _LOGGER.info("Debug mode active")
-        _LOGGER.debug(f"Lib version is {bosch.version}")
-    if debug > 1:
-        logging.getLogger("aioxmpp").setLevel(logging.DEBUG)
-        logging.getLogger("aioopenssl").setLevel(logging.DEBUG)
-        logging.getLogger("aiosasl").setLevel(logging.DEBUG)
-        logging.getLogger("asyncio").setLevel(logging.DEBUG)
-    else:
-        logging.getLogger("aioxmpp").setLevel(logging.WARN)
-        logging.getLogger("aioopenssl").setLevel(logging.WARN)
-        logging.getLogger("aiosasl").setLevel(logging.WARN)
-        logging.getLogger("asyncio").setLevel(logging.WARN)
+    set_debug(debug)
 
     if device.upper() in (NEFIT, IVT, EASYCONTROL):
         BoschGateway = bosch.gateway_chooser(device_type=device)
@@ -308,21 +311,8 @@ async def query(
     debug: int,
 ):
     """Query values of Bosch thermostat."""
-    if debug == 0:
-        logging.basicConfig(level=logging.INFO)
-    if debug > 0:
-        _LOGGER.info("Debug mode active")
-        _LOGGER.debug(f"Lib version is {bosch.version}")
-    if debug > 1:
-        logging.getLogger("aioxmpp").setLevel(logging.DEBUG)
-        logging.getLogger("aioopenssl").setLevel(logging.DEBUG)
-        logging.getLogger("aiosasl").setLevel(logging.DEBUG)
-        logging.getLogger("asyncio").setLevel(logging.DEBUG)
-    else:
-        logging.getLogger("aioxmpp").setLevel(logging.WARN)
-        logging.getLogger("aioopenssl").setLevel(logging.WARN)
-        logging.getLogger("aiosasl").setLevel(logging.WARN)
-        logging.getLogger("asyncio").setLevel(logging.WARN)
+    set_debug(debug=debug)
+    
     if device.upper() in (NEFIT, IVT, EASYCONTROL):
         BoschGateway = bosch.gateway_chooser(device_type=device)
     else:
@@ -350,6 +340,8 @@ async def query(
             password=password,
         )
         await _runquery(gateway, path)
+    except FailedAuthException as e:
+        _LOGGER.error(e)
     finally:
         await gateway.close(force=True)
 
@@ -385,18 +377,8 @@ async def put(
 
     VALUE is the raw value to send to thermostat. It will be parsed to json.
     """
-    if debug == 0:
-        logging.basicConfig(level=logging.INFO)
-    if debug > 0:
-        _LOGGER.info("Debug mode active")
-        _LOGGER.debug(f"Lib version is {bosch.version}")
-    if debug > 1:
-        logging.getLogger("slixmpp").setLevel(logging.DEBUG)
-        logging.getLogger("asyncio").setLevel(logging.DEBUG)
-    else:
-        logging.getLogger("slixmpp").setLevel(logging.WARN)
-        logging.getLogger("asyncio").setLevel(logging.WARN)
-    logging.getLogger("slixmpp.stringprep").setLevel(logging.ERROR)
+    set_debug(debug=debug)
+
     if not value:
         _LOGGER.error("Value to put not provided. Exiting")
         return

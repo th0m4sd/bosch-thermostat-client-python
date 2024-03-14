@@ -40,6 +40,11 @@ class FirmwareException(BoschException):
     pass
 
 
+class FailedAuthException(BoschException):
+    """Failed auth."""
+    pass
+
+
 class UnknownDevice(BoschException):
     """
     Unknown device.

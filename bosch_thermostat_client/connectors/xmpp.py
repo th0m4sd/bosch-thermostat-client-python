@@ -12,6 +12,7 @@ from bosch_thermostat_client.exceptions import (
     DeviceException,
     MsgException,
     EncryptionException,
+    FailedAuthException
 )
 from bosch_thermostat_client.const import (
     GET,
@@ -54,6 +55,8 @@ class XMPPBaseConnector:
         self.client.register_plugin("xep_0199")  # XMPP Ping
         self.client.add_event_handler("session_start", self.session_start)
         self.client.add_event_handler("session_end", self.session_end)
+        self.client.add_event_handler("auth_success", lambda ev: self._auth(True))
+        self.client.add_event_handler("failed_auth", lambda ev: self._auth(False))
 
         self.client.add_event_handler("message", self.main_listener)
         self.client.register_handler(
@@ -68,10 +71,22 @@ class XMPPBaseConnector:
         )
         self.connected_event = asyncio.Event()
         self.disconnect_event = asyncio.Event()
-        self.session_started = False
+        self._auth_event = asyncio.Event()
+        self._auth_success = False
         self.received_message = None
 
         self.listeners = set()
+
+    def _auth(self, success: bool) -> None:
+        """Called after authentication.
+
+        Args:
+            success: Whether or not the authentication was successful.
+        """
+        # store and fire
+        self._auth_success = success
+        if not success:
+            self.connected_event.set()
 
     def handle_query_request(self, iq: Iq):
         query = iq.get_query()
@@ -94,10 +109,11 @@ class XMPPBaseConnector:
     async def session_start(self, event):
         self.client.send_presence()
         self.client.get_roster()
-        self.session_started = True
+        self._auth_event = True
         self.connected_event.set()
 
     async def session_end(self, event):
+        self._auth_event = False
         self.disconnect_event.set()
 
     @property
@@ -129,11 +145,13 @@ class XMPPBaseConnector:
     async def _request(self, method, path, encrypted_msg=None, timeout=REQUEST_TIMEOUT):
         data = None
         try:
-            if not self.session_started:
+            if not self._auth_success:
                 self.client.connect(
                     use_ssl=self.use_ssl, force_starttls=self.force_starttls, disable_starttls=self.disable_starttls
                 )
                 await asyncio.wait_for(self.connected_event.wait(), timeout=10)
+                if not self._auth_success:
+                    raise FailedAuthException("Can't authorize to XMPP server.")
         except asyncio.TimeoutError:
             _LOGGER.error(
                 "Can't connect to XMPP server!. Check your network connection or credentials!"
@@ -226,3 +244,4 @@ class XMPPBaseConnector:
     def discard_ssl_invalid_chain(event):
         """Do nothing if ssl certificate is invalid."""
         _LOGGER.info("Ignoring invalid SSL certificate as requested")
+
