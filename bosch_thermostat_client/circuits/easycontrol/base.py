@@ -115,6 +115,7 @@ class EasycontrolCircuit(Circuit):
 
 
 class EasyControlDVCircuit(EasycontrolCircuit):
+    """Circuits for EasyControl /devices URI."""
     _omit_updates = [NAME]
 
     def __init__(self, **kwargs):
