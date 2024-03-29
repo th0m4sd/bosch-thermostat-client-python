@@ -56,7 +56,7 @@ class Sensors(BoschEntities):
     """Sensors object containing multiple Sensor objects."""
 
     def __init__(
-        self, connector, sensors_db, uri_prefix=None, data=None, parent=None
+        self, connector, sensors_db={}, uri_prefix=None, data=None, parent=None
     ):
         """
         Initialize sensors.

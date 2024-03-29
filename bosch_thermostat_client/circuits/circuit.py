@@ -53,7 +53,7 @@ class BasicCircuit(BoschSingleEntity):
                 self._data[key] = {RESULT: {}, URI: uri, TYPE: value[TYPE]}
         self._sensors = Sensors(
             connector=connector,
-            sensors_db=self._db.get(SENSORS),
+            sensors_db=self._db.get(SENSORS, {}),
             uri_prefix=self._main_uri,
             data=self._data,
             parent=self,
