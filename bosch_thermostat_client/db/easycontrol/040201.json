@@ -38,6 +38,11 @@
         "id": "etrv/valvePosition",
         "name": "Valve position",
         "type": "regular"
+      },
+      "etrvStatus": {
+        "id": "etrv/status",
+        "name": "Etrv status",
+        "type": "regular"
       }
     },
     "switches": {
