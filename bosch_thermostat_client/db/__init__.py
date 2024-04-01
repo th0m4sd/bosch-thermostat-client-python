@@ -1,4 +1,5 @@
 """Retrieve standard data."""
+
 import logging
 import json
 import os
@@ -50,7 +51,9 @@ def get_db_of_firmware(device_type, firmware_version):
     if not firmware_version:
         _LOGGER.error("Can't find your fw version.")
         return None
-    filename = DEVICE_TYPES[device_type].format(firmware_version.replace(".", ""))
+    filename = DEVICE_TYPES[device_type].format(
+        firmware_version.replace(".", "")
+    )
     filepath = os.path.join(MAINPATH, filename)
     _LOGGER.debug("Attempt to load database from file %s", filepath)
     _db = open_json(filepath)
@@ -73,3 +76,8 @@ def get_ivt_errors() -> dict:
 def get_nefit_errors() -> dict:
     """Get error codes of NEFIT devices."""
     return open_json(os.path.join(MAINPATH, "errorcodes_nefit.json"))
+
+
+def get_easycontrol_errors() -> dict:
+    """Get error codes of EASYCONTROL devices."""
+    return open_json(os.path.join(MAINPATH, "errorcodes_easycontrol.json"))

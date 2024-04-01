@@ -15,6 +15,7 @@ from bosch_thermostat_client.const import (
     NAME,
 )
 from bosch_thermostat_client.const.ivt import IVT
+from bosch_thermostat_client.const.easycontrol import EASYCONTROL
 from bosch_thermostat_client.helper import (
     BoschEntities,
 )
@@ -31,8 +32,11 @@ ENERGY = "energy"
 
 
 def get_sensor_class(device_type, sensor_type):
+    print("de", device_type, sensor_type)
     if device_type == IVT:
         from .notification_ivt import NotificationSensor
+    elif device_type == EASYCONTROL:
+        from .notification_easycontrol import NotificationSensor
     else:
         from .notification_nefit import NotificationSensor
     return {
@@ -73,7 +77,11 @@ class Sensors(BoschEntities):
                     "connector": connector,
                     "attr_id": sensor_id,
                     "name": sensor.get(NAME),
-                    "path": f"{uri_prefix}/{sensor[ID]}" if uri_prefix else sensor[ID],
+                    "path": (
+                        f"{uri_prefix}/{sensor[ID]}"
+                        if uri_prefix
+                        else sensor[ID]
+                    ),
                     "kind": sensor.get(TYPE, REGULAR),
                     "data": data,
                     "parent": parent,
@@ -82,6 +90,7 @@ class Sensors(BoschEntities):
                 SensorClass = get_sensor_class(
                     device_type=connector.device_type, sensor_type=sensor_id
                 )
+                print("sensr", SensorClass)
                 self._items[sensor_id] = SensorClass(
                     **kwargs,
                 )
@@ -111,7 +120,9 @@ class Sensors(BoschEntities):
             for rec in found[VALUE]:
                 sensor_id = get_id(rec, found[RECORDING])
                 if sensor_id not in self._items:
-                    self._items[sensor_id] = get_crawl_sensor_class(found[RECORDING])(
+                    self._items[sensor_id] = get_crawl_sensor_class(
+                        found[RECORDING]
+                    )(
                         connector=self._connector,
                         attr_id=sensor_id,
                         name=sensor_id,
@@ -120,7 +131,9 @@ class Sensors(BoschEntities):
                         state=found[DB_RECORD].get(STATE),
                         device_class=get_device_class(
                             uri=rec[ID],
-                            default_class=found[DB_RECORD].get(DEVICE_CLASS, "energy"),
+                            default_class=found[DB_RECORD].get(
+                                DEVICE_CLASS, "energy"
+                            ),
                         ),
                         state_class=found[DB_RECORD].get(STATE_CLASS),
                     )

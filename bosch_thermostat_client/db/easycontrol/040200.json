@@ -408,6 +408,10 @@
       "id": "/system/autoAway/enabled",
       "name": "autoAwayEnabled",
       "type": "binary"
+    },
+    "notifications": {
+      "id": "/notifications",
+      "name": "Notifications"
     }
   },
   "crawlSensors": [],
