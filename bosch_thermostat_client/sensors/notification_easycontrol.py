@@ -1,4 +1,6 @@
-from bosch_thermostat_client.db import get_ivt_errors, get_nefit_errors
+from bosch_thermostat_client.db import (
+    get_easycontrol_errors,
+)
 from bosch_thermostat_client.const.ivt import INVALID
 from .sensor import Sensor
 from bosch_thermostat_client.const import (
@@ -8,7 +10,7 @@ from bosch_thermostat_client.const import (
 
 
 class NotificationSensor(Sensor):
-    errorcodes = get_nefit_errors() | get_ivt_errors()
+    errorcodes = get_easycontrol_errors()
 
     def get_error_message(self, dcd: str, ccd: str, act: str, fc: str) -> str:
         msg = "Unknown error"
@@ -44,10 +46,10 @@ class NotificationSensor(Sensor):
                         key_suffix = "" if idx == 0 else f"_{idx}"
                         data[RESULT][f"{VALUE}{key_suffix}"] = (
                             self.get_error_message(
-                                dcd=val.get("dcd", ""),
-                                ccd=val.get("ccd", ""),
-                                act=val.get("act", ""),
-                                fc=val.get("fc", ""),
+                                dcd=str(val.get("dcd", "")),
+                                ccd=str(val.get("ccd", "")),
+                                act=str(val.get("act", "")),
+                                fc=str(val.get("fc", "")),
                             )
                         )
                         data[RESULT]["fullError"] = val
