@@ -1,5 +1,6 @@
 """Retrieve standard data."""
 
+import asyncio
 import logging
 import json
 import os
@@ -29,6 +30,10 @@ DEVICE_TYPES = {
 }
 
 
+async def async_open_json(file):
+    return await asyncio.to_thread(open_json, file)
+
+
 def open_json(file):
     """Open json file."""
     try:
@@ -40,13 +45,13 @@ def open_json(file):
     return {}
 
 
-def get_initial_db(device_type):
+async def get_initial_db(device_type):
     filename = os.path.join(MAINPATH, f"db_{device_type}.json")
     """Get initial db. Same for all devices."""
-    return open_json(filename)
+    return await async_open_json(filename)
 
 
-def get_db_of_firmware(device_type, firmware_version):
+async def get_db_of_firmware(device_type, firmware_version):
     """Get db of specific device."""
     if not firmware_version:
         _LOGGER.error("Can't find your fw version.")
@@ -56,7 +61,7 @@ def get_db_of_firmware(device_type, firmware_version):
     )
     filepath = os.path.join(MAINPATH, filename)
     _LOGGER.debug("Attempt to load database from file %s", filepath)
-    _db = open_json(filepath)
+    _db = await async_open_json(filepath)
     return _db if _db.get(FIRMWARE_VERSION) == firmware_version else None
 
 

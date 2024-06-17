@@ -64,18 +64,18 @@ class BaseGateway:
         self.initialization_msg = None
         self._bus_type = None
 
-    def get_base_db(self):
-        return get_initial_db(self.device_type)
+    async def get_base_db(self):
+        return await get_initial_db(self.device_type)
 
     async def initialize(self):
         """Initialize gateway asynchronously."""
-        initial_db = self.get_base_db()
+        initial_db = await self.get_base_db()
         await self._update_info(initial_db.get(GATEWAY))
         self._firmware_version = self._data[GATEWAY].get(FIRMWARE_VERSION)
         self._device = self.get_device_model(initial_db)
         if self._device and VALUE in self._device:
             _LOGGER.debug("Found device %s", json.dumps(self._device))
-            self._db = get_db_of_firmware(self._device[TYPE], self._firmware_version)
+            self._db = await get_db_of_firmware(self._device[TYPE], self._firmware_version)
             if self._db:
                 _LOGGER.debug(
                     f"Loading database: {self._device[TYPE]} for firmware {self._firmware_version}"
@@ -90,11 +90,11 @@ class BaseGateway:
             )
         raise UnknownDevice("Your device is unknown %s" % json.dumps(self._device))
 
-    def custom_initialize(self, extra_db):
+    async def custom_initialize(self, extra_db):
         "Custom initialization of component"
         if self._firmware_version:
             self._db = get_custom_db(self._firmware_version, extra_db)
-            initial_db = get_initial_db()
+            initial_db = await get_initial_db()
             initial_db.pop(MODELS, None)
             self._db.update(initial_db)
             self._initialized = True
@@ -357,7 +357,7 @@ class BaseGateway:
     async def check_firmware_validity(self):
         """Run query against firmware version."""
         fw = await self._connector.get(self._db.get(BASE_FIRMWARE_VERSION))
-        if get_db_of_firmware(self._device[TYPE], fw.get(VALUE, "")):
+        if await get_db_of_firmware(self._device[TYPE], fw.get(VALUE, "")):
             return True
         raise FirmwareException(
             "You might have unsupported firmware version %s. Maybe it get updated?"
