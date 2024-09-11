@@ -15,6 +15,7 @@ import json
 import asyncio
 from functools import wraps
 from yaml import load
+
 try:
     from yaml import CLoader as Loader
 except ImportError:
@@ -59,10 +60,11 @@ def set_debug(debug: int) -> None:
 
 def set_default(ctx, param, value):
     if os.path.exists(value):
-        with open(value, 'r') as f:
+        with open(value, "r") as f:
             config = load(f.read(), Loader=Loader)
         ctx.default_map = config
     return value
+
 
 def add_options(options):
     def _add_options(func):
@@ -74,7 +76,9 @@ def add_options(options):
 
 
 async def _scan(gateway, smallscan, output, stdout):
-    _LOGGER.info("Successfully connected to gateway. Found UUID: %s", gateway.uuid)
+    _LOGGER.info(
+        "Successfully connected to gateway. Found UUID: %s", gateway.uuid
+    )
     if smallscan:
         result = await gateway.smallscan(_type=smallscan.lower())
         out_file = output if output else f"smallscan_{gateway.uuid}.json"
@@ -100,7 +104,7 @@ async def _runquery(gateway, path):
         await asyncio.sleep(0.3)
     if results:
         _LOGGER.info("Query succeed: %s", path)
-        click.secho(json.dumps(result, indent=4, sort_keys=True), fg="green")
+        click.secho(json.dumps(results, indent=4, sort_keys=True), fg="green")
     else:
         _LOGGER.warning("No results from queries: %s", path)
 
@@ -199,7 +203,9 @@ _scan_options = [
         required=False,
         help="Path to output file of scan. Default to [raw/small]scan_uuid.json",
     ),
-    click.option("--stdout", default=False, count=True, help="Print scan to stdout"),
+    click.option(
+        "--stdout", default=False, count=True, help="Print scan to stdout"
+    ),
     click.option("-d", "--debug", default=False, count=True),
     click.option(
         "-i",
@@ -211,7 +217,9 @@ _scan_options = [
     click.option(
         "-s",
         "--smallscan",
-        type=click.Choice(["HC", "DHW", "SENSORS", "RECORDINGS"], case_sensitive=False),
+        type=click.Choice(
+            ["HC", "DHW", "SENSORS", "RECORDINGS"], case_sensitive=False
+        ),
         help="Scan only single circuit of thermostat.",
     ),
 ]
@@ -312,7 +320,7 @@ async def query(
 ):
     """Query values of Bosch thermostat."""
     set_debug(debug=debug)
-    
+
     if device.upper() in (NEFIT, IVT, EASYCONTROL):
         BoschGateway = bosch.gateway_chooser(device_type=device)
     else:
@@ -345,6 +353,7 @@ async def query(
     finally:
         await gateway.close(force=True)
 
+
 _path_put_options = [
     click.option(
         "-p",
@@ -355,6 +364,7 @@ _path_put_options = [
         help="Path to run against. Look at rawscan at possible paths. e.g. /gateway/uuid - Can be specified multiple times!",
     )
 ]
+
 
 @cli.command()
 @add_options(_cmd1_options)
