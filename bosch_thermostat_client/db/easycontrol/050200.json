@@ -252,6 +252,10 @@
       {
         "haname": "performance",
         "boschname": ["ownprogram"]
+      },
+      {
+        "haname": "eco",
+        "boschname": ["eco"]
       }
     ],
     "min_ref": "setpoint1",
@@ -278,6 +282,11 @@
       "switch_points": "value"
     },
     "refs": {
+      "current_temp": {
+        "id": "actualTemp",
+        "name": "Tank temperature",
+        "type": "regular"
+      },
       "operation_mode": {
         "id": "operationMode",
         "name": "Operation mode",
